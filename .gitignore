@@ -1,3 +1,4 @@
 front-end/node_modules/*
 back-end/mygym/.vscode/*
+back-end/mygym/.idea/*
 back-end/mygym/target/*
