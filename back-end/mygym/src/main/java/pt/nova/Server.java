@@ -7,12 +7,14 @@ import java.util.logging.Logger;
 import org.glassfish.jersey.jdkhttp.JdkHttpServerFactory;
 import org.glassfish.jersey.server.ResourceConfig;
 
+import pt.nova.resources.UsersResource;
+
 /**
  * The class to start the server up.
  */
-public class MyGymServer 
+public class Server 
 {
-    private static Logger Log = Logger.getLogger(MyGymServer.class.getName());
+    private static Logger Log = Logger.getLogger(Server.class.getName());
 
     static {
 		System.setProperty("java.net.preferIPv4Stack", "true");
@@ -27,7 +29,7 @@ public class MyGymServer
             String ip = InetAddress.getLocalHost().getHostAddress();
 
 			ResourceConfig config = new ResourceConfig();
-            config.register(new MyGymResource());
+            config.register(new UsersResource());
 
             String serverURI = String.format("http://%s:%s/rest", ip, PORT);
 			JdkHttpServerFactory.createHttpServer( URI.create(serverURI), config);
