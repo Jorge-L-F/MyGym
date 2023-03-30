@@ -8,8 +8,7 @@ import org.glassfish.jersey.jdkhttp.JdkHttpServerFactory;
 import org.glassfish.jersey.server.ResourceConfig;
 
 /**
- * Hello world!
- *
+ * The class to start the server up.
  */
 public class MyGymServer 
 {
