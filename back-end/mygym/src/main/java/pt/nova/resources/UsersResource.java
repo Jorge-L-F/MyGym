@@ -14,8 +14,6 @@ public class UsersResource implements RestUsers {
 
     public UsersResource() {}
 
-    // TODO
-    // Endpoint overrides should go below this point.
     @Override
     public String createUser(User user) {
         // TODO Auto-generated method stub
