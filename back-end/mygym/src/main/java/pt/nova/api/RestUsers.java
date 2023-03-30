@@ -22,9 +22,6 @@ import pt.nova.api.entities.User;
 public interface RestUsers {
     static final String PATH="/users";
 
-    // TOGO
-    // Endpoints should be defined below this point
-
     /**
 	 * Creates a new user.
 	 * 

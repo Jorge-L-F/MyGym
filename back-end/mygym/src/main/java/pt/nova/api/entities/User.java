@@ -1,5 +1,8 @@
 package pt.nova.api.entities;
 
+/**
+ * Represents a User in the app.
+ */
 public class User {
 
     private String userId;
@@ -7,6 +10,8 @@ public class User {
     private String password;
     private String fullName;
     private float weight;
+    // TODO
+    // May need more fields, getters and setters.
 
     public User(){}
 
