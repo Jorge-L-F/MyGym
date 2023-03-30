@@ -3,15 +3,19 @@ package pt.nova.api.entities;
 public class User {
 
     private String userId;
-    private String name;
+    private String username;
+    private String password;
+    private String fullName;
     private float weight;
 
     public User(){}
 
-    public User(String userId, String name, float weight) {
+    public User(String userId, String username, String password, String fullName, float weight) {
         super();
         this.userId = userId;
-        this.name = name;
+        this.username = username;
+        this.password = password;
+        this.fullName = fullName;
         this.weight = weight;
     }
 
@@ -23,12 +27,28 @@ public class User {
 		this.userId = userId;
 	}
 
-    public String getUserName() {
-        return name;
+    public String getUsername() {
+        return username;
     }
 
-    public void setUserName(String name) {
-        this.name = name;
+    public void setUsername(String name) {
+        this.username = name;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getFullName() {
+        return fullName;
+    }
+
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
     }
 
     public float getUserWeight() {
