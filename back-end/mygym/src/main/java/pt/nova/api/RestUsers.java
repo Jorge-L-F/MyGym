@@ -37,8 +37,8 @@ public interface RestUsers {
 
     /**
 	 * Obtains the information on the user identified by name.
-	 * @param userId the userId of the user
-	 * @param password password of the user
+	 * @param userId 	the userId of the user
+	 * @param password 	password of the user
 	 * @return 200 the user object, if the userId exists and password matches the existing
 	 *         password
 	 *         403 if the password is incorrect
@@ -52,9 +52,9 @@ public interface RestUsers {
     /**
 	 * Modifies the information of a user. Values of null in any field of the user will be 
 	 * considered as if the the fields is not to be modified (the id cannot be modified).
-	 * @param userId the userId of the user
-	 * @param password password of the user
-	 * @param user Updated information
+	 * @param userId 	the userId of the user
+	 * @param password 	password of the user
+	 * @param user 		Updated information
 	 * @return 200 the updated user object, if the name exists and password matches the
 	 *         existing password 
 	 *         403 if the password is incorrect
