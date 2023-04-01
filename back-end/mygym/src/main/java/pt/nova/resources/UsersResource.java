@@ -28,15 +28,15 @@ public class UsersResource implements RestUsers {
 
         // Check if the user is valid, if not, return HTTP BAD REQUEST (400)
 		validateFields(user.getUserId(), user.getPassword(), user.getFullName(), user.getWeight());
-        
+
+        //Add the user to the map of users
+		User oldUser = users.putIfAbsent(user.getUserId(), user);
+
         // Check if the user already exists, if yes, return HTTP CONFLICT (409)
-		if(users.containsKey(user.getUserId())) {
+		if(oldUser != null) {
 			Log.info("User already exists.");
 			throw new WebApplicationException( Status.CONFLICT );
 		}
-
-        //Add the user to the map of users
-		users.put(user.getUserId(), user);
 		
 		return user.getUserId();
     }
