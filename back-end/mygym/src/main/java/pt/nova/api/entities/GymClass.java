@@ -4,6 +4,9 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Represents a gym class in the app.
+ */
 public class GymClass {
     
     private String classId;

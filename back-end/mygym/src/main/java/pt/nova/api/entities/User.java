@@ -1,7 +1,7 @@
 package pt.nova.api.entities;
 
 /**
- * Represents a User in the app.
+ * Represents a user in the app.
  */
 public class User {
 

@@ -1,5 +1,8 @@
 package pt.nova.api.entities;
 
+/**
+ * Represents a teacher in the app.
+ */
 public class Teacher extends User {
     
     public Teacher() {
