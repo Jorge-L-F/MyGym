@@ -56,11 +56,11 @@ public class User {
         this.fullName = fullName;
     }
 
-    public float getUserWeight() {
+    public float getWeight() {
         return weight;
     }
 
-    public void setUserWeight(float weight) {
+    public void setWeight(float weight) {
         this.weight = weight;
     }
 
