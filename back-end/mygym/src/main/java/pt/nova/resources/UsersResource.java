@@ -16,6 +16,7 @@ import pt.nova.api.entities.User;
  */
 @Singleton
 public class UsersResource implements RestUsers {
+    
     private final Map<String, User> users = new ConcurrentHashMap<>();
     private static Logger Log = Logger.getLogger(UsersResource.class.getName());
 
@@ -28,7 +29,7 @@ public class UsersResource implements RestUsers {
         // Check if the user is valid, if not, return HTTP BAD REQUEST (400)
 		validateFields(user.getUserId(), user.getPassword(), user.getFullName(), user.getWeight());
         
-        // Check if userId exists, if not, return HTTP CONFLICT (409)
+        // Check if the user already exists, if yes, return HTTP CONFLICT (409)
 		if(users.containsKey(user.getUserId())) {
 			Log.info("User already exists.");
 			throw new WebApplicationException( Status.CONFLICT );
