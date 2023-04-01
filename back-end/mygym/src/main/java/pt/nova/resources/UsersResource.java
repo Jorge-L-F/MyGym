@@ -16,7 +16,7 @@ import pt.nova.api.entities.User;
  */
 @Singleton
 public class UsersResource implements RestUsers {
-    
+
     private final Map<String, User> users = new ConcurrentHashMap<>();
     private static Logger Log = Logger.getLogger(UsersResource.class.getName());
 
@@ -43,8 +43,9 @@ public class UsersResource implements RestUsers {
 
     @Override
     public User getUser(String userId, String password) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getUser'");
+        Log.info("getUser : user = " + userId + "; pwd = " + password);
+
+		return fetchUser(userId, password);
     }
 
     @Override
@@ -75,6 +76,7 @@ public class UsersResource implements RestUsers {
 	 * @return
 	 */
 	private void validateFields(String userId, String password, String fullname, float weight){
+
 		if (userId == null || password == null || fullname == null) {
 			Log.info("One or more fields are null.");
 			throw new WebApplicationException( Status.BAD_REQUEST );
@@ -83,6 +85,34 @@ public class UsersResource implements RestUsers {
             Log.info("The weight is not valid.");
             throw new WebApplicationException( Status.BAD_REQUEST );
         }
+        
+	}
+
+    /**
+	 * Fetches a user given it's userId.
+	 *
+	 * @param userId   the user id
+	 * @param password the authentication password
+	 * @return user
+	 */
+	private User fetchUser(String userId, String password) {
+
+		User user;
+
+		// Check if user exists
+		if (userId == null || (user = users.get(userId)) == null) {
+			Log.info("User does not exist.");
+			throw new WebApplicationException( Status.NOT_FOUND );
+		}
+
+		//Check if the password is correct
+		if (!user.getPassword().equals(password)) {
+			Log.info("Password is incorrect.");
+			throw new WebApplicationException( Status.FORBIDDEN );
+		}
+
+		return user;
+
 	}
     
 }
