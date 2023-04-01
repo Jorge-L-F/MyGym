@@ -13,7 +13,7 @@ public class User {
     // TODO
     // May need more fields, getters and setters.
 
-    public User(){}
+    public User() {}
 
     public User(String userId, String username, String password, String fullName, float weight) {
         super();
