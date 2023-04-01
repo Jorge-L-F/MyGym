@@ -1,15 +1,20 @@
 package pt.nova.resources;
 
 import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.logging.Logger;
 
+import jakarta.inject.Singleton;
 import pt.nova.api.RestUsers;
 import pt.nova.api.entities.User;
 
 /**
  * Implementation of the users rest resource.
  */
+@Singleton
 public class UsersResource implements RestUsers {
+    private final Map<String, User> users = new ConcurrentHashMap<>();
     private static Logger Log = Logger.getLogger(UsersResource.class.getName());
 
     public UsersResource() {}
