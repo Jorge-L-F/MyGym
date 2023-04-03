@@ -24,7 +24,7 @@ public interface RestUsers {
     /**
 	 * Creates a new user.
 	 * 
-	 * @param user User to be created.
+	 * @param user UserDTO object.
 	 * @return 200 the userId.
 	 *         400 otherwise.
 	 */
@@ -52,7 +52,7 @@ public interface RestUsers {
 	 * considered as if the the fields is not to be modified (the id cannot be modified).
 	 * @param userId 	the userId of the user
 	 * @param password 	password of the user
-	 * @param user 		Updated information
+	 * @param user 		data object with new information
 	 * @return 200 the updated user object, if the name exists and password matches the
 	 *         existing password 
 	 *         403 if the password is incorrect

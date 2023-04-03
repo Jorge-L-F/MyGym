@@ -6,7 +6,7 @@ import jakarta.ws.rs.Path;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.QueryParam;
 import jakarta.ws.rs.core.MediaType;
-import pt.nova.api.entities.GymClass;
+import pt.nova.data.GymClassDTO;
 
 /**
  * API of the rest classes.
@@ -20,12 +20,12 @@ public interface RestClasses {
      * 
      * @param userId    the id of the user creating this class
      * @param password  the password of the user
-     * @param cls       the GymClass object to be added.
+     * @param cls       the GymClassDTO object.
      * @return 200 the classId.
 	 *         400 otherwise.
      */
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    String createClass(@QueryParam("userId") String userId, @QueryParam("password") String password, GymClass cls);
+    String createClass(@QueryParam("userId") String userId, @QueryParam("password") String password, GymClassDTO cls);
 }
