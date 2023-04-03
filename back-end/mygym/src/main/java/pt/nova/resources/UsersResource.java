@@ -10,6 +10,7 @@ import jakarta.ws.rs.WebApplicationException;
 import jakarta.ws.rs.core.Response.Status;
 import pt.nova.api.RestUsers;
 import pt.nova.api.entities.User;
+import pt.nova.data.UserDTO;
 
 /**
  * Implementation of the users rest resource.
@@ -23,16 +24,16 @@ public class UsersResource implements RestUsers {
     public UsersResource() {}
 
     @Override
-    public String createUser(User user) {
+    public String createUser(UserDTO user) {
         Log.info("createUser : " + user);
 
         // Check if the user is valid, if not, return HTTP BAD REQUEST (400)
 		validateFields(user.getUsername(), user.getPassword(), user.getFullName(), user.getWeight());
 
         // Create a random id for the user and add them to the map of users
-		user.setUserId(generateUserID());
+		User newUser = new User(generateUserID(), user);
 		
-		return user.getUserId();
+		return newUser.getUserId();
     }
 
     @Override
@@ -43,7 +44,7 @@ public class UsersResource implements RestUsers {
     }
 
     @Override
-    public User updateUser(String userId, String password, User user) {
+    public User updateUser(String userId, String password, UserDTO user) {
 		Log.info("getUser : user = " + userId + "; pwd = " + password + "; fields = " + user.toString());
 
 		User newUser = fetchUser(userId, password);

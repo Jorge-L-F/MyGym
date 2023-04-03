@@ -1,5 +1,7 @@
 package pt.nova.api.entities;
 
+import pt.nova.data.UserDTO;
+
 /**
  * Represents a user in the app.
  */
@@ -24,6 +26,16 @@ public class User {
         this.fullName = fullName;
         this.weight = weight;
         this.type = type;
+    }
+
+    public User(String userId, UserDTO user) {
+        super();
+        this.userId = userId;
+        this.username = user.getUsername();
+        this.password = user.getPassword();
+        this.fullName = user.getFullName();
+        this.weight = user.getWeight();
+        this.type = user.getType();
     }
 
     public String getUserId() {
@@ -75,15 +87,15 @@ public class User {
     }
 
     /**
-     * Changes the applicable fields of this object according to the fields of the parameter object. 
-     * 
+     * Changes the applicable fields of this object according to the fields of the data object.
+     *
      * @param user the object with the fields to set
      */
-    public void setFields(User user) {
+    public void setFields(UserDTO user) {
         if (user.getUsername() != null) this.setUsername(user.getUsername());
-		if (user.getFullName() != null) this.setFullName(user.getFullName());
-		if (user.getPassword() != null) this.setPassword(user.getPassword());
-		if (user.getWeight() >= 0f) this.setWeight(user.getWeight());
+        if (user.getFullName() != null) this.setFullName(user.getFullName());
+        if (user.getPassword() != null) this.setPassword(user.getPassword());
+        if (user.getWeight() >= 0f) this.setWeight(user.getWeight());
         if (user.getType() != null) this.setType(user.getType());
     }
 

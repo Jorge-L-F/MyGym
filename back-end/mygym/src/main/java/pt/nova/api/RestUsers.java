@@ -12,6 +12,7 @@ import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.QueryParam;
 import jakarta.ws.rs.core.MediaType;
 import pt.nova.api.entities.User;
+import pt.nova.data.UserDTO;
 
 /**
  * API of the rest users.
@@ -30,7 +31,7 @@ public interface RestUsers {
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    String createUser(User user);
+    String createUser(UserDTO user);
 
     /**
 	 * Obtains the information on the user identified by name.
@@ -62,7 +63,7 @@ public interface RestUsers {
 	@Path("/{userId}")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	User updateUser(@PathParam("userId") String userId, @QueryParam("password") String password, User user);
+	User updateUser(@PathParam("userId") String userId, @QueryParam("password") String password, UserDTO user);
 	
 	/**
 	 * Deletes the user identified by userId. The spreadsheets owned by the user should be eventually removed (asynchronous
