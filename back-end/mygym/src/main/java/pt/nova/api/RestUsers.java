@@ -25,7 +25,6 @@ public interface RestUsers {
 	 * 
 	 * @param user User to be created.
 	 * @return 200 the userId.
-	 *         409 if the user id already exists. 
 	 *         400 otherwise.
 	 */
     @POST

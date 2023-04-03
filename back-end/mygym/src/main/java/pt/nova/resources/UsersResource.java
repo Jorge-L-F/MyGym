@@ -1,6 +1,7 @@
 package pt.nova.resources;
 
 import java.util.Map;
+import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.logging.Logger;
 
@@ -26,16 +27,10 @@ public class UsersResource implements RestUsers {
         Log.info("createUser : " + user);
 
         // Check if the user is valid, if not, return HTTP BAD REQUEST (400)
-		validateFields(user.getUserId(), user.getPassword(), user.getFullName(), user.getWeight());
+		validateFields(user.getUsername(), user.getPassword(), user.getFullName(), user.getWeight());
 
-        //Add the user to the map of users
-		User oldUser = users.putIfAbsent(user.getUserId(), user);
-
-        // Check if the user already exists, if yes, return HTTP CONFLICT (409)
-		if(oldUser != null) {
-			Log.info("User already exists.");
-			throw new WebApplicationException( Status.CONFLICT );
-		}
+        // Create a random id for the user and add them to the map of users
+		user.setUserId(generateUserID());
 		
 		return user.getUserId();
     }
@@ -73,15 +68,15 @@ public class UsersResource implements RestUsers {
     /**
 	 * Checks if the fields are invalid and if so throws appropriate request.
 	 *
-	 * @param userId    the user id
+	 * @param username  the user name
      * @param password  user password
 	 * @param fullname  user fullname
      * @param weight    user weight
 	 * @return
 	 */
-	private void validateFields(String userId, String password, String fullname, float weight){
+	private void validateFields(String username, String password, String fullname, float weight){
 
-		if (userId == null || password == null || fullname == null) {
+		if (username == null || password == null || fullname == null) {
 			Log.info("One or more fields are null.");
 			throw new WebApplicationException( Status.BAD_REQUEST );
 		}
@@ -90,6 +85,16 @@ public class UsersResource implements RestUsers {
             throw new WebApplicationException( Status.BAD_REQUEST );
         }
         
+	}
+
+	private String generateUserID() {
+		String id;
+		do {
+			UUID uuid = UUID.randomUUID();
+			id = uuid.toString();
+		} while (users.containsKey(id));
+
+		return id;
 	}
 
     /**
