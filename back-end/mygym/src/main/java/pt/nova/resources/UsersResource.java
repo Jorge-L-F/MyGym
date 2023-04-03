@@ -53,11 +53,7 @@ public class UsersResource implements RestUsers {
 
 		User newUser = fetchUser(userId, password);
 
-		// Change the fields of the user where applicable
-		if (user.getUsername() != null) newUser.setUsername(user.getUsername());
-		if (user.getFullName() != null) newUser.setFullName(user.getFullName());
-		if (user.getPassword() != null) newUser.setPassword(user.getPassword());
-		if (user.getWeight() >= 0f) newUser.setWeight(user.getWeight());
+		newUser.setFields(user);
 
         return newUser;
     }
