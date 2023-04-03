@@ -50,14 +50,29 @@ public class UsersResource implements RestUsers {
 
     @Override
     public User updateUser(String userId, String password, User user) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'updateUser'");
+		Log.info("getUser : user = " + userId + "; pwd = " + password + "; fields = " + user.toString());
+
+		User newUser = fetchUser(userId, password);
+
+		// Change the fields of the user where applicable
+		if (user.getUsername() != null) newUser.setUsername(user.getUsername());
+		if (user.getFullName() != null) newUser.setFullName(user.getFullName());
+		if (user.getPassword() != null) newUser.setPassword(user.getPassword());
+		if (user.getWeight() >= 0f) newUser.setWeight(user.getWeight());
+
+        return newUser;
     }
 
     @Override
     public User deleteUser(String userId, String password) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'deleteUser'");
+		Log.info("deleteUser : user = " + userId + "; pwd = " + password);
+
+		User user = fetchUser(userId, password);
+
+		// Removes the user
+		users.remove(userId, user);
+
+		return user;
     }
 
     @Override
@@ -90,6 +105,8 @@ public class UsersResource implements RestUsers {
 
     /**
 	 * Fetches a user given it's userId.
+	 * If the id does not exist, return HTTP NOT FOUND (404).
+	 * If the password is incorrect, return HTTP FORBIDDEN (403).
 	 *
 	 * @param userId   the user id
 	 * @param password the authentication password

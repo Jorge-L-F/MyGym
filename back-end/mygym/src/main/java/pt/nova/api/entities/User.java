@@ -64,4 +64,10 @@ public class User {
         this.weight = weight;
     }
 
+    @Override
+    public String toString() {
+        return String.format("User [userid=%s, username=%s, fullName=%s, password=%s, weight=%.1f]",
+                             this.userId, this.username, this.fullName, this.password, this.weight);
+    }
+
 }
