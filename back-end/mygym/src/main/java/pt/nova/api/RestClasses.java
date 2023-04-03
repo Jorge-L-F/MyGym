@@ -18,10 +18,11 @@ public interface RestClasses {
     /**
      * Creates a new class.
      * 
-     * @param userId
-     * @param password
-     * @param cls
-     * @return
+     * @param userId    the id of the user creating this class
+     * @param password  the password of the user
+     * @param cls       the GymClass object to be added.
+     * @return 200 the classId.
+	 *         400 otherwise.
      */
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
