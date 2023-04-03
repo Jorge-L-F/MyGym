@@ -1,6 +1,5 @@
 package pt.nova.resources;
 
-import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.logging.Logger;
@@ -73,12 +72,6 @@ public class UsersResource implements RestUsers {
 		users.remove(userId, user);
 
 		return user;
-    }
-
-    @Override
-    public List<User> searchUsers(String pattern) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'searchUsers'");
     }
 
     /**

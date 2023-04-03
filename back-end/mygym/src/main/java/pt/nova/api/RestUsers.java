@@ -5,8 +5,6 @@ import jakarta.ws.rs.PUT;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.PathParam;
 
-import java.util.List;
-
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.DELETE;
 import jakarta.ws.rs.GET;
@@ -81,16 +79,5 @@ public interface RestUsers {
 	@Path("/{userId}")
 	@Produces(MediaType.APPLICATION_JSON)
 	User deleteUser(@PathParam("userId") String userId, @QueryParam("password") String password);
-
-    /**
-	 * Returns the list of users for which the pattern is a substring of the name (of the user), case-insensitive.
-	 * The password of the users returned by the query must be set to the empty string "".
-	 * @param pattern substring to search
-	 * @return 200 when the search was successful, regardless of the number of hits (including 0 hits).
-	 *         400 otherwise.
-	 */
-	@GET
-	@Produces(MediaType.APPLICATION_JSON)
-	List<User> searchUsers(@QueryParam("query") String pattern);
 	
 }
