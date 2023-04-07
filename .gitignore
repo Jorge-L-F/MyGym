@@ -2,3 +2,6 @@ front-end/node_modules/*
 back-end/mygym/.vscode/*
 back-end/mygym/.idea/*
 back-end/mygym/target/*
+.vscode/*
+frontend/my-project/node_modules/*
+frontend/my-project/package-lock.json
