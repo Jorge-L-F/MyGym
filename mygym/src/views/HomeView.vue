@@ -1,6 +1,6 @@
 <template>
     <v-container fluid class="pa-0">
-        <h1 class="text-center mt-10">Welcome back, {{ me.firstName }}!</h1>
+        <h1 class="text-center mt-10">Welcome back, {{ me.fullName }}!</h1>
         <div max-width="50%" class="d-flex justify-center mt-15">
             <v-card width="50%" elevation="10">
                 <v-card-text>
@@ -23,8 +23,7 @@
                     <v-card-text>
                         <p>Here is your profile information:</p>
                         <ul>
-                            <li>First Name: {{ me.firstName }}</li>
-                            <li>Last Name: {{ me.lastName }}</li>
+                            <li>Name: {{ me.fullName }}</li>
                             <li>Email: {{ me.email }}</li>
                         </ul>
                     </v-card-text>
@@ -61,11 +60,7 @@ export default {
 
     computed: {
         me() {
-            return {
-                firstName: "John",
-                lastName: "Doe",
-                email: "johnEmail@email.com"
-            };
+            return JSON.parse(localStorage.getItem("me"));
         }
     },
 
