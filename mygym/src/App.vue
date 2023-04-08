@@ -52,7 +52,16 @@
                     >
                         <div class="d-flex flex-column align-center">
                             <v-list-item-avatar color="primary">
-                                <img src="@/assets/user.png" alt="user" />
+                                <img
+                                    v-if="me.gender == 'male'"
+                                    src="@/assets/userMale.png"
+                                    alt="user"
+                                />
+                                <img
+                                    v-else
+                                    src="@/assets/userFemale.png"
+                                    alt="user"
+                                />
                             </v-list-item-avatar>
                             <v-list-item-title class="mt-1">
                                 {{ me.fullName }}
@@ -114,15 +123,12 @@
 </template>
 
 <script>
-import api from "./api";
-
 export default {
     name: "App",
 
     data() {
         return {
             drawer: false,
-            isLoggedIn: true,
             menuItems: [
                 {
                     title: "Profile",
@@ -146,7 +152,10 @@ export default {
 
     computed: {
         me() {
-            return JSON.parse(localStorage.getItem("me"));
+            return this.$store.state.me;
+        },
+        isLoggedIn() {
+            return this.$store.state.isLoggedIn;
         },
         computedMenuItem() {
             return this.menuItems;
@@ -156,18 +165,32 @@ export default {
     beforeCreate() {},
     created() {},
     mounted() {
-        if (!this.isLoggedIn) this.$router.push("/login");
-        else {
-            api.getUser(1).then((res) => {
-                localStorage.setItem("me", JSON.stringify(res.data));
-            });
+        if (this.isLoggedIn) {
+            this.fetchMe();
         }
     },
     methods: {
         logout() {
-            this.isLoggedIn = false;
-            this.$router.push("/login");
-            //logout
+            this.$store
+                .dispatch("user/logout")
+                .then(() => {
+                    this.drawer = false;
+                    this.pushTo("login");
+                })
+                .catch((error) => {
+                    console.log("Logout failed", error);
+                })
+                .finally(() => {
+                    this.pushTo("login");
+                });
+        },
+        fetchMe() {
+            return this.$store
+                .dispatch("user/fetchMe")
+                .then(() => {})
+                .catch((error) => {
+                    console.log("fetchMe catched error: ", error);
+                });
         }
     }
 };
