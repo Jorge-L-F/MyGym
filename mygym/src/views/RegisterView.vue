@@ -1,129 +1,152 @@
 <template>
-    <div class="h-screen w-screen overflow-y-hidden d-flex justify-center align-center">
-      <v-card 
-      class="mx-auto pa-4 elevation-3 bg-white"
-      variant="tonal"
-      width="300"
-      rounded>
-          <v-card-item>
-            <h1 class="text-center">Register</h1>
-          </v-card-item>
-          <v-form>
-            <h3 class="mb-3">Credentials</h3>
-            <v-text-field
-              variant="outlined" 
-              v-model="username"
-              label="Username"
-              :rules="usernameRules"
-              class="rounded-lg"
-            ></v-text-field>
-            <v-text-field
-              variant="outlined" 
-              v-model="password"
-              label="Password"
-              :rules="passwordRules"
-              hint="Enter your password to access this website"
-              type="password"
-              class="rounded"
-            ></v-text-field>
-            <v-text-field
-              variant="outlined" 
-              v-model="confirmPassword"
-              label="Confirm Password"
-              :rules="confirmPasswordRules"
-              hint="Enter your password again."
-              type="password"
-              class="rounded"
-            ></v-text-field>
-            <h3 class="mb-3">Information</h3>
-            <v-text-field
-              variant="outlined" 
-              v-model="fullName"
-              label="Full Name"
-              :rules="fullNameRules"
-              class="rounded-lg"
-            ></v-text-field>
-            <v-select
-              label="Gender"
-              :items="['Male', 'Female']"
-              variant="outlined"
-            ></v-select>
-            <v-btn 
+    <v-container class="fill-height bg-grey" fluid>
+      <v-form class="bg-white rounded mx-auto pa-4 elevation-3" v-model="valid">
+      <div class=" d-flex flex-column align-center mt-2 mb-8">
+        <img
+          src="@/assets/logo.png"
+          alt="Logo"
+          class=""
+          height="44"
+                  />
+      </div>
+    
+      <v-row>
+        <!-- Credentials -->
+        <v-col>
+        <h2 class="mb-3">Credentials</h2>
+
+        <v-text-field
+        placeholder="Username"
+        name="username"
+        type="text"
+        :rules="[rules.required]"
+        :error-messages="error"
+        outlined
+        prepend-inner-icon="person"
+        v-model="email"
+    ></v-text-field>
+
+      <v-text-field
+        placeholder="E-mail"
+        name="email"
+        type="email"
+        :rules="[rules.required, rules.validEmail]"
+        :error-messages="error"
+        outlined
+        prepend-inner-icon="person"
+        v-model="email"
+    ></v-text-field>
+
+        <v-text-field
+        id="password"
+        placeholder="Password"
+        name="password"
+        :type="showpassword ? 'text' : 'password'"
+        :rules="[rules.required]"
+        :error-messages="error"
+        outlined
+        v-model="password"
+        prepend-inner-icon="lock"
+        @keydown.enter="login"
+        >
+        <template v-slot:append>
+            <v-icon
+                color="primary"
+                @click="showpassword = !showpassword"
+                tabindex="-1"
+                >{{
+                    showpassword
+                        ? "visibility"
+                        : "visibility_off"
+                }}</v-icon
+            >
+        </template>
+    </v-text-field>
+
+        </v-col>
+        <!-- Info -->
+        <v-col>
+        <h2 class="mb-3">Information</h2>
+        <v-text-field
+        placeholder="Full Name"
+        name="fullname"
+        type="text"
+        :rules="[rules.required]"
+        :error-messages="error"
+        outlined
+        prepend-inner-icon="person"
+        v-model="fullname"
+    ></v-text-field>
+      <v-text-field
+        placeholder="Height"
+        name="height"
+        type="number"
+        :rules="[rules.required]"
+        :error-messages="error"
+        outlined
+        prepend-inner-icon="person"
+        v-model="height"
+    ></v-text-field>
+      <v-text-field
+        placeholder="Weight"
+        name="Weight"
+        type="number"
+        :rules="[rules.required]"
+        :error-messages="error"
+        outlined
+        prepend-inner-icon="person"
+        v-model="weight"
+    ></v-text-field>
+        <v-select
+          :items="genderOptions"
+          label="Gender"
+          outlined
+        ></v-select>
+        </v-col>
+      </v-row>
+          <v-btn 
             type="submit" 
             block 
-            class="mt-2 bg-blue-darken-1"
-            variant="outlined" 
+            class="mt-2 bg-blue"
+            outlined 
             >Submit</v-btn>
-          </v-form>
-      </v-card>
-    </div>
+      </v-form>
+        
+    </v-container>
     
     </template>
     
     <script>
-      export default {
-        name: "RegisterView",
-        data() {
-          return {
+export default {
+    title: "Login",
+    data: function () {
+        return {
+            showpassword: false,
+            valid: false,
             username: "",
-            usernameRules: [
-              //FIXME Add submit rules
-              value => {
-                if (value.length >= 5) {
-                  return true;
-                }
-    
-                return "Username must be at least 5 characters";
-              }
-            ],
+            email: "",
             password: "",
-            passwordRules: [
-              value => {
-                if (value.length < 5) {
-                  return "Password must be at least 5 characters";
-                }
-    
-                return true;
-              }
-            ],
             confirmPassword: "",
-            confirmPasswordRules: [
-              value => {
-                if (value.length < 5) {
-                  return "Password must be at least 5 characters";
-                }
-    
-                if (value !== this.password) {
-                  return "Password must be the same as before";
-                }
-    
-                return true;
-              } 
-            ],
-            fullName: "",
-            fullNameRules: [
-              value => {
-                if (value.length < 5) {
-                  return "This field must be at least 5 characters";
-                }
-    
-                if(!value.includes(" ")){
-                  return "Must have multiple names in this field";
-                }
-    
-                return true;
-              } 
-            ],
-          };
-        },
-        mounted() {
-          fetch("https://jsonplaceholder.typicode.com/users")
-            .then((response) => response.json())
-            .then((json) => {
-              this.users = json;
-            });
-        },
-      };
+            fullname: "",
+            genderOptions: ["Male", "Female"],
+            height: "",
+            error: "",
+            rules: {
+                required: (value) => !!value || "Required.",
+                validEmail: (value) => /.+@.+/.test(value) || 'E-mail must be valid',
+            }
+        };
+    },
+    computed: {},
+
+    created() {},
+    methods: {
+        login() {
+            this.$router.push("/");
+            //TODO
+        }
+    }
+};
     </script>
     
     <style>
