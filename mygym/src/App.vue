@@ -55,7 +55,7 @@
                                 <img src="@/assets/user.png" alt="user" />
                             </v-list-item-avatar>
                             <v-list-item-title class="mt-1">
-                                {{ me.firstName }} {{ me.lastName }}
+                                {{ me.fullName }}
                             </v-list-item-title>
                             <v-list-item-subtitle>{{
                                 me.email
@@ -114,6 +114,8 @@
 </template>
 
 <script>
+import api from "./api";
+
 export default {
     name: "App",
 
@@ -144,11 +146,7 @@ export default {
 
     computed: {
         me() {
-            return {
-                firstName: "John",
-                lastName: "Doe",
-                email: "johnEmail@email.com"
-            };
+            return JSON.parse(localStorage.getItem("me"));
         },
         computedMenuItem() {
             return this.menuItems;
@@ -157,7 +155,14 @@ export default {
     watch: {},
     beforeCreate() {},
     created() {},
-    mounted() {},
+    mounted() {
+        if (!this.isLoggedIn) this.$router.push("/login");
+        else {
+            api.getUser(1).then((res) => {
+                localStorage.setItem("me", JSON.stringify(res.data));
+            });
+        }
+    },
     methods: {
         logout() {
             this.isLoggedIn = false;
