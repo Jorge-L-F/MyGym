@@ -7,9 +7,9 @@
         class="background rounded mx-auto pa-4 elevation-3"
         v-model="valid"
         >
-        
-            <h1>{{me.email}}</h1>
-
+            <img src="https://api.dicebear.com/6.x/micah/svg?seed=siui&radius=50">
+            <h1>{{me.fullName}}</h1>
+            <p>{{me.email}}</p>
         </v-form>
 
     </v-container>

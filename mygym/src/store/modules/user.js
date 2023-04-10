@@ -29,9 +29,21 @@ const actions = {
         return new Promise(() => {
             const userData = payload;
             api.createUser(userData)
-            .then(() => {
-                //TODO Log in the registered user 
-                return true;
+            .then((response) => {
+                if (response) {
+                    //FIXME Log in the registered user 
+                    localStorage.setItem(
+                        "me",
+                        JSON.stringify(userData)
+                    );
+                    context.commit(types.SET_ME, { ...userData });
+                    context.commit(types.LOGIN);
+
+                    return true;
+                } else {
+                    return false;
+                }
+                
             });
         })
     },

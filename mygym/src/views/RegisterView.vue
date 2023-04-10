@@ -1,6 +1,6 @@
 <template>
     <v-container class="fill-height bg-grey" fluid>
-      <v-form class="bg-white rounded mx-auto pa-4 elevation-3" v-model="valid" onSubmit="console.log('Siui')">
+      <v-form class="bg-white rounded mx-auto pa-4 elevation-3" v-model="valid" @submit.prevent="register">
       <div class=" d-flex flex-column align-center mt-2 mb-8">
         <img
           src="@/assets/logo.png"
@@ -33,7 +33,7 @@
         :rules="[rules.required, rules.validEmail]"
         :error-messages="error"
         outlined
-        prepend-inner-icon="person"
+        prepend-inner-icon="alternate_email"
         v-model="email"
     ></v-text-field>
 
@@ -74,8 +74,18 @@
         :rules="[rules.required]"
         :error-messages="error"
         outlined
-        prepend-inner-icon="person"
+        prepend-inner-icon="badge"
         v-model="fullname"
+    ></v-text-field>
+    <v-text-field
+        placeholder="Age"
+        name="age"
+        type="number"
+        :rules="[rules.required]"
+        :error-messages="error"
+        outlined
+        prepend-inner-icon="timer"
+        v-model="age"
     ></v-text-field>
       <v-text-field
         placeholder="Height"
@@ -84,7 +94,7 @@
         :rules="[rules.required]"
         :error-messages="error"
         outlined
-        prepend-inner-icon="person"
+        prepend-inner-icon="straighten"
         v-model="height"
     ></v-text-field>
       <v-text-field
@@ -94,7 +104,7 @@
         :rules="[rules.required]"
         :error-messages="error"
         outlined
-        prepend-inner-icon="person"
+        prepend-inner-icon="scale"
         v-model="weight"
     ></v-text-field>
         <v-select
@@ -103,15 +113,28 @@
           v-model="gender"
           label="Gender"
           outlined
-        ></v-select>
+        >
+        <template v-slot:append>
+            <v-icon
+                color="primary"
+                tabindex="-1"
+                >{{
+                    gender.toLowerCase()
+                }}</v-icon
+            >
+        </template>
+        </v-select>
         </v-col>
       </v-row>
+      <!--
+@click="register"
+      -->
           <v-btn 
             type="submit" 
             block 
             class="mt-2 bg-blue"
             outlined 
-            @click="register"
+            
             >Submit</v-btn>
       </v-form>
         
@@ -136,6 +159,7 @@ export default {
             fullname: "",
             genderOptions: ["Male", "Female"],
             gender: "",
+            age: "",
             height: "",
             weight: "",
             error: "",
@@ -149,10 +173,14 @@ export default {
 
     created() {},
     methods: {
+        helloWorld() {
+            console.log("Siui");
+        },
         register() {
+            console.log("Register");
             if (this.valid) {
-                this.$store
-                    .dispatch("user/register", {
+
+                const data = {
                         "id": nanoid(),
                         "fullName": this.fullname,
                         "email": this.email,
@@ -161,10 +189,14 @@ export default {
                         "username": this.username,
                         "gender": this.gender.toLowerCase(),
                         //TODO Add "age" input field
-                        "age": 21,
-                        "height": this.height,
-                        "weight": this.weight
-                    })
+                        "age": parseFloat(this.age),
+                        "height": parseFloat(this.height),
+                        "weight": parseFloat(this.weight)
+                    };
+
+                console.log("User: " + data);
+                this.$store
+                    .dispatch("user/register", data)
                     .then((res) => {
                         if (res) {
                             this.$router.push({ name: "Home" });
