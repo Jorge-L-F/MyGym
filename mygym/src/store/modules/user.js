@@ -21,6 +21,21 @@ const mutations = {
 };
 
 const actions = {
+
+    //TODO
+    async register(context, payload) {
+        localStorage.clear();
+
+        return new Promise(() => {
+            const userData = payload;
+            api.createUser(userData)
+            .then(() => {
+                //TODO Log in the registered user 
+                return true;
+            });
+        })
+    },
+
     async login(context, payload) {
         localStorage.clear();
 

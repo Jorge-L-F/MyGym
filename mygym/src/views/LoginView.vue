@@ -1,7 +1,7 @@
 <template>
-    <v-container class="fill-height bg-grey" fluid>
+    <v-container class="fill-height background2" fluid>
         <v-form
-            class="bg-white rounded mx-auto pa-4 elevation-3"
+            class="background rounded mx-auto pa-4 elevation-3"
             v-model="valid"
         >
             <div class="d-flex flex-column align-center mt-2 mb-8">
@@ -42,7 +42,6 @@
                     >
                 </template>
             </v-text-field>
-
             <v-btn
                 type="submit"
                 block

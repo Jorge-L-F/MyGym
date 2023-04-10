@@ -1,38 +1,62 @@
 {
-    "user": [
-        {
-            "id": 1,
-            "fullName": "John Doe",
-            "email": "johndoe@email.com",
-            "password": "123",
-            "role": "user",
-            "username": "johndoe",
-            "gender": "male",
-            "age": 25,
-            "height": 180,
-            "weight": 80
-        },
-        {
-            "id": 2,
-            "fullName": "Bruno Braga",
-            "email": "braga@email.com",
-            "password": "123",
-            "role": "trainer",
-            "username": "brunobraga",
-            "gender": "male",
-            "age": 25,
-            "height": 180,
-            "weight": 80
-        }
-    ],
-    "class": [
-        {
-            "id": 1,
-            "name": "Yoga",
-            "description": "Yoga is a group of physical, mental, and spiritual practices or disciplines which originated in ancient India.",
-            "duration": 60,
-            "price": 10,
-            "trainer": 2
-        }
-    ]
+  "user": [
+    {
+      "id": 1,
+      "fullName": "John Doe",
+      "email": "johndoe@email.com",
+      "password": "123",
+      "role": "user",
+      "username": "johndoe",
+      "gender": "male",
+      "age": 25,
+      "height": 180,
+      "weight": 80
+    },
+    {
+      "id": 2,
+      "fullName": "Bruno Braga",
+      "email": "braga@email.com",
+      "password": "123",
+      "role": "trainer",
+      "username": "brunobraga",
+      "gender": "male",
+      "age": 25,
+      "height": 180,
+      "weight": 80
+    },
+    {
+      "id": 3,
+      "fullName": "rodrigo alegris",
+      "email": "alegris@email.com",
+      "password": "123",
+      "role": "user",
+      "username": "alegris",
+      "gender": "male",
+      "age": 21,
+      "height": 190,
+      "weight": 80
+    },
+    {
+      "id": "bUs6K-EXY3Zv6ScTPnfHx",
+      "fullName": "Joao Cristiano",
+      "email": "jc@email.com",
+      "password": "123",
+      "role": "user",
+      "username": "jcristiano",
+      "gender": "male",
+      "age": 21,
+      "height": "140",
+      "weight": "55"
+    }
+  ],
+  "class": [
+    {
+      "id": 1,
+      "name": "Yoga",
+      "description": "Yoga is a group of physical, mental, and spiritual practices or disciplines which originated in ancient India.",
+      "duration": 60,
+      "price": 10,
+      "trainer": 2
+    }
+  ]
 }
