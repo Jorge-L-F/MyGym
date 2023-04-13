@@ -152,10 +152,23 @@ export default {
 
     computed: {
         me() {
-            return this.$store.state.me;
+            //return this.$store.state.me;
+            return {
+      "id": "bUs6K-EXY3Zv6ScTPnfHx",
+      "fullName": "Joao Cristiano",
+      "email": "jc@email.com",
+      "password": "123",
+      "role": "user",
+      "username": "jcristiano",
+      "gender": "male",
+      "age": 21,
+      "height": "140",
+      "weight": "55"
+    };
         },
         isLoggedIn() {
-            return this.$store.state.isLoggedIn;
+            //return this.$store.state.isLoggedIn;
+            return true;
         },
         computedMenuItem() {
             return this.menuItems;
