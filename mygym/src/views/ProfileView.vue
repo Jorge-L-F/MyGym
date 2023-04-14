@@ -30,7 +30,7 @@
                 <v-card class="rounded pa-4 elevation-3">
                     <h1>Details</h1>
                     <v-row>
-                        <v-col class="d-flex">
+                        <v-col class="d-flex justify-center">
                             <DetailCard
                                 title="Weight"
                                 icon="scale"
@@ -40,10 +40,19 @@
                                 title="Height"
                                 icon="straighten"
                                 :content="me.height"
-                                color="#00ff00"
+                                backgroundColor="#00ff00"
+                                color="#323232"
+                            ></DetailCard>
+                            <DetailCard
+                                title="Age"
+                                icon="calendar_month"
+                                :content="me.age"
+                                backgroundColor="#550aad"
+                                color="#dfdfdf"
                             ></DetailCard>
                         </v-col>
                     </v-row>
+                    <h1>Latest classes</h1>
                     <div class="d-flex"></div>
                 </v-card>
             </v-col>
