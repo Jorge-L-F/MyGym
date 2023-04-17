@@ -9,6 +9,8 @@ const api = axios.create({
 });
 
 export default {
+
+    //User methods
     getUsers() {
         return api.get("/user");
     },
@@ -21,6 +23,19 @@ export default {
     },
     createUser(user) {
         return api.post("/user", user);
+    },
+
+    //Classes methods
+    listClasses() {
+        return api.get("/class");
+    },
+
+    getClass(id) {
+        return api.get(`/class?id=${id}`)
+    },
+
+    getClassesOf(userId) {
+        return api.get(`/class?participants_like=${userId}`)
     }
 
     // ... other methods

@@ -2,7 +2,7 @@
     <v-container class="fill-height background2" fluid>
         <v-row>
             <v-col cols="5">
-                <v-card class="rounded pa-4 elevation-3 position-fixed">
+                <v-card class="rounded pa-4 elevation-3">
                     <div class="d-flex justify-center mb-3">
                         <v-avatar size="200px">
                             <img :src="getAvatar(me.id)" />
@@ -22,26 +22,30 @@
                                 </span>
                             </v-chip>
                         </div>
-                        <p class="text--secondary">{{ me.email }}</p>
+                        <p class="text--secondary" style="margin-top: -0.5rem">
+                            {{ me.email }}
+                        </p>
                     </div>
                 </v-card>
             </v-col>
             <v-col>
-                <v-card class="rounded pa-4 elevation-3">
+                <v-card class="rounded pa-4 elevation-3 w-50">
                     <h1>Details</h1>
-                    <v-row>
-                        <v-col class="d-flex justify-center">
+                    <v-row class="mb-1">
+                        <v-col class="d-flex justify-start">
                             <DetailCard
                                 title="Weight"
                                 icon="scale"
                                 :content="me.weight"
+                                backgroundColor="#86BBD8"
+                                color="#ffffff"
                             ></DetailCard>
                             <DetailCard
                                 title="Height"
                                 icon="straighten"
                                 :content="me.height"
-                                backgroundColor="#00ff00"
-                                color="#323232"
+                                backgroundColor="#0faa79"
+                                color="#dfdfdf"
                             ></DetailCard>
                             <DetailCard
                                 title="Age"
@@ -52,19 +56,92 @@
                             ></DetailCard>
                         </v-col>
                     </v-row>
-                    <h1>Latest classes</h1>
-                    <div class="d-flex">
-                        <v-list lines="two">
-                            <v-list-item
-                                v-for="item in [0, 1, 2, 3, 4]"
-                                :key="'item' + item"
-                                :title="'Title ' + item"
-                                subtitle="..."
-                            >
-                                Description of Item {{ item }}
-                            </v-list-item>
-                        </v-list>
-                    </div>
+                    <h1>Information</h1>
+                    <v-form class="pa-2" v-model="valid">
+                        <v-row>
+                            <v-col cols="9">
+                                <v-text-field
+                                    placeholder="Full Name"
+                                    name="fullname"
+                                    type="text"
+                                    :rules="[rules.required]"
+                                    :error-messages="error"
+                                    outlined
+                                    hide-details
+                                    prepend-inner-icon="badge"
+                                    v-model="me.fullName"
+                                ></v-text-field>
+                            </v-col>
+                        </v-row>
+
+                        <v-row>
+                            <v-col cols="3">
+                                <v-text-field
+                                    placeholder="Age"
+                                    name="age"
+                                    type="number"
+                                    :rules="[rules.required]"
+                                    :error-messages="error"
+                                    outlined
+                                    hide-details
+                                    prepend-inner-icon="timer"
+                                    v-model.number="me.age"
+                                ></v-text-field>
+                            </v-col>
+                            <v-col cols="3">
+                                <v-text-field
+                                    placeholder="Height"
+                                    name="height"
+                                    type="number"
+                                    :rules="[rules.required]"
+                                    :error-messages="error"
+                                    outlined
+                                    hide-details
+                                    prepend-inner-icon="straighten"
+                                    v-model.number="me.height"
+                                ></v-text-field>
+                            </v-col>
+                            <v-col cols="3">
+                                <v-text-field
+                                    placeholder="Weight"
+                                    name="Weight"
+                                    type="number"
+                                    :rules="[rules.required]"
+                                    :error-messages="error"
+                                    outlined
+                                    hide-details
+                                    prepend-inner-icon="scale"
+                                    v-model.number="me.weight"
+                                ></v-text-field>
+                            </v-col>
+                        </v-row>
+
+                        <v-row>
+                            <v-col cols="9">
+                                <v-select
+                                    :items="genderOptions"
+                                    :rules="[rules.required]"
+                                    v-model="me.gender"
+                                    label="Gender"
+                                    outlined
+                                    hide-details
+                                >
+                                    <template v-slot:prepend-inner>
+                                        <v-icon color="primary" tabindex="-1">{{
+                                            me.gender.toLowerCase()
+                                        }}</v-icon>
+                                    </template>
+                                </v-select>
+                            </v-col>
+                        </v-row>
+                        <v-row class="d-flex justify-center">
+                            <v-col cols="5">
+                                <v-btn block class="mt-2 bg-blue" outlined
+                                    >Submit
+                                </v-btn>
+                            </v-col>
+                        </v-row>
+                    </v-form>
                 </v-card>
             </v-col>
         </v-row>
@@ -76,7 +153,24 @@ import DetailCard from "@/components/DetailCard.vue";
 export default {
     title: "Profile",
     data: function () {
-        return {};
+        return {
+            classes: [],
+            genderOptions: [
+                {
+                    text: "Male",
+                    value: "male"
+                },
+                {
+                    text: "Female",
+                    value: "female"
+                }
+            ],
+            rules: {
+                required: (value) => !!value || "Required.",
+                validEmail: (value) =>
+                    /.+@.+/.test(value) || "E-mail must be valid"
+            }
+        };
     },
     computed: {
         me() {

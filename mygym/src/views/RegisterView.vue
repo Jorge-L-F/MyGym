@@ -105,6 +105,7 @@
                         prepend-inner-icon="scale"
                         v-model.number="weight"
                     ></v-text-field>
+
                     <v-select
                         :items="genderOptions"
                         :rules="[rules.required]"
@@ -112,7 +113,7 @@
                         label="Gender"
                         outlined
                     >
-                        <template v-slot:append>
+                        <template v-slot:prepend-inner>
                             <v-icon color="primary" tabindex="-1">{{
                                 gender.toLowerCase()
                             }}</v-icon>

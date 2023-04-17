@@ -10,7 +10,9 @@
             "gender": "male",
             "age": 25,
             "height": 180,
-            "weight": 80
+            "weight": 80,
+            "classes": [],
+            "sensors": []
         },
         {
             "id": 2,
@@ -22,7 +24,9 @@
             "gender": "male",
             "age": 25,
             "height": 180,
-            "weight": 80
+            "weight": 80,
+            "classes": [],
+            "sensors": []
         },
         {
             "id": 3,
@@ -34,7 +38,9 @@
             "gender": "male",
             "age": 21,
             "height": 190,
-            "weight": 80
+            "weight": 80,
+            "classes": [],
+            "sensors": []
         },
         {
             "id": "bUs6K-EXY3Zv6ScTPnfHx",
@@ -45,8 +51,8 @@
             "username": "jcristiano",
             "gender": "male",
             "age": 21,
-            "height": "140",
-            "weight": "55",
+            "height": 140,
+            "weight": 55,
             "classes": [],
             "sensors": []
         }
@@ -59,7 +65,7 @@
             "duration": 60,
             "isCompleted": false,
             "trainer": 2,
-            "participants": []
+            "participants": [2]
         }
     ]
 }
