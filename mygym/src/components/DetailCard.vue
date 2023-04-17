@@ -45,7 +45,7 @@ export default {
             required: true
         },
         content: {
-            type: String,
+            type: Number,
             required: true
         },
         backgroundColor: {

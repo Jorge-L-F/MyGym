@@ -46,7 +46,7 @@
                             <DetailCard
                                 title="Age"
                                 icon="calendar_month"
-                                :content="String(me.age)"
+                                :content="me.age"
                                 backgroundColor="#550aad"
                                 color="#dfdfdf"
                             ></DetailCard>
@@ -56,12 +56,12 @@
                     <div class="d-flex">
                         <v-list lines="two">
                             <v-list-item
-                                v-for="item in [0,1,2,3,4]"
-                                :key="'item'+item"
+                                v-for="item in [0, 1, 2, 3, 4]"
+                                :key="'item' + item"
                                 :title="'Title ' + item"
                                 subtitle="..."
                             >
-                            Description of Item {{item}}
+                                Description of Item {{ item }}
                             </v-list-item>
                         </v-list>
                     </div>
