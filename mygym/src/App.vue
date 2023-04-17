@@ -53,13 +53,7 @@
                         <div class="d-flex flex-column align-center">
                             <v-list-item-avatar color="primary">
                                 <img
-                                    v-if="me.gender == 'male'"
-                                    src="@/assets/userMale.png"
-                                    alt="user"
-                                />
-                                <img
-                                    v-else
-                                    src="@/assets/userFemale.png"
+                                    :src="getAvatar(me.id)"
                                     alt="user"
                                 />
                             </v-list-item-avatar>
@@ -204,6 +198,9 @@ export default {
                 .catch((error) => {
                     console.log("fetchMe catched error: ", error);
                 });
+        },
+        getAvatar(seed) {
+            return `https://api.dicebear.com/6.x/micah/svg?seed=${seed}&radius=50`;
         }
     }
 };

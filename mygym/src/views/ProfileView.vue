@@ -2,7 +2,7 @@
     <v-container class="fill-height background2" fluid>
         <v-row>
             <v-col cols="5">
-                <v-card class="rounded pa-4 elevation-3">
+                <v-card class="rounded pa-4 elevation-3 position-fixed">
                     <div class="d-flex justify-center mb-3">
                         <v-avatar size="200px">
                             <img :src="getAvatar(me.id)" />
@@ -46,14 +46,25 @@
                             <DetailCard
                                 title="Age"
                                 icon="calendar_month"
-                                :content="me.age"
+                                :content="String(me.age)"
                                 backgroundColor="#550aad"
                                 color="#dfdfdf"
                             ></DetailCard>
                         </v-col>
                     </v-row>
                     <h1>Latest classes</h1>
-                    <div class="d-flex"></div>
+                    <div class="d-flex">
+                        <v-list lines="two">
+                            <v-list-item
+                                v-for="item in [0,1,2,3,4]"
+                                :key="'item'+item"
+                                :title="'Title ' + item"
+                                subtitle="..."
+                            >
+                            Description of Item {{item}}
+                            </v-list-item>
+                        </v-list>
+                    </div>
                 </v-card>
             </v-col>
         </v-row>
@@ -78,7 +89,7 @@ export default {
     },
     methods: {
         getAvatar(seed) {
-            return `https://api.dicebear.com/6.x/micah/svg?seed=${seed}&radius=50`;
+            return `https://api.dicebear.com/6.x/micah/svg?seed=${seed}&radius=50&backgroundType=gradientLinear&backgroundColor=b6e3f4`;
         }
     }
 };
