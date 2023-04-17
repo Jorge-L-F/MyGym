@@ -83,7 +83,7 @@
                         :error-messages="error"
                         outlined
                         prepend-inner-icon="timer"
-                        v-model="age"
+                        v-model.number="age"
                     ></v-text-field>
                     <v-text-field
                         placeholder="Height"
@@ -93,7 +93,7 @@
                         :error-messages="error"
                         outlined
                         prepend-inner-icon="straighten"
-                        v-model="height"
+                        v-model.number="height"
                     ></v-text-field>
                     <v-text-field
                         placeholder="Weight"
@@ -103,7 +103,7 @@
                         :error-messages="error"
                         outlined
                         prepend-inner-icon="scale"
-                        v-model="weight"
+                        v-model.number="weight"
                     ></v-text-field>
                     <v-select
                         :items="genderOptions"
@@ -120,10 +120,7 @@
                     </v-select>
                 </v-col>
             </v-row>
-            <!--
-@click="register"
-      -->
-            <v-btn type="submit" block class="mt-2 bg-blue" outlined
+            <v-btn block class="mt-2 bg-blue" @click="register" outlined
                 >Submit</v-btn
             >
         </v-form>
@@ -175,16 +172,15 @@ export default {
                     role: "user",
                     username: this.username,
                     gender: this.gender.toLowerCase(),
-                    //TODO Add "age" input field
-                    age: parseFloat(this.age),
-                    height: parseFloat(this.height),
-                    weight: parseFloat(this.weight)
+                    age: this.age,
+                    height: this.height,
+                    weight: this.weight
                 };
 
                 console.log("User: " + data);
                 this.$store.dispatch("user/register", data).then((res) => {
                     if (res) {
-                        this.$router.push({ name: "Home" });
+                        this.$router.push({ name: "Login" });
                     } else {
                         //FIXME More appropriate error message
                         this.error = "Invalid email or password";

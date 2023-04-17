@@ -21,21 +21,16 @@ const mutations = {
 };
 
 const actions = {
-
     //TODO
     async register(context, payload) {
         localStorage.clear();
 
         return new Promise(() => {
             const userData = payload;
-            api.createUser(userData)
-            .then((response) => {
+            api.createUser(userData).then((response) => {
                 if (response) {
-                    //FIXME Log in the registered user 
-                    localStorage.setItem(
-                        "me",
-                        JSON.stringify(userData)
-                    );
+                    //FIXME Log in the registered user
+                    localStorage.setItem("me", JSON.stringify(userData));
                     context.commit(types.SET_ME, { ...userData });
                     context.commit(types.LOGIN);
 
@@ -43,9 +38,8 @@ const actions = {
                 } else {
                     return false;
                 }
-                
             });
-        })
+        });
     },
 
     async login(context, payload) {
@@ -53,7 +47,6 @@ const actions = {
 
         return new Promise(() => {
             api.getUserByEmail(payload.email).then((response) => {
-                console.log(response);
                 if (response.data) {
                     if (response.data.password !== payload.password) {
                         localStorage.setItem(
@@ -76,7 +69,9 @@ const actions = {
 
     async fetchMe(context) {
         return new Promise(() => {
-            api.getUser(context.state.me.id).then((response) => {
+            console.log("🚀 ~ file: user.js:104 ~ fetchMe ~ context:", context);
+            let id = JSON.parse(localStorage.getItem("me")).id;
+            api.getUser(id).then((response) => {
                 localStorage.setItem("me", JSON.stringify(response.data));
                 context.commit(types.SET_ME, { ...response.data });
             });

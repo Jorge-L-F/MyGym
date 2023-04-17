@@ -42,12 +42,7 @@
                     >
                 </template>
             </v-text-field>
-            <v-btn
-                type="submit"
-                block
-                class="mt-2 bg-blue"
-                outlined
-                @click="login"
+            <v-btn block class="mt-2 bg-blue" outlined @click="login"
                 >Submit</v-btn
             >
         </v-form>
@@ -77,6 +72,7 @@ export default {
     methods: {
         login() {
             if (this.valid) {
+                console.log("login", this.email, this.password);
                 this.$store
                     .dispatch("user/login", {
                         email: this.email,
