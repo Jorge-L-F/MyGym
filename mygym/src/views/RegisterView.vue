@@ -10,7 +10,7 @@
 
             <v-row>
                 <!-- Credentials -->
-                <v-col >
+                <v-col>
                     <h2 class="mb-3">Credentials</h2>
 
                     <v-text-field
@@ -29,10 +29,10 @@
                         name="email"
                         type="email"
                         :rules="[rules.required, rules.validEmail]"
-                        :error-messages="error"
+                        :error-messages="email.error"
                         outlined
                         prepend-inner-icon="alternate_email"
-                        v-model="email"
+                        v-model="email.text"
                     ></v-text-field>
 
                     <v-text-field
@@ -113,7 +113,7 @@
                         outlined
                     >
                         <template v-slot:prepend-inner>
-                            <v-icon color="primary" tabindex="-1" >{{
+                            <v-icon color="primary" tabindex="-1">{{
                                 gender
                             }}</v-icon>
                         </template>
@@ -136,9 +136,12 @@ export default {
     data: function () {
         return {
             showpassword: false,
-            valid: false,
+            valid: null,
             username: "",
-            email: "",
+            email: {
+                text: "",
+                error: ""
+            },
             password: "",
             confirmPassword: "",
             fullname: "",
@@ -171,23 +174,34 @@ export default {
                 const data = {
                     id: nanoid(),
                     fullName: this.fullname,
-                    email: this.email,
+                    email: this.email.text,
                     password: this.password,
                     role: "user",
                     username: this.username,
                     gender: this.gender.toLowerCase(),
                     age: this.age,
                     height: this.height,
-                    weight: this.weight
+                    weight: this.weight,
+                    classes: [],
+                    sensors: []
                 };
 
-                console.log("User: " + data);
-                api.createUser(data).then((res) => {
-                    if (res.status === 201) {
-                        this.$router.push({ name: "Login" });
+                console.log("User: ");
+                console.log(data);
+
+                api.getUserByEmail(this.email).then((res) => {
+                    console.log(res);
+                    if (res.data !== []) {
+                        this.email.error =
+                            "An Account already exists with this email";
                     } else {
-                        //FIXME More appropriate error message
-                        this.error = "Invalid email or password";
+                        api.createUser(data).then((res) => {
+                            if (res.status === 201) {
+                                this.$router.push({ name: "Login" });
+                            } else {
+                                //FIXME More appropriate error message
+                            }
+                        });
                     }
                 });
             } else {
