@@ -79,7 +79,7 @@ export default {
                         password: this.password
                     })
                     .then((res) => {
-                        if (res) {
+                        if (res?.success) {
                             this.$router.push({ name: "Home" });
                         } else {
                             this.error = "Invalid email or password";

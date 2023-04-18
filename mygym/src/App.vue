@@ -143,11 +143,10 @@ export default {
 
     computed: {
         me() {
-            return JSON.parse(localStorage.getItem("me"));
+            return this.$store.state.user.me;
         },
         isLoggedIn() {
-            //return this.$store.state.isLoggedIn;
-            return true;
+            return this.$store.state.user.loggedIn;
         },
         computedMenuItem() {
             return this.menuItems;
@@ -167,13 +166,13 @@ export default {
                 .dispatch("user/logout")
                 .then(() => {
                     this.drawer = false;
-                    this.pushTo("login");
+                    this.pushTo("Login");
                 })
                 .catch((error) => {
                     console.log("Logout failed", error);
                 })
                 .finally(() => {
-                    this.pushTo("login");
+                    this.pushTo("Login");
                 });
         },
         fetchMe() {

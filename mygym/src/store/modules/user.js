@@ -1,7 +1,7 @@
 import * as types from "../types";
 import api from "../../api";
 
-const me = localStorage.getItem("me");
+const me = JSON.parse(localStorage.getItem("me"));
 
 const state = me ? { me, loggedIn: true } : { me: null, loggedIn: false };
 
@@ -21,56 +21,33 @@ const mutations = {
 };
 
 const actions = {
-    //TODO
-    async register(context, payload) {
-        localStorage.clear();
-
-        return new Promise(() => {
-            const userData = payload;
-            api.createUser(userData).then((response) => {
-                if (response) {
-                    //FIXME Log in the registered user
-                    localStorage.setItem("me", JSON.stringify(userData));
-                    context.commit(types.SET_ME, { ...userData });
-                    context.commit(types.LOGIN);
-
-                    return true;
-                } else {
-                    return false;
-                }
-            });
-        });
-    },
 
     async login(context, payload) {
-        localStorage.clear();
+        try {
+            localStorage.clear();
 
-        return new Promise(() => {
-            api.getUserByEmail(payload.email).then((response) => {
-                if (response.data) {
-                    if (response.data.password !== payload.password) {
-                        localStorage.setItem(
-                            "me",
-                            JSON.stringify(response.data[0])
-                        );
-                        context.commit(types.SET_ME, { ...response.data[0] });
-                        context.commit(types.LOGIN);
+            const response = await api.getUserByEmail(payload.email);
+            if (response.data && response.data[0].password === payload.password) {
+                localStorage.setItem("me", JSON.stringify(response.data[0]));
+                context.commit(types.SET_ME, { ...response.data[0] });
+                context.commit(types.LOGIN);
 
-                        return true;
-                    } else {
-                        return false;
-                    }
-                } else {
-                    return false;
-                }
-            });
-        });
+                return { success: true };
+            } else {
+                return { success: false, message: "Invalid email or password" };
+            }
+        } catch (error) {
+            return { success: false, message: error.message };
+        }
     },
 
     async fetchMe(context) {
         return new Promise(() => {
-            console.log("🚀 ~ file: user.js:104 ~ fetchMe ~ context:", context);
-            let id = JSON.parse(localStorage.getItem("me")).id;
+            console.log(
+                "🚀 ~ file: user.js:104 ~ fetchMe ~ state.user.me.id:",
+                state
+            );
+            let id = state.me.id;
             api.getUser(id).then((response) => {
                 localStorage.setItem("me", JSON.stringify(response.data));
                 context.commit(types.SET_ME, { ...response.data });

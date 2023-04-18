@@ -18,7 +18,6 @@ export default {
         return api.get(`/user/${id}`);
     },
     getUserByEmail(email) {
-        console.log("🚀 ~ file: api.js:19 ~ getUserByEmail ~ email:", email)
         return api.get(`/user?email=${email}`);
     },
     createUser(user) {

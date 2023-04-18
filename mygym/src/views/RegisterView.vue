@@ -3,7 +3,6 @@
         <v-form
             class="bg-white rounded mx-auto pa-4 elevation-3"
             v-model="valid"
-            @submit.prevent="register"
         >
             <div class="d-flex flex-column align-center mt-2 mb-8">
                 <img src="@/assets/logo.png" alt="Logo" class="" height="44" />
@@ -129,6 +128,7 @@
 </template>
 
 <script>
+import api from "@/api";
 import { nanoid } from "nanoid";
 
 export default {
@@ -179,14 +179,16 @@ export default {
                 };
 
                 console.log("User: " + data);
-                this.$store.dispatch("user/register", data).then((res) => {
-                    if (res) {
+                api.createUser(data).then((res) => {
+                    if (res.status === 201) {
                         this.$router.push({ name: "Login" });
                     } else {
                         //FIXME More appropriate error message
                         this.error = "Invalid email or password";
                     }
                 });
+            } else {
+                this.error = "Please fill all the fields";
             }
         }
     }
