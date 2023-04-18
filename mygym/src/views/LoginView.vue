@@ -13,7 +13,6 @@
                 name="email"
                 type="email"
                 :rules="[rules.required, rules.validEmail]"
-                :error-messages="error"
                 outlined
                 prepend-inner-icon="person"
                 v-model="email"
@@ -25,7 +24,6 @@
                 name="password"
                 :type="showpassword ? 'text' : 'password'"
                 :rules="[rules.required]"
-                :error-messages="error"
                 outlined
                 v-model="password"
                 prepend-inner-icon="lock"
@@ -42,6 +40,9 @@
                     >
                 </template>
             </v-text-field>
+            <p v-if="!success" class="text-center red--text ma-0">
+                {{ error }}
+            </p>
             <v-btn block class="mt-2 bg-blue" outlined @click="login"
                 >Submit</v-btn
             >
@@ -56,6 +57,7 @@ export default {
         return {
             showpassword: false,
             valid: false,
+            success: true,
             email: "",
             password: "",
             error: "",
@@ -83,6 +85,7 @@ export default {
                             this.$router.push({ name: "Home" });
                         } else {
                             this.error = "Invalid email or password";
+                            this.success = false;
                         }
                     });
             }

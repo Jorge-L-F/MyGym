@@ -3,28 +3,33 @@
         <v-row>
             <v-col cols="5">
                 <v-card class="rounded pa-4 elevation-3">
-                    <div class="d-flex justify-center mb-3">
+                    <div
+                        class="d-flex flex-column align-center justify-center mb-3"
+                    >
                         <v-avatar size="200px">
                             <img :src="getAvatar(me.id)" />
                         </v-avatar>
-                    </div>
-                    <div>
-                        <div class="d-flex align-center">
-                            <h1>{{ me.fullName }}</h1>
-                            <v-chip
-                                class="primary text-center rounded-pill ml-2"
+                        <div>
+                            <div class="d-flex align-center">
+                                <h1>{{ me.fullName }}</h1>
+                                <v-chip
+                                    class="primary text-center rounded-pill ml-2"
+                                >
+                                    <span class="font-weight-bold">
+                                        {{
+                                            me.role.charAt(0).toUpperCase() +
+                                            me.role.slice(1)
+                                        }}
+                                    </span>
+                                </v-chip>
+                            </div>
+                            <p
+                                class="text--secondary"
+                                style="margin-top: -0.5rem"
                             >
-                                <span class="font-weight-bold">
-                                    {{
-                                        me.role.charAt(0).toUpperCase() +
-                                        me.role.slice(1)
-                                    }}
-                                </span>
-                            </v-chip>
+                                {{ me.email }}
+                            </p>
                         </div>
-                        <p class="text--secondary" style="margin-top: -0.5rem">
-                            {{ me.email }}
-                        </p>
                     </div>
                 </v-card>
             </v-col>
@@ -111,7 +116,7 @@
                                     outlined
                                     hide-details
                                     prepend-inner-icon="scale"
-                                    v-model.number="me.weight"
+                                    v-model.number="weight"
                                 ></v-text-field>
                             </v-col>
                         </v-row>
@@ -134,7 +139,7 @@
                                 </v-select>
                             </v-col>
                         </v-row>
-                        <v-row class="d-flex justify-center">
+                        <v-row v-if="hasChanges" class="d-flex justify-center">
                             <v-col cols="5">
                                 <v-btn block class="mt-2 bg-blue" outlined
                                     >Submit
@@ -152,8 +157,29 @@ import DetailCard from "@/components/DetailCard.vue";
 
 export default {
     title: "Profile",
+
+    watch: {
+        me: {
+            immediate: true,
+            handler(val) {
+                if (val) {
+                    //TODO Add more attributes
+                    this.weight = val.weight;
+                    //this.editTrigger();
+                }
+            }
+        }
+        /*me(value) {
+            if (value) {
+                this.weight = value.weight;
+            }
+        }*/
+    },
+
     data: function () {
         return {
+            weight: null,
+
             classes: [],
             genderOptions: [
                 {
@@ -176,8 +202,12 @@ export default {
     },
     computed: {
         me() {
-            console.log(JSON.parse(localStorage.getItem("me")));
-            return JSON.parse(localStorage.getItem("me"));
+            return this.$store.state.user.me;
+        },
+        hasChanges() {
+            //console.log("Has Changes!");
+            //TODO Add more attributes
+            return this.me.weight !== this.weight;
         }
     },
     components: {

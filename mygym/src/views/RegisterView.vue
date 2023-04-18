@@ -1,8 +1,9 @@
 <template>
     <v-container class="fill-height bg-grey" fluid>
         <v-form
+            ref="registerForm"
             class="bg-white rounded mx-auto pa-4 elevation-3"
-            v-model="valid"
+            :v-model="valid"
         >
             <div class="d-flex flex-column align-center mt-2 mb-8">
                 <img src="@/assets/logo.png" alt="Logo" class="" height="44" />
@@ -18,7 +19,6 @@
                         name="username"
                         type="text"
                         :rules="[rules.required]"
-                        :error-messages="error"
                         outlined
                         prepend-inner-icon="person"
                         v-model="username"
@@ -41,7 +41,6 @@
                         name="password"
                         :type="showpassword ? 'text' : 'password'"
                         :rules="[rules.required]"
-                        :error-messages="error"
                         outlined
                         v-model="password"
                         prepend-inner-icon="lock"
@@ -69,7 +68,6 @@
                         name="fullname"
                         type="text"
                         :rules="[rules.required]"
-                        :error-messages="error"
                         outlined
                         prepend-inner-icon="badge"
                         v-model="fullname"
@@ -78,8 +76,7 @@
                         placeholder="Age"
                         name="age"
                         type="number"
-                        :rules="[rules.required]"
-                        :error-messages="error"
+                        :rules="[rules.required, rules.positiveNumber]"
                         outlined
                         prepend-inner-icon="timer"
                         v-model.number="age"
@@ -88,8 +85,7 @@
                         placeholder="Height"
                         name="height"
                         type="number"
-                        :rules="[rules.required]"
-                        :error-messages="error"
+                        :rules="[rules.required, rules.positiveNumber]"
                         outlined
                         prepend-inner-icon="straighten"
                         v-model.number="height"
@@ -98,8 +94,7 @@
                         placeholder="Weight"
                         name="Weight"
                         type="number"
-                        :rules="[rules.required]"
-                        :error-messages="error"
+                        :rules="[rules.required, rules.positiveNumber]"
                         outlined
                         prepend-inner-icon="scale"
                         v-model.number="weight"
@@ -136,7 +131,7 @@ export default {
     data: function () {
         return {
             showpassword: false,
-            valid: null,
+            valid: false,
             username: "",
             email: {
                 text: "",
@@ -157,7 +152,9 @@ export default {
             rules: {
                 required: (value) => !!value || "Required.",
                 validEmail: (value) =>
-                    /.+@.+/.test(value) || "E-mail must be valid"
+                    /.+@.+/.test(value) || "E-mail must be valid",
+                positiveNumber: (value) =>
+                    value > 0 || "Must be positive number"
             }
         };
     },
@@ -165,9 +162,6 @@ export default {
 
     created() {},
     methods: {
-        helloWorld() {
-            console.log("Siui");
-        },
         register() {
             console.log("Register");
             if (this.valid) {
@@ -189,7 +183,7 @@ export default {
                 console.log("User: ");
                 console.log(data);
 
-                api.getUserByEmail(this.email).then((res) => {
+                api.getUserByEmail(this.email.text).then((res) => {
                     console.log(res);
                     if (res.data !== []) {
                         this.email.error =
@@ -205,6 +199,7 @@ export default {
                     }
                 });
             } else {
+                this.$refs.registerForm.validate();
                 this.error = "Please fill all the fields";
             }
         }
