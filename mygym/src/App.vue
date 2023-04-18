@@ -120,7 +120,7 @@ export default {
     data() {
         return {
             drawer: false,
-            menuItems: [
+            userMenuItems: [
                 {
                     title: "Profile",
                     icon: "person",
@@ -137,6 +137,24 @@ export default {
                     icon: "mdi-calendar",
                     to: "/classes"
                 }
+            ],
+            trainerMenuItems: [
+                {
+                    title: "Profile",
+                    icon: "person",
+                    to: "/profile"
+                },
+                {
+                    title: "Home",
+                    icon: "mdi-home",
+                    to: "/"
+                },
+
+                {
+                    title: "Manage Classes",
+                    icon: "mdi-calendar",
+                    to: "/classes"
+                }
             ]
         };
     },
@@ -149,7 +167,9 @@ export default {
             return this.$store.state.user.loggedIn;
         },
         computedMenuItem() {
-            return this.menuItems;
+            return this.me.role === "trainer"
+                ? this.trainerMenuItems
+                : this.userMenuItems;
         }
     },
     watch: {},
