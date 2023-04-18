@@ -64,11 +64,6 @@
                                             >Month</v-list-item-title
                                         >
                                     </v-list-item>
-                                    <v-list-item @click="type = '4day'">
-                                        <v-list-item-title
-                                            >4 days</v-list-item-title
-                                        >
-                                    </v-list-item>
                                 </v-list>
                             </v-menu>
                         </v-toolbar>
@@ -78,13 +73,11 @@
                             ref="calendar"
                             v-model="focus"
                             color="primary"
-                            :events="events"
-                            :event-color="getEventColor"
+                            :events="eventsFormatted"
                             :type="type"
                             @click:event="showEvent"
                             @click:more="viewDay"
                             @click:date="viewDay"
-                            @change="updateRange"
                         ></v-calendar>
                         <v-menu
                             v-model="selectedOpen"
@@ -134,8 +127,10 @@
 </template>
 
 <script>
+import api from "../api";
+
 export default {
-    title: "Home",
+    title: "Classes",
 
     data() {
         return {
@@ -144,8 +139,7 @@ export default {
             typeToLabel: {
                 month: "Month",
                 week: "Week",
-                day: "Day",
-                "4day": "4 Days"
+                day: "Day"
             },
             selectedEvent: {},
             selectedElement: null,
@@ -159,16 +153,6 @@ export default {
                 "green",
                 "orange",
                 "grey darken-1"
-            ],
-            names: [
-                "Meeting",
-                "Holiday",
-                "PTO",
-                "Travel",
-                "Event",
-                "Birthday",
-                "Conference",
-                "Party"
             ]
         };
     },
@@ -179,21 +163,36 @@ export default {
         },
         today() {
             return new Date();
+        },
+        eventsFormatted() {
+            return this.events.map((event) => {
+                return {
+                    ...event,
+                    start: new Date(event.start),
+                    end: new Date(event.end),
+                    color: this.colors[event.id % this.colors.length],
+                    timed: true
+                };
+            });
         }
     },
-
-    watch: {},
+    watch: {
+        eventsFormatted() {
+            console.log(this.eventsFormatted);
+        }
+    },
     created() {},
     mounted() {
+        api.getClassesOf(this.me.id).then((res) => {
+            console.log(res);
+            this.events = res.data;
+        });
         this.$refs.calendar.checkChange();
     },
     methods: {
         viewDay({ date }) {
             this.focus = date;
             this.type = "day";
-        },
-        getEventColor(event) {
-            return event.color;
         },
         setToday() {
             this.focus = "";
@@ -223,38 +222,38 @@ export default {
             }
 
             nativeEvent.stopPropagation();
-        },
-        updateRange({ start, end }) {
-            const events = [];
-
-            const min = new Date(`${start.date}T00:00:00`);
-            const max = new Date(`${end.date}T23:59:59`);
-            const days = (max.getTime() - min.getTime()) / 86400000;
-            const eventCount = this.rnd(days, days + 20);
-
-            for (let i = 0; i < eventCount; i++) {
-                const allDay = this.rnd(0, 3) === 0;
-                const firstTimestamp = this.rnd(min.getTime(), max.getTime());
-                const first = new Date(
-                    firstTimestamp - (firstTimestamp % 900000)
-                );
-                const secondTimestamp = this.rnd(2, allDay ? 288 : 8) * 900000;
-                const second = new Date(first.getTime() + secondTimestamp);
-
-                events.push({
-                    name: this.names[this.rnd(0, this.names.length - 1)],
-                    start: first,
-                    end: second,
-                    color: this.colors[this.rnd(0, this.colors.length - 1)],
-                    timed: !allDay
-                });
-            }
-
-            this.events = events;
-        },
-        rnd(a, b) {
-            return Math.floor((b - a + 1) * Math.random()) + a;
         }
+        // updateRange({ start, end }) {
+        //     const events = [];
+
+        //     const min = new Date(`${start.date}T00:00:00`);
+        //     const max = new Date(`${end.date}T23:59:59`);
+        //     const days = (max.getTime() - min.getTime()) / 86400000;
+        //     const eventCount = this.rnd(days, days + 20);
+
+        //     for (let i = 0; i < eventCount; i++) {
+        //         const allDay = this.rnd(0, 3) === 0;
+        //         const firstTimestamp = this.rnd(min.getTime(), max.getTime());
+        //         const first = new Date(
+        //             firstTimestamp - (firstTimestamp % 900000)
+        //         );
+        //         const secondTimestamp = this.rnd(2, allDay ? 288 : 8) * 900000;
+        //         const second = new Date(first.getTime() + secondTimestamp);
+
+        //         events.push({
+        //             name: this.names[this.rnd(0, this.names.length - 1)],
+        //             start: first,
+        //             end: second,
+        //             color: this.colors[this.rnd(0, this.colors.length - 1)],
+        //             timed: !allDay
+        //         });
+        //     }
+
+        //     this.events = events;
+        // },
+        // rnd(a, b) {
+        //     return Math.floor((b - a + 1) * Math.random()) + a;
+        // }
     }
 };
 </script>

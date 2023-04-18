@@ -45,10 +45,6 @@ const actions = {
 
     async fetchMe(context) {
         return new Promise(() => {
-            console.log(
-                "🚀 ~ file: user.js:104 ~ fetchMe ~ state.user.me.id:",
-                state
-            );
             let id = state.me.id;
             api.getUser(id).then((response) => {
                 localStorage.setItem("me", JSON.stringify(response.data));
