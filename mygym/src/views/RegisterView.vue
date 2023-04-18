@@ -10,7 +10,7 @@
 
             <v-row>
                 <!-- Credentials -->
-                <v-col>
+                <v-col >
                     <h2 class="mb-3">Credentials</h2>
 
                     <v-text-field
@@ -113,8 +113,8 @@
                         outlined
                     >
                         <template v-slot:prepend-inner>
-                            <v-icon color="primary" tabindex="-1">{{
-                                gender.toLowerCase()
+                            <v-icon color="primary" tabindex="-1" >{{
+                                gender
                             }}</v-icon>
                         </template>
                     </v-select>
@@ -142,8 +142,11 @@ export default {
             password: "",
             confirmPassword: "",
             fullname: "",
-            genderOptions: ["Male", "Female"],
-            gender: "",
+            genderOptions: [
+                { text: "Male", value: "male" },
+                { text: "Female", value: "female" }
+            ],
+            gender: null,
             age: "",
             height: "",
             weight: "",
