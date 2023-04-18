@@ -166,13 +166,12 @@ export default {
                 .dispatch("user/logout")
                 .then(() => {
                     this.drawer = false;
-                    this.pushTo("Login");
                 })
                 .catch((error) => {
                     console.log("Logout failed", error);
                 })
                 .finally(() => {
-                    this.pushTo("Login");
+                    this.$router.push("/login");
                 });
         },
         fetchMe() {

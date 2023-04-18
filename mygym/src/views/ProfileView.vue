@@ -165,6 +165,8 @@ export default {
                     value: "female"
                 }
             ],
+            valid: false,
+            error: null,
             rules: {
                 required: (value) => !!value || "Required.",
                 validEmail: (value) =>

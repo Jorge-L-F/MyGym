@@ -21,13 +21,15 @@ const mutations = {
 };
 
 const actions = {
-
     async login(context, payload) {
         try {
             localStorage.clear();
 
             const response = await api.getUserByEmail(payload.email);
-            if (response.data && response.data[0].password === payload.password) {
+            if (
+                response.data &&
+                response.data[0].password === payload.password
+            ) {
                 localStorage.setItem("me", JSON.stringify(response.data[0]));
                 context.commit(types.SET_ME, { ...response.data[0] });
                 context.commit(types.LOGIN);
@@ -56,10 +58,13 @@ const actions = {
     },
 
     async logout(context) {
-        return new Promise(() => {
+        try {
             localStorage.clear();
             context.commit(types.LOGOUT);
-        });
+            return { success: true };
+        } catch (error) {
+            return { success: false, message: error.message };
+        }
     }
 };
 
