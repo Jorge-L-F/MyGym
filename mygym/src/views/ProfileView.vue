@@ -74,7 +74,7 @@
                                     outlined
                                     hide-details
                                     prepend-inner-icon="badge"
-                                    v-model="me.fullName"
+                                    v-model="fullName"
                                 ></v-text-field>
                             </v-col>
                         </v-row>
@@ -90,7 +90,7 @@
                                     outlined
                                     hide-details
                                     prepend-inner-icon="timer"
-                                    v-model.number="me.age"
+                                    v-model.number="age"
                                 ></v-text-field>
                             </v-col>
                             <v-col cols="3">
@@ -103,7 +103,7 @@
                                     outlined
                                     hide-details
                                     prepend-inner-icon="straighten"
-                                    v-model.number="me.height"
+                                    v-model.number="height"
                                 ></v-text-field>
                             </v-col>
                             <v-col cols="3">
@@ -126,7 +126,7 @@
                                 <v-select
                                     :items="genderOptions"
                                     :rules="[rules.required]"
-                                    v-model="me.gender"
+                                    v-model="gender"
                                     label="Gender"
                                     outlined
                                     hide-details
@@ -141,7 +141,11 @@
                         </v-row>
                         <v-row v-if="hasChanges" class="d-flex justify-center">
                             <v-col cols="5">
-                                <v-btn block class="mt-2 bg-blue" outlined
+                                <v-btn
+                                    block
+                                    class="mt-2 bg-blue"
+                                    outlined
+                                    @click="update"
                                     >Submit
                                 </v-btn>
                             </v-col>
@@ -154,6 +158,7 @@
 </template>
 <script>
 import DetailCard from "@/components/DetailCard.vue";
+import api from "@/api";
 
 export default {
     title: "Profile",
@@ -163,9 +168,11 @@ export default {
             immediate: true,
             handler(val) {
                 if (val) {
-                    //TODO Add more attributes
+                    this.fullName = val.fullName;
+                    this.age = val.age;
+                    this.height = val.height;
                     this.weight = val.weight;
-                    //this.editTrigger();
+                    this.gender = val.gender;
                 }
             }
         }
@@ -178,7 +185,11 @@ export default {
 
     data: function () {
         return {
+            fullName: null,
+            age: null,
+            height: null,
             weight: null,
+            gender: null,
 
             classes: [],
             genderOptions: [
@@ -206,8 +217,14 @@ export default {
         },
         hasChanges() {
             //console.log("Has Changes!");
-            //TODO Add more attributes
-            return this.me.weight !== this.weight;
+            const target = this.me;
+            return (
+                target.fullName !== this.fullName ||
+                target.age !== this.age ||
+                target.height !== this.height ||
+                target.weight !== this.weight ||
+                target.gender !== this.gender
+            );
         }
     },
     components: {
@@ -216,6 +233,32 @@ export default {
     methods: {
         getAvatar(seed) {
             return `https://api.dicebear.com/6.x/micah/svg?seed=${seed}&radius=50&backgroundType=gradientLinear&backgroundColor=b6e3f4`;
+        },
+        update() {
+            console.log("Updating user");
+
+            if (!this.valid) {
+                return;
+            }
+
+            const target = this.me;
+            const user = {
+                id: target.id,
+                fullName: this.fullName,
+                email: target.email,
+                password: target.password,
+                role: target.role,
+                username: target.username,
+                gender: this.gender,
+                age: this.age,
+                height: this.height,
+                weight: this.weight
+            };
+
+            api.updateUser(user).then((res) => {
+                //TODO Set the new me variable!
+                console.log(res);
+            });
         }
     }
 };

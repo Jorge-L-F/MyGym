@@ -23,6 +23,9 @@ export default {
     createUser(user) {
         return api.post("/user", user);
     },
+    updateUser(user) {
+        return api.patch(`/user/${user.id}`, user);
+    },
 
     //Classes methods
     listClasses() {
