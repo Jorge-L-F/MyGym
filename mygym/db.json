@@ -84,13 +84,12 @@
     "class": [
         {
             "id": 1,
-            "name": "Yoga",
-            "description": "Yoga is a group of physical, mental, and spiritual practices or disciplines which originated in ancient India.",
+            "type": "yoga",
             "isCompleted": false,
             "start": "2023-04-19T18:00:00",
             "end": "2023-04-19T19:00:00",
             "trainer": 2,
-            "participants": [2]
+            "participants": [1]
         }
     ]
 }
