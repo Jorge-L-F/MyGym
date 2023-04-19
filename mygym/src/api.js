@@ -40,6 +40,10 @@ export default {
     },
     getClassesOfTrainer(userId) {
         return api.get(`/class?trainer=${userId}`);
+    },
+    updateClass(classObj) {
+        console.log(classObj);
+        return api.patch(`/class/${classObj.id}`, classObj);
     }
 
     // ... other methods

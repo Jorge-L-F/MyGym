@@ -78,8 +78,8 @@
                             @click:event="showEvent"
                             @click:more="viewDay"
                             @click:date="viewDay"
-                            @click:day="createEvent"
-                            @click:time="createEvent"
+                            @click:day="createEventDialog"
+                            @click:time="createEventDialog"
                         ></v-calendar>
                         <v-menu
                             v-model="selectedOpen"
@@ -93,114 +93,126 @@
                                 max-width="600px"
                                 flat
                             >
-                                <v-card-title :class="selectedEvent.color" dark
+                                <v-card-title
+                                    :class="vCardTitleAndColor.color"
+                                    dark
                                     ><v-btn icon @click="editMode = true">
                                         <v-icon>mdi-pencil</v-icon> </v-btn
                                     ><span class="ml-5">{{
-                                        selectedEvent
-                                            ? selectedEvent.name
+                                        vCardTitleAndColor.title
+                                            ? vCardTitleAndColor.title
                                             : "Create New Event"
                                     }}</span>
                                 </v-card-title>
 
                                 <v-card-text class="mt-5">
-                                    <v-select
-                                        v-model="selectedEvent.type"
-                                        :items="typesOfClasses"
-                                        item-text="text"
-                                        item-value="value"
-                                        label="Type of class"
-                                        :rules="[rules.required]"
-                                        outlined
-                                        :disabled="!editMode"
-                                    ></v-select>
+                                    <v-form ref="form" v-model="valid">
+                                        <v-select
+                                            v-model="selectedEvent.type"
+                                            :items="typesOfClasses"
+                                            item-text="text"
+                                            item-value="value"
+                                            label="Type of class"
+                                            :rules="[rules.required]"
+                                            outlined
+                                            :disabled="!editMode || !createMode"
+                                        ></v-select>
 
-                                    <v-menu
-                                        ref="menu"
-                                        v-model="menu"
-                                        :close-on-content-click="false"
-                                        transition="scale-transition"
-                                        offset-y
-                                        min-width="auto"
-                                    >
-                                        <template v-slot:activator="{ on }">
-                                            <v-text-field
-                                                v-model="dateFormatted"
-                                                :clearable="editMode"
-                                                label="Date"
-                                                v-on="on"
-                                                outlined
-                                                :rules="[rules.required]"
-                                                :disabled="!editMode"
-                                            >
-                                            </v-text-field>
-                                        </template>
-                                        <v-date-picker
-                                            v-model="selectedEvent.date"
-                                            no-title
-                                            @input="menu = false"
+                                        <v-menu
+                                            ref="menu"
+                                            v-model="menu"
+                                            :close-on-content-click="false"
+                                            transition="scale-transition"
+                                            offset-y
+                                            min-width="auto"
                                         >
-                                        </v-date-picker>
-                                    </v-menu>
-                                    <v-menu
-                                        ref="menuStartTime"
-                                        v-model="menuStartTime"
-                                        :close-on-content-click="false"
-                                        transition="scale-transition"
-                                        offset-y
-                                        min-width="auto"
-                                    >
-                                        <template v-slot:activator="{ on }">
-                                            <v-text-field
-                                                v-model="selectedStartTime"
-                                                :clearable="editMode"
-                                                label="Start Time"
-                                                v-on="on"
-                                                outlined
-                                                :rules="[rules.required]"
-                                                :disabled="!editMode"
+                                            <template v-slot:activator="{ on }">
+                                                <v-text-field
+                                                    v-model="dateFormatted"
+                                                    :clearable="editMode"
+                                                    label="Date"
+                                                    v-on="on"
+                                                    outlined
+                                                    :rules="[rules.required]"
+                                                    :disabled="
+                                                        !editMode || !createMode
+                                                    "
+                                                >
+                                                </v-text-field>
+                                            </template>
+                                            <v-date-picker
+                                                v-model="selectedEvent.date"
+                                                no-title
+                                                @input="menu = false"
                                             >
-                                            </v-text-field>
-                                        </template>
-                                        <v-time-picker
-                                            v-model="selectedEvent.start"
-                                            format="24hr"
-                                            scrollable
-                                            @input="menuStartTime = false"
-                                        ></v-time-picker>
-                                    </v-menu>
-                                    <v-menu
-                                        ref="menuEndTime"
-                                        v-model="menuEndTime"
-                                        :close-on-content-click="false"
-                                        transition="scale-transition"
-                                        offset-y
-                                        min-width="auto"
-                                    >
-                                        <template v-slot:activator="{ on }">
-                                            <v-text-field
-                                                v-model="selectedEndTime"
-                                                :clearable="editMode"
-                                                label="Start Time"
-                                                v-on="on"
-                                                outlined
-                                                :rules="[rules.required]"
-                                                :disabled="!editMode"
-                                            >
-                                            </v-text-field>
-                                        </template>
-                                        <v-time-picker
-                                            v-model="selectedEvent.end"
-                                            format="24hr"
-                                            scrollable
-                                            @input="menuEndTime = false"
-                                        ></v-time-picker>
-                                    </v-menu>
-                                    <v-checkbox
-                                        v-model="selectedEvent.completed"
-                                        label="Completed"
-                                        :disabled="!editMode"
-                                    ></v-checkbox>
+                                            </v-date-picker>
+                                        </v-menu>
+                                        <v-menu
+                                            ref="menuStartTime"
+                                            v-model="menuStartTime"
+                                            :close-on-content-click="false"
+                                            transition="scale-transition"
+                                            offset-y
+                                            min-width="auto"
+                                        >
+                                            <template v-slot:activator="{ on }">
+                                                <v-text-field
+                                                    v-model="
+                                                        selectedEvent.start
+                                                    "
+                                                    :clearable="editMode"
+                                                    label="Start Time"
+                                                    v-on="on"
+                                                    outlined
+                                                    :rules="[rules.required]"
+                                                    :disabled="
+                                                        !editMode || !createMode
+                                                    "
+                                                >
+                                                </v-text-field>
+                                            </template>
+                                            <v-time-picker
+                                                v-model="selectedEvent.start"
+                                                format="24hr"
+                                                scrollable
+                                                @input="menuStartTime = false"
+                                            ></v-time-picker>
+                                        </v-menu>
+                                        <v-menu
+                                            ref="menuEndTime"
+                                            v-model="menuEndTime"
+                                            :close-on-content-click="false"
+                                            transition="scale-transition"
+                                            offset-y
+                                            min-width="auto"
+                                        >
+                                            <template v-slot:activator="{ on }">
+                                                <v-text-field
+                                                    v-model="selectedEvent.end"
+                                                    :clearable="editMode"
+                                                    label="End Time"
+                                                    v-on="on"
+                                                    outlined
+                                                    :rules="[rules.required]"
+                                                    :disabled="
+                                                        !editMode || !createMode
+                                                    "
+                                                >
+                                                </v-text-field>
+                                            </template>
+                                            <v-time-picker
+                                                v-model="selectedEvent.end"
+                                                format="24hr"
+                                                scrollable
+                                                @input="menuEndTime = false"
+                                            ></v-time-picker>
+                                        </v-menu>
+                                        <v-checkbox
+                                            v-model="selectedEvent.isCompleted"
+                                            label="Completed"
+                                            :disabled="!editMode || !createMode"
+                                        ></v-checkbox>
+                                    </v-form>
                                 </v-card-text>
                                 <v-card-actions>
                                     <v-btn
@@ -215,7 +227,17 @@
                                         v-if="editMode"
                                         text
                                         color="primary"
+                                        :disabled="!valid"
                                         @click="editSelectedEvent()"
+                                    >
+                                        Save
+                                    </v-btn>
+                                    <v-btn
+                                        v-if="createMode"
+                                        text
+                                        color="primary"
+                                        :disabled="!valid"
+                                        @click="create()"
                                     >
                                         Save
                                     </v-btn>
@@ -231,6 +253,7 @@
 
 <script>
 import api from "../api";
+import { nanoid } from "nanoid";
 
 export default {
     title: "Classes",
@@ -244,14 +267,11 @@ export default {
                 week: "Week",
                 day: "Day"
             },
+            valid: false,
             disabled: false,
             menu: false,
             menuStartTime: false,
-            selectedStartTime: null,
             menuEndTime: false,
-            selectedIsCompleted: false,
-            selectedEndTime: null,
-            selectedDate: null,
             selectedEvent: {},
             selectedElement: null,
             selectedOpen: false,
@@ -311,14 +331,15 @@ export default {
                 {
                     text: "Cycling",
                     value: "cycling",
-                    color: "yellow"
+                    color: "yellow darken-2"
                 }
             ],
             rules: {
                 required: (value) => !!value || "Required.",
                 validEmail: (value) =>
                     /.+@.+/.test(value) || "E-mail must be valid"
-            }
+            },
+            createMode: false
         };
     },
 
@@ -328,6 +349,22 @@ export default {
         },
         today() {
             return new Date();
+        },
+        vCardTitleAndColor() {
+            let color = "grey";
+            let title = null;
+            if (this.selectedEvent) {
+                if (this.selectedEvent.color) color = this.selectedEvent.color;
+                else if (this.selectedEvent.type)
+                    color = this.typesOfClasses.find(
+                        (type) => type.value === this.selectedEvent.type
+                    ).color;
+                if (this.selectedEvent.type)
+                    title = this.typesOfClasses.find(
+                        (type) => type.value === this.selectedEvent.type
+                    ).text;
+            }
+            return { color: color, title: title };
         },
         eventsFormatted() {
             return this.events.map((event) => {
@@ -346,23 +383,47 @@ export default {
             });
         },
         dateFormatted() {
-            if (!this.selectedEvent || this.selectedEvent.date) return null;
+            if (!this.selectedEvent || !this.selectedEvent.date) return null;
 
             const [year, month, day] = this.selectedEvent.date.split("-");
             return `${day}/${month}/${year}`;
         }
     },
     watch: {
-        selectedOpen(val) {
-            if (!val) {
-                // this.selectedEvent = null;
-            } else {
+        selectedOpen() {
+            //find the event in the events array and reset this.selectedEvent
+            const index = this.eventsFormatted.findIndex(
+                (event) => event.id === this.selectedEvent.id
+            );
+            if (index > -1) {
+                let event = this.eventsFormatted[index];
                 this.selectedEvent = {
-                    ...this.selectedEvent,
-                    date: this.selectedEvent.start.toISOString().substr(0, 10),
-                    start: this.selectedEvent.start.toISOString().substr(11, 5),
-                    end: this.selectedEvent.end.toISOString().substr(11, 5)
+                    ...event,
+                    date: new Date(
+                        new Date(event.start).getTime() -
+                            new Date(event.start).getTimezoneOffset() *
+                                60 *
+                                1000
+                    )
+                        .toISOString()
+                        .substr(0, 10),
+                    start: new Date(
+                        new Date(event.start).getTime() -
+                            new Date(event.start).getTimezoneOffset() *
+                                60 *
+                                1000
+                    )
+                        .toISOString()
+                        .substr(11, 5),
+                    end: new Date(
+                        new Date(event.end).getTime() -
+                            new Date(event.end).getTimezoneOffset() * 60 * 1000
+                    )
+                        .toISOString()
+                        .substr(11, 5)
                 };
+            } else {
+                this.selectedEvent = {};
             }
         }
     },
@@ -396,6 +457,40 @@ export default {
         showEvent({ nativeEvent, event }) {
             const open = () => {
                 this.selectedEvent = event;
+                this.selectedEvent = {
+                    ...this.selectedEvent,
+                    date: new Date(
+                        new Date(this.selectedEvent.start).getTime() -
+                            new Date(
+                                this.selectedEvent.start
+                            ).getTimezoneOffset() *
+                                60 *
+                                1000
+                    )
+                        .toISOString()
+                        .substr(0, 10),
+                    start: new Date(
+                        new Date(this.selectedEvent.start).getTime() -
+                            new Date(
+                                this.selectedEvent.start
+                            ).getTimezoneOffset() *
+                                60 *
+                                1000
+                    )
+                        .toISOString()
+                        .substr(11, 5),
+                    end: new Date(
+                        new Date(this.selectedEvent.end).getTime() -
+                            new Date(
+                                this.selectedEvent.end
+                            ).getTimezoneOffset() *
+                                60 *
+                                1000
+                    )
+                        .toISOString()
+                        .substr(11, 5)
+                };
+
                 this.selectedElement = nativeEvent.target;
                 requestAnimationFrame(() =>
                     requestAnimationFrame(() => (this.selectedOpen = true))
@@ -413,62 +508,84 @@ export default {
 
             nativeEvent.stopPropagation();
         },
-        createEvent(day) {
+        createEventDialog(day) {
             console.log(day);
+            this.selectedEvent = {
+                id: nanoid(),
+                trainer: this.me.id,
+                participants: [],
+                type: null,
+                isCompleted: false,
+                date: day.date,
+                start: null,
+                end: null
+            };
+            this.createMode = true;
+            this.selectedElement = day.nativeEvent.target;
+            requestAnimationFrame(() =>
+                requestAnimationFrame(() => (this.selectedOpen = true))
+            );
         },
+
         editSelectedEvent() {
-            //TODO clear selected
-            // const event = this.selectedEvent;
-            // const start = this.selectedStartTime;
-            // const end = this.selectedEndTime;
-            // const isCompleted = this.selectedIsCompleted;
-            // if (start && end) {
-            //     event.start = start;
-            //     event.end = end;
-            // }
-            // if (isCompleted) {
-            //     event.isCompleted = isCompleted;
-            // }
-            // this.$refs.calendar.updateEvent(event);
+            if (this.valid) {
+                let event = {
+                    id: this.selectedEvent.id,
+                    trainer: this.selectedEvent.trainer,
+                    participants: this.selectedEvent.participants,
+                    type: this.selectedEvent.type,
+                    isCompleted: this.selectedEvent.isCompleted,
+                    start: new Date(
+                        `${this.selectedEvent.date}T${this.selectedEvent.start}:00`
+                    ).toISOString(),
+                    end: new Date(
+                        `${this.selectedEvent.date}T${this.selectedEvent.end}:00`
+                    ).toISOString()
+                };
+                api.updateClass(event).then(() => {
+                    this.refetchEvents();
+                    this.clearSelectedEvent();
+                });
+            }
         },
         clearSelectedEvent() {
-            // this.selectedEvent = {};
-            // this.selectedStartTime = null;
-            // this.selectedEndTime = null;
-            // this.selectedIsCompleted = false;
+            this.editMode = false;
+            this.createMode = false;
             this.selectedOpen = false;
+        },
+        createEvent() {
+            if (this.valid) {
+                let event = {
+                    id: this.selectedEvent.id,
+                    trainer: this.selectedEvent.trainer,
+                    participants: this.selectedEvent.participants,
+                    type: this.selectedEvent.type,
+                    isCompleted: this.selectedEvent.isCompleted,
+                    start: new Date(
+                        `${this.selectedEvent.date}T${this.selectedEvent.start}:00`
+                    ).toISOString(),
+                    end: new Date(
+                        `${this.selectedEvent.date}T${this.selectedEvent.end}:00`
+                    ).toISOString()
+                };
+                api.createClass(event).then(() => {
+                    this.refetchEvents();
+                    this.clearSelectedEvent();
+                });
+            }
+        },
+        refetchEvents() {
+            if (this.me.role === "user") {
+                api.getClassesOf(this.me.id).then((res) => {
+                    this.events = res.data;
+                });
+            } else {
+                api.getClassesOfTrainer(this.me.id).then((res) => {
+                    this.events = res.data;
+                });
+            }
+            this.$refs.calendar.checkChange();
         }
-        // updateRange({ start, end }) {
-        //     const events = [];
-
-        //     const min = new Date(`${start.date}T00:00:00`);
-        //     const max = new Date(`${end.date}T23:59:59`);
-        //     const days = (max.getTime() - min.getTime()) / 86400000;
-        //     const eventCount = this.rnd(days, days + 20);
-
-        //     for (let i = 0; i < eventCount; i++) {
-        //         const allDay = this.rnd(0, 3) === 0;
-        //         const firstTimestamp = this.rnd(min.getTime(), max.getTime());
-        //         const first = new Date(
-        //             firstTimestamp - (firstTimestamp % 900000)
-        //         );
-        //         const secondTimestamp = this.rnd(2, allDay ? 288 : 8) * 900000;
-        //         const second = new Date(first.getTime() + secondTimestamp);
-
-        //         events.push({
-        //             name: this.names[this.rnd(0, this.names.length - 1)],
-        //             start: first,
-        //             end: second,
-        //             color: this.colors[this.rnd(0, this.colors.length - 1)],
-        //             timed: !allDay
-        //         });
-        //     }
-
-        //     this.events = events;
-        // },
-        // rnd(a, b) {
-        //     return Math.floor((b - a + 1) * Math.random()) + a;
-        // }
     }
 };
 </script>
