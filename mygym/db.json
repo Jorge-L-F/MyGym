@@ -1,97 +1,96 @@
 {
-  "user": [
-    {
-      "id": 1,
-      "fullName": "John Doe",
-      "email": "johndoe@email.com",
-      "password": "123",
-      "role": "user",
-      "username": "johndoe",
-      "gender": "male",
-      "age": 25,
-      "height": 180,
-      "weight": 80,
-      "classes": [],
-      "sensors": []
-    },
-    {
-      "id": 2,
-      "fullName": "Bruno Braga",
-      "email": "braga@email.com",
-      "password": "123",
-      "role": "trainer",
-      "username": "brunobraga",
-      "gender": "male",
-      "age": 25,
-      "height": 180,
-      "weight": 80,
-      "classes": [],
-      "sensors": []
-    },
-    {
-      "id": 3,
-      "fullName": "rodrigo alegris",
-      "email": "alegris@email.com",
-      "password": "123",
-      "role": "user",
-      "username": "alegris",
-      "gender": "male",
-      "age": 21,
-      "height": 190,
-      "weight": 80,
-      "classes": [],
-      "sensors": []
-    },
-    {
-      "id": "bUs6K-EXY3Zv6ScTPnfHx",
-      "fullName": "Joao Cristiano",
-      "email": "jc@email.com",
-      "password": "123",
-      "role": "user",
-      "username": "jcristiano",
-      "gender": "male",
-      "age": 21,
-      "height": 140,
-      "weight": 55,
-      "classes": [],
-      "sensors": []
-    },
-    {
-      "id": "JrG0N09KCkkP93qDENJyk",
-      "fullName": "123",
-      "email": "123@email",
-      "password": "123",
-      "role": "user",
-      "username": "123",
-      "gender": "male",
-      "age": 123,
-      "height": 123,
-      "weight": 123
-    },
-    {
-      "id": "2Z7b4p3s3FKfJLa3jYJ-T",
-      "fullName": "123",
-      "email": "123@email",
-      "password": "123",
-      "role": "user",
-      "username": "rd.alegria",
-      "gender": "male",
-      "age": 123,
-      "height": 123,
-      "weight": 123
-    }
-  ],
-  "class": [
-    {
-      "id": 1,
-      "name": "Yoga",
-      "description": "Yoga is a group of physical, mental, and spiritual practices or disciplines which originated in ancient India.",
-      "duration": 60,
-      "isCompleted": false,
-      "trainer": 2,
-      "participants": [
-        2
-      ]
-    }
-  ]
+    "user": [
+        {
+            "id": 1,
+            "fullName": "John Doe",
+            "email": "johndoe@email.com",
+            "password": "123",
+            "role": "user",
+            "username": "johndoe",
+            "gender": "male",
+            "age": 25,
+            "height": 180,
+            "weight": 80,
+            "classes": [],
+            "sensors": []
+        },
+        {
+            "id": 2,
+            "fullName": "Bruno Braga",
+            "email": "braga@email.com",
+            "password": "123",
+            "role": "trainer",
+            "username": "brunobraga",
+            "gender": "male",
+            "age": 25,
+            "height": 180,
+            "weight": 80,
+            "classes": [],
+            "sensors": []
+        },
+        {
+            "id": 3,
+            "fullName": "rodrigo alegris",
+            "email": "alegris@email.com",
+            "password": "123",
+            "role": "user",
+            "username": "alegris",
+            "gender": "male",
+            "age": 21,
+            "height": 190,
+            "weight": 80,
+            "classes": [],
+            "sensors": []
+        },
+        {
+            "id": "bUs6K-EXY3Zv6ScTPnfHx",
+            "fullName": "Joao Cristiano",
+            "email": "jc@email.com",
+            "password": "123",
+            "role": "user",
+            "username": "jcristiano",
+            "gender": "male",
+            "age": 21,
+            "height": 140,
+            "weight": 55,
+            "classes": [],
+            "sensors": []
+        },
+        {
+            "id": "JrG0N09KCkkP93qDENJyk",
+            "fullName": "123",
+            "email": "123@email",
+            "password": "123",
+            "role": "user",
+            "username": "123",
+            "gender": "male",
+            "age": 123,
+            "height": 123,
+            "weight": 123
+        },
+        {
+            "id": "2Z7b4p3s3FKfJLa3jYJ-T",
+            "fullName": "123",
+            "email": "123@email",
+            "password": "123",
+            "role": "user",
+            "username": "rd.alegria",
+            "gender": "male",
+            "age": 123,
+            "height": 123,
+            "weight": 123
+        }
+    ],
+    "class": [
+        {
+            "id": 1,
+            "name": "Yoga",
+            "description": "Yoga is a group of physical, mental, and spiritual practices or disciplines which originated in ancient India.",
+            "isCompleted": false,
+            "start": "2023-04-19T18:00:00",
+            "end": "2023-04-19T19:00:00",
+            "trainer": 2,
+            "participants": [2]
+        }
+    ]
 }
