@@ -306,7 +306,12 @@ export default {
                 {
                     text: "Swimming",
                     value: "swimming",
-                    color: "blue"
+                    color: "orange"
+                },
+                {
+                    text: "Cycling",
+                    value: "cycling",
+                    color: "yellow"
                 }
             ],
             rules: {
