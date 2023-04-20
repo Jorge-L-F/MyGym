@@ -84,7 +84,7 @@
   "class": [
     {
       "id": 1,
-      "type": "yoga",
+      "type": "skippingRope",
       "isCompleted": false,
       "start": "2023-04-19T17:00:00.000Z",
       "end": "2023-04-19T18:00:00.000Z",
@@ -103,6 +103,24 @@
       "participants": [
         1
       ]
+    },
+    {
+      "id": "NQ9YpWvrBddh1-OeLcPlH",
+      "trainer": 2,
+      "participants": [],
+      "type": "skippingRope",
+      "isCompleted": false,
+      "start": "2023-04-20T14:00:00.000Z",
+      "end": "2023-04-20T15:00:00.000Z"
+    },
+    {
+      "id": "DeU27_HskgVV5wUWb0WKM",
+      "trainer": 2,
+      "participants": [],
+      "type": "boxing",
+      "isCompleted": true,
+      "start": "2023-04-15T14:00:00.000Z",
+      "end": "2023-04-15T15:00:00.000Z"
     }
   ]
 }
