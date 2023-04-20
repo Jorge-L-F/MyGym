@@ -25,12 +25,13 @@ export default {
     updateUser(user) {
         return api.patch(`/user/${user.id}`, user);
     },
-
-    //Classes methods
-    listClasses() {
-        return api.get("/class");
+    createSensorData(data, userId) {
+        return api.patch(`/user/${userId}`, {
+            sensors: [...data]
+        });
     },
 
+    //Classes methods
     getClass(id) {
         return api.get(`/class?id=${id}`);
     },
@@ -55,6 +56,6 @@ export default {
         return api.patch(`/class/${classId}`, {
             participants
         });
-    },
+    }
     // ... other methods
 };

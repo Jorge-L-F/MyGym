@@ -100,15 +100,19 @@
                                         icon
                                         @click="editMode = true"
                                         v-if="
-                                            !createMode && me.role == 'trainer'
+                                            !createMode &&
+                                            me.role == 'trainer' &&
+                                            selectedEventIsCompleted == false
                                         "
                                     >
                                         <v-icon>mdi-pencil</v-icon> </v-btn
-                                    ><span class="ml-5">{{
-                                        vCardTitleAndColor.title
-                                            ? vCardTitleAndColor.title
-                                            : "Create New Event"
-                                    }}</span>
+                                    ><span class="ml-5"
+                                        >{{
+                                            vCardTitleAndColor.title
+                                                ? vCardTitleAndColor.title
+                                                : "Create New Event"
+                                        }}
+                                    </span>
                                 </v-card-title>
 
                                 <v-card-text class="mt-5">
@@ -218,10 +222,10 @@
                                             ></v-time-picker>
                                         </v-menu>
                                         <v-checkbox
-                                            v-if="editMode"
+                                            v-if="!createMode"
                                             v-model="selectedEvent.isCompleted"
                                             label="Completed"
-                                            :disabled="!editMode && !createMode"
+                                            :disabled="!editMode"
                                         ></v-checkbox>
                                     </v-form>
                                     <div v-else class="text-center">
@@ -240,7 +244,10 @@
                                             {{ selectedEvent.end }}</span
                                         >
                                         <br />
-                                        <div class="d-flex justify-center mt-3">
+                                        <div
+                                            class="d-flex justify-center mt-3"
+                                            v-if="!selectedEvent.isCompleted"
+                                        >
                                             <v-btn
                                                 v-if="!isParticipant"
                                                 color="primary"
@@ -302,6 +309,7 @@
 <script>
 import api from "../api";
 import { nanoid } from "nanoid";
+import generateData from "@/simulateSensor";
 
 export default {
     title: "Classes",
@@ -397,7 +405,11 @@ export default {
                 return this.selectedEvent?.participants?.includes(this.me.id);
             return false;
         },
-
+        selectedEventIsCompleted() {
+            return this.eventsFormatted?.find(
+                (event) => event.id === this.selectedEvent.id
+            )?.isCompleted;
+        },
         me() {
             return this.$store.state.user.me;
         },
@@ -594,7 +606,7 @@ export default {
                 start: day.hasTime ? day.time : null,
                 end: null
             };
-            
+
             this.createMode = true;
             this.selectedElement = day.nativeEvent.target;
             requestAnimationFrame(() =>
@@ -617,6 +629,9 @@ export default {
                         `${this.selectedEvent.date}T${this.selectedEvent.end}:00`
                     ).toISOString()
                 };
+                if (event.isCompleted) {
+                    this.simulateSensorData(event);
+                }
                 api.updateClass(event).then(() => {
                     this.refetchEvents();
                     this.clearSelectedEvent();
@@ -677,6 +692,32 @@ export default {
             ).then(() => {
                 this.refetchEvents();
                 this.clearSelectedEvent();
+            });
+        },
+        simulateSensorData(classObj) {
+            let durationInMinutes =
+                (new Date(classObj.end) - new Date(classObj.start)) / 60000;
+            classObj?.participants.forEach((participantId) => {
+                let participant = null;
+                api.getUser(participantId).then((res) => {
+                    participant = res.data;
+                    let simulatedData = generateData(
+                        participant.gender,
+                        participant.age,
+                        participant.height,
+                        participant.weight,
+                        classObj.type,
+                        durationInMinutes
+                    );
+
+                    participant.sensors =
+                        participant.sensors.concat(simulatedData);
+
+                    api.createSensorData(
+                        participant.sensors,
+                        participant.id
+                    ).then(() => {});
+                });
             });
         }
     }

@@ -11,8 +11,18 @@
       "age": 25,
       "height": 180,
       "weight": 80,
-      "classes": [],
-      "sensors": []
+      "sensors": [
+        {
+          "calories": 1053.7142857142856,
+          "heartRate": 0,
+          "weightLoss": 0
+        },
+        {
+          "calories": 699.4285714285714,
+          "heartRate": 0,
+          "weightLoss": 0
+        }
+      ]
     },
     {
       "id": 2,
@@ -25,7 +35,6 @@
       "age": 25,
       "height": 180,
       "weight": 80,
-      "classes": [],
       "sensors": []
     },
     {
@@ -39,7 +48,6 @@
       "age": 21,
       "height": 190,
       "weight": 80,
-      "classes": [],
       "sensors": []
     },
     {
@@ -53,7 +61,6 @@
       "age": 21,
       "height": 140,
       "weight": 55,
-      "classes": [],
       "sensors": []
     },
     {
@@ -85,7 +92,7 @@
     {
       "id": 1,
       "type": "skippingRope",
-      "isCompleted": false,
+      "isCompleted": true,
       "start": "2023-04-19T17:00:00.000Z",
       "end": "2023-04-19T18:00:00.000Z",
       "trainer": 2,
@@ -107,16 +114,20 @@
     {
       "id": "NQ9YpWvrBddh1-OeLcPlH",
       "trainer": 2,
-      "participants": [],
+      "participants": [
+        1
+      ],
       "type": "skippingRope",
-      "isCompleted": false,
+      "isCompleted": true,
       "start": "2023-04-20T14:00:00.000Z",
       "end": "2023-04-20T15:00:00.000Z"
     },
     {
       "id": "DeU27_HskgVV5wUWb0WKM",
       "trainer": 2,
-      "participants": [],
+      "participants": [
+        1
+      ],
       "type": "boxing",
       "isCompleted": true,
       "start": "2023-04-15T14:00:00.000Z",
