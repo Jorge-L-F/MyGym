@@ -14,13 +14,11 @@
       "sensors": [
         {
           "calories": 1053.7142857142856,
-          "heartRate": 0,
-          "weightLoss": 0
+          "heartRate": 0
         },
         {
           "calories": 699.4285714285714,
-          "heartRate": 0,
-          "weightLoss": 0
+          "heartRate": 0
         }
       ]
     },
