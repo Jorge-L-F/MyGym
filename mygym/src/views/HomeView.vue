@@ -53,7 +53,7 @@
 </template>
 
 <script>
-import { BarChart } from "@/components/chart/BarChart.vue";
+import BarChart from "@/components/chart/BarChart.vue";
 //import { LineChart } from "@/components/chart/LineChart.vue";
 
 export default {

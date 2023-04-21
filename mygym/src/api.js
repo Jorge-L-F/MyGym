@@ -46,7 +46,6 @@ export default {
         return api.get(`/class?trainer=${userId}`);
     },
     updateClass(classObj) {
-        console.log(classObj);
         return api.patch(`/class/${classObj.id}`, classObj);
     },
     createClass(classObj) {
