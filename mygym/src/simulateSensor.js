@@ -29,7 +29,6 @@ var refWeight = 70;
 function generateData(gender, age, height, weight, typeClass, duration) {
     let calories;
     let heartRate = 0; //TODO average heart rate
-    let weightLoss = 0; //TODO
     switch (typeClass) {
         case "running":
             if (gender == "male") {
@@ -261,7 +260,7 @@ function generateData(gender, age, height, weight, typeClass, duration) {
             break;
         default:
     }
-    return { calories: calories, heartRate: heartRate, weightLoss: weightLoss };
+    return { calories: calories, heartRate: heartRate };
 }
 
 export default generateData;
