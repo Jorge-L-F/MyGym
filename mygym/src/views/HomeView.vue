@@ -5,7 +5,7 @@
                 Welcome back, {{ me.fullName }}!
             </h1>
             <v-row class="pa-3">
-                <v-col cols="5" sm="12">
+                <v-col md="5" sm="12">
                     <v-card class="pa-4 rounded">
                         <h1>Next Classes</h1>
                         <v-timeline side="start" density="compact">
@@ -37,10 +37,10 @@
                         </v-timeline>
                     </v-card>
                 </v-col>
-                <v-col sm="12">
+                <v-col md="7" sm="12">
                     <v-card class="pa-4 rounded">
-                        <h1>Biometric Record</h1>
-                        <BarChart></BarChart>
+                        <h1 class="mb-3">Biometric Record</h1>
+                        <BarChart :chartData="biometricData"></BarChart>
                     </v-card>
                 </v-col>
             </v-row>
@@ -53,13 +53,13 @@
 </template>
 
 <script>
+//import LineChart from "@/components/chart/LineChart.vue";
 import BarChart from "@/components/chart/BarChart.vue";
-//import { LineChart } from "@/components/chart/LineChart.vue";
 
 export default {
     title: "Home",
     components: {
-        //LineChart,
+        //LineChart
         BarChart
     },
     data() {
@@ -69,6 +69,36 @@ export default {
     computed: {
         me() {
             return this.$store.state.user.me;
+        },
+        biometricData() {
+            const backgroundColors = {
+                heartRate: "rgba(100, 0, 255, 0.45)",
+                calories: "rgba(200, 100, 0, 0.45)",
+                weightLoss: "rgba(0, 143, 120, 0.32)"
+            };
+
+            const user = this.$store.state.user.me;
+            const sensors = user.sensors;
+
+            let resultDataset = {};
+
+            sensors.forEach((value) => {
+                const keys = Object.keys(value);
+                keys.forEach((key) => {
+                    console.log(resultDataset.key);
+
+                    //console.log(value);
+                    //resultDataset.data.push(value[key]);
+                });
+            });
+
+            console.log(resultDataset);
+
+            return {
+                //Days of the week
+                labels: [0, 1],
+                datasets: Array.from(resultDataset)
+            };
         },
         items() {
             return [
