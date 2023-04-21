@@ -1,63 +1,67 @@
 <template>
     <v-container fluid class="pa-0">
         <div v-if="me">
-            <h1 class="text-center mt-10">Welcome back, {{ me.fullName }}!</h1>
-            <div max-width="50%" class="d-flex justify-center mt-15">
-                <v-card width="50%" elevation="10">
-                    <v-card-text>
-                        <p>Here are your upcoming classes:</p>
-                        <ul>
-                            <li>Yoga - Monday at 6pm</li>
-                            <li>Zumba - Tuesday at 7pm</li>
-                            <li>Spin - Wednesday at 6:30am</li>
-                        </ul>
-                        <p>Don't forget to check in when you arrive!</p>
-                    </v-card-text>
-                </v-card>
-            </div>
-            <v-row class="mt-5 px-10"
-                ><v-col cols="6">
-                    <v-card elevation="10">
-                        <v-card-title class="text-center">
-                            <h2>My Profile</h2>
-                        </v-card-title>
-                        <v-card-text>
-                            <p>Here is your profile information:</p>
-                            <ul>
-                                <li>Name: {{ me.fullName }}</li>
-                                <li>Email: {{ me.email }}</li>
-                            </ul>
-                        </v-card-text>
+            <h1 class="text-center mt-10 mb-4">
+                Welcome back, {{ me.fullName }}!
+            </h1>
+            <v-row class="pa-3">
+                <v-col cols="5" sm="12">
+                    <v-card class="pa-4 rounded">
+                        <h1>Next Classes</h1>
+                        <v-timeline side="start" density="compact">
+                            <v-timeline-item
+                                v-for="item in items"
+                                :key="item.id"
+                                size="small"
+                            >
+                                <v-card>
+                                    <v-card-title v-bind:class="item.color">
+                                        <v-icon
+                                            size="large"
+                                            class="me-4"
+                                            :icon="item.icon"
+                                        ></v-icon>
+                                        <h2 class="font-weight-light">
+                                            Title 1
+                                        </h2>
+                                    </v-card-title>
+                                    <v-card-text>
+                                        Lorem ipsum dolor sit amet, no nam
+                                        oblique veritus. Commune scaevola
+                                        imperdiet nec ut, sed euismod convenire
+                                        principes at. Est et nobis iisque
+                                        percipit.
+                                    </v-card-text>
+                                </v-card>
+                            </v-timeline-item>
+                        </v-timeline>
                     </v-card>
                 </v-col>
-                <v-col cols="6">
-                    <v-card elevation="10">
-                        <v-card-title class="text-center">
-                            <h2>My Classes</h2>
-                        </v-card-title>
-                        <v-card-text>
-                            <p>
-                                Here are the classes you are currently enrolled
-                                in:
-                            </p>
-                            <ul>
-                                <li>Yoga - Monday at 6pm</li>
-                                <li>Zumba - Tuesday at 7pm</li>
-                                <li>Spin - Wednesday at 6:30am</li>
-                            </ul>
-                        </v-card-text>
+                <v-col sm="12">
+                    <v-card class="pa-4 rounded">
+                        <h1>Biometric Record</h1>
+                        <BarChart></BarChart>
                     </v-card>
                 </v-col>
             </v-row>
         </div>
-        <div v-else>HomePage sem login</div>
+        <div v-else>
+            <v-btn @click="goto('Login')"> Login </v-btn>
+            <v-btn @click="goto('Register')"> Register </v-btn>
+        </div>
     </v-container>
 </template>
 
 <script>
+import { BarChart } from "@/components/chart/BarChart.vue";
+//import { LineChart } from "@/components/chart/LineChart.vue";
+
 export default {
     title: "Home",
-
+    components: {
+        //LineChart,
+        BarChart
+    },
     data() {
         return {};
     },
@@ -65,12 +69,30 @@ export default {
     computed: {
         me() {
             return this.$store.state.user.me;
+        },
+        items() {
+            return [
+                {
+                    id: 1,
+                    color: "bg-purple-lighten-2",
+                    icon: "mdi-information"
+                },
+                {
+                    id: 2,
+                    color: "bg-amber-lighten-1",
+                    icon: "mdi-alert-circle"
+                }
+            ];
         }
     },
 
     watch: {},
     created() {},
     mounted() {},
-    methods: {}
+    methods: {
+        goto(routeName) {
+            this.$router.push({ name: routeName });
+        }
+    }
 };
 </script>
