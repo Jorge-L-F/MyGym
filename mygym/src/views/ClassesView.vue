@@ -1,7 +1,7 @@
 <template>
     <v-container fluid class="pa-0">
-        <h1 class="text-center mt-10">Classes</h1>
-        <div class="mx-10">
+        <h1 class="text-center mt-5">Classes</h1>
+        <div class="mx-10 mt-5">
             <v-row class="fill-height">
                 <v-col>
                     <v-sheet height="64">
@@ -96,17 +96,31 @@
                                 <v-card-title
                                     :class="vCardTitleAndColor.color"
                                     dark
-                                    ><v-btn icon @click="editMode = true">
+                                    ><v-btn
+                                        icon
+                                        @click="editMode = true"
+                                        v-if="
+                                            !createMode &&
+                                            me.role == 'trainer' &&
+                                            selectedEventIsCompleted == false
+                                        "
+                                    >
                                         <v-icon>mdi-pencil</v-icon> </v-btn
-                                    ><span class="ml-5">{{
-                                        vCardTitleAndColor.title
-                                            ? vCardTitleAndColor.title
-                                            : "Create New Event"
-                                    }}</span>
+                                    ><span class="ml-5"
+                                        >{{
+                                            vCardTitleAndColor.title
+                                                ? vCardTitleAndColor.title
+                                                : "Create New Event"
+                                        }}
+                                    </span>
                                 </v-card-title>
 
                                 <v-card-text class="mt-5">
-                                    <v-form ref="form" v-model="valid">
+                                    <v-form
+                                        ref="form"
+                                        v-model="valid"
+                                        v-if="me.role == 'trainer'"
+                                    >
                                         <v-select
                                             v-model="selectedEvent.type"
                                             :items="typesOfClasses"
@@ -115,7 +129,7 @@
                                             label="Type of class"
                                             :rules="[rules.required]"
                                             outlined
-                                            :disabled="!editMode || !createMode"
+                                            :disabled="!editMode && !createMode"
                                         ></v-select>
 
                                         <v-menu
@@ -135,7 +149,7 @@
                                                     outlined
                                                     :rules="[rules.required]"
                                                     :disabled="
-                                                        !editMode || !createMode
+                                                        !editMode && !createMode
                                                     "
                                                 >
                                                 </v-text-field>
@@ -166,7 +180,7 @@
                                                     outlined
                                                     :rules="[rules.required]"
                                                     :disabled="
-                                                        !editMode || !createMode
+                                                        !editMode && !createMode
                                                     "
                                                 >
                                                 </v-text-field>
@@ -195,7 +209,7 @@
                                                     outlined
                                                     :rules="[rules.required]"
                                                     :disabled="
-                                                        !editMode || !createMode
+                                                        !editMode && !createMode
                                                     "
                                                 >
                                                 </v-text-field>
@@ -208,11 +222,52 @@
                                             ></v-time-picker>
                                         </v-menu>
                                         <v-checkbox
+                                            v-if="!createMode"
                                             v-model="selectedEvent.isCompleted"
                                             label="Completed"
-                                            :disabled="!editMode || !createMode"
+                                            :disabled="!editMode"
                                         ></v-checkbox>
                                     </v-form>
+                                    <div v-else class="text-center">
+                                        <span
+                                            ><b>Date:</b>
+                                            {{ selectedEvent.date }}</span
+                                        >
+                                        <br />
+                                        <span
+                                            ><b>Start Time:</b>
+                                            {{ selectedEvent.start }}</span
+                                        >
+                                        <br />
+                                        <span
+                                            ><b>End Time:</b>
+                                            {{ selectedEvent.end }}</span
+                                        >
+                                        <br />
+                                        <div
+                                            class="d-flex justify-center mt-3"
+                                            v-if="!selectedEvent.isCompleted"
+                                        >
+                                            <v-btn
+                                                v-if="!isParticipant"
+                                                color="primary"
+                                                @click="
+                                                    updateParticipants(true)
+                                                "
+                                            >
+                                                Register
+                                            </v-btn>
+                                            <v-btn
+                                                v-else
+                                                color="primary"
+                                                @click="
+                                                    updateParticipants(false)
+                                                "
+                                            >
+                                                Unsubscribe
+                                            </v-btn>
+                                        </div>
+                                    </div>
                                 </v-card-text>
                                 <v-card-actions>
                                     <v-btn
@@ -237,7 +292,7 @@
                                         text
                                         color="primary"
                                         :disabled="!valid"
-                                        @click="create()"
+                                        @click="createEvent()"
                                     >
                                         Save
                                     </v-btn>
@@ -254,6 +309,7 @@
 <script>
 import api from "../api";
 import { nanoid } from "nanoid";
+import generateData from "@/simulateSensor";
 
 export default {
     title: "Classes",
@@ -344,6 +400,16 @@ export default {
     },
 
     computed: {
+        isParticipant() {
+            if (this.selectedEvent)
+                return this.selectedEvent?.participants?.includes(this.me.id);
+            return false;
+        },
+        selectedEventIsCompleted() {
+            return this.eventsFormatted?.find(
+                (event) => event.id === this.selectedEvent.id
+            )?.isCompleted;
+        },
         me() {
             return this.$store.state.user.me;
         },
@@ -354,8 +420,7 @@ export default {
             let color = "grey";
             let title = null;
             if (this.selectedEvent) {
-                if (this.selectedEvent.color) color = this.selectedEvent.color;
-                else if (this.selectedEvent.type)
+                if (this.selectedEvent.type)
                     color = this.typesOfClasses.find(
                         (type) => type.value === this.selectedEvent.type
                     ).color;
@@ -368,11 +433,19 @@ export default {
         },
         eventsFormatted() {
             return this.events.map((event) => {
+                // see if me.id is in event.participants
+
                 return {
                     ...event,
-                    name: this.typesOfClasses.find(
-                        (type) => type.value === event.type
-                    ).text,
+                    name:
+                        this.me?.role == "user" &&
+                        event.participants.includes(this.me.id)
+                            ? this.typesOfClasses.find(
+                                  (type) => type.value === event.type
+                              ).text + " REGISTERED"
+                            : this.typesOfClasses.find(
+                                  (type) => type.value === event.type
+                              ).text,
                     start: new Date(event.start),
                     end: new Date(event.end),
                     color: this.typesOfClasses.find(
@@ -391,46 +464,55 @@ export default {
     },
     watch: {
         selectedOpen() {
-            //find the event in the events array and reset this.selectedEvent
-            const index = this.eventsFormatted.findIndex(
-                (event) => event.id === this.selectedEvent.id
-            );
-            if (index > -1) {
-                let event = this.eventsFormatted[index];
-                this.selectedEvent = {
-                    ...event,
-                    date: new Date(
-                        new Date(event.start).getTime() -
-                            new Date(event.start).getTimezoneOffset() *
-                                60 *
-                                1000
-                    )
-                        .toISOString()
-                        .substr(0, 10),
-                    start: new Date(
-                        new Date(event.start).getTime() -
-                            new Date(event.start).getTimezoneOffset() *
-                                60 *
-                                1000
-                    )
-                        .toISOString()
-                        .substr(11, 5),
-                    end: new Date(
-                        new Date(event.end).getTime() -
-                            new Date(event.end).getTimezoneOffset() * 60 * 1000
-                    )
-                        .toISOString()
-                        .substr(11, 5)
-                };
-            } else {
-                this.selectedEvent = {};
+            this.$refs.form?.resetValidation();
+            if (!this.selectedOpen) {
+                this.editMode = false;
+                this.createMode = false;
+            }
+            if (!this.createMode) {
+                //find the event in the events array and reset this.selectedEvent
+                const index = this.eventsFormatted.findIndex(
+                    (event) => event.id === this.selectedEvent.id
+                );
+                if (index > -1) {
+                    let event = this.eventsFormatted[index];
+                    this.selectedEvent = {
+                        ...event,
+                        date: new Date(
+                            new Date(event.start).getTime() -
+                                new Date(event.start).getTimezoneOffset() *
+                                    60 *
+                                    1000
+                        )
+                            .toISOString()
+                            .substr(0, 10),
+                        start: new Date(
+                            new Date(event.start).getTime() -
+                                new Date(event.start).getTimezoneOffset() *
+                                    60 *
+                                    1000
+                        )
+                            .toISOString()
+                            .substr(11, 5),
+                        end: new Date(
+                            new Date(event.end).getTime() -
+                                new Date(event.end).getTimezoneOffset() *
+                                    60 *
+                                    1000
+                        )
+                            .toISOString()
+                            .substr(11, 5)
+                    };
+                } else {
+                    this.selectedEvent = {};
+                }
             }
         }
     },
     created() {},
     mounted() {
         if (this.me.role === "user") {
-            api.getClassesOf(this.me.id).then((res) => {
+            api.getAllClasses().then((res) => {
                 this.events = res.data;
             });
         } else {
@@ -509,7 +591,11 @@ export default {
             nativeEvent.stopPropagation();
         },
         createEventDialog(day) {
-            console.log(day);
+            if (this.selectedOpen || this.me.role == "user") {
+                this.selectedOpen = false;
+                return;
+            }
+
             this.selectedEvent = {
                 id: nanoid(),
                 trainer: this.me.id,
@@ -517,9 +603,10 @@ export default {
                 type: null,
                 isCompleted: false,
                 date: day.date,
-                start: null,
+                start: day.hasTime ? day.time : null,
                 end: null
             };
+
             this.createMode = true;
             this.selectedElement = day.nativeEvent.target;
             requestAnimationFrame(() =>
@@ -542,6 +629,9 @@ export default {
                         `${this.selectedEvent.date}T${this.selectedEvent.end}:00`
                     ).toISOString()
                 };
+                if (event.isCompleted) {
+                    this.simulateSensorData(event);
+                }
                 api.updateClass(event).then(() => {
                     this.refetchEvents();
                     this.clearSelectedEvent();
@@ -560,7 +650,7 @@ export default {
                     trainer: this.selectedEvent.trainer,
                     participants: this.selectedEvent.participants,
                     type: this.selectedEvent.type,
-                    isCompleted: this.selectedEvent.isCompleted,
+                    isCompleted: false,
                     start: new Date(
                         `${this.selectedEvent.date}T${this.selectedEvent.start}:00`
                     ).toISOString(),
@@ -576,7 +666,7 @@ export default {
         },
         refetchEvents() {
             if (this.me.role === "user") {
-                api.getClassesOf(this.me.id).then((res) => {
+                api.getAllClasses().then((res) => {
                     this.events = res.data;
                 });
             } else {
@@ -585,6 +675,50 @@ export default {
                 });
             }
             this.$refs.calendar.checkChange();
+        },
+        updateParticipants(toRegister) {
+            // if true then register, else unregister
+            if (toRegister) {
+                this.selectedEvent.participants.push(this.me.id);
+            } else {
+                this.selectedEvent.participants =
+                    this.selectedEvent.participants.filter(
+                        (id) => id !== this.me.id
+                    );
+            }
+            api.updateParticipants(
+                this.selectedEvent.id,
+                this.selectedEvent.participants
+            ).then(() => {
+                this.refetchEvents();
+                this.clearSelectedEvent();
+            });
+        },
+        simulateSensorData(classObj) {
+            let durationInMinutes =
+                (new Date(classObj.end) - new Date(classObj.start)) / 60000;
+            classObj?.participants.forEach((participantId) => {
+                let participant = null;
+                api.getUser(participantId).then((res) => {
+                    participant = res.data;
+                    let simulatedData = generateData(
+                        participant.gender,
+                        participant.age,
+                        participant.height,
+                        participant.weight,
+                        classObj.type,
+                        durationInMinutes
+                    );
+
+                    participant.sensors =
+                        participant.sensors.concat(simulatedData);
+
+                    api.createSensorData(
+                        participant.sensors,
+                        participant.id
+                    ).then(() => {});
+                });
+            });
         }
     }
 };

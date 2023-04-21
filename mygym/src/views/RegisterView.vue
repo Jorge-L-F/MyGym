@@ -176,7 +176,6 @@ export default {
                     age: this.age,
                     height: this.height,
                     weight: this.weight,
-                    classes: [],
                     sensors: []
                 };
 

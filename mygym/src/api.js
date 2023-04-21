@@ -25,12 +25,13 @@ export default {
     updateUser(user) {
         return api.patch(`/user/${user.id}`, user);
     },
-
-    //Classes methods
-    listClasses() {
-        return api.get("/class");
+    createSensorData(data, userId) {
+        return api.patch(`/user/${userId}`, {
+            sensors: [...data]
+        });
     },
 
+    //Classes methods
     getClass(id) {
         return api.get(`/class?id=${id}`);
     },
@@ -38,13 +39,23 @@ export default {
     getClassesOf(userId) {
         return api.get(`/class?participants_like=${userId}`);
     },
+    getAllClasses() {
+        return api.get("/class");
+    },
     getClassesOfTrainer(userId) {
         return api.get(`/class?trainer=${userId}`);
     },
     updateClass(classObj) {
         console.log(classObj);
         return api.patch(`/class/${classObj.id}`, classObj);
+    },
+    createClass(classObj) {
+        return api.post("/class", classObj);
+    },
+    updateParticipants(classId, participants) {
+        return api.patch(`/class/${classId}`, {
+            participants
+        });
     }
-
     // ... other methods
 };
