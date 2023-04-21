@@ -1,3 +1,4 @@
 .vscode/*
 mygym/node_modules/*
+mygym/node_modules
 mygym/package-lock.json
