@@ -1,5 +1,5 @@
 <template>
-    <v-container fluid style="height: 90vh;" class="pa-0">
+    <v-container fluid style="height: 90vh" class="pa-0">
         <div v-if="me">
             <h1 class="text-center mt-10 mb-4">
                 Welcome back, {{ me.fullName }}!
@@ -10,10 +10,18 @@
                         <h1>Next Classes</h1>
 
                         <v-timeline side="end" density="compact">
-                            <v-timeline-item v-for="item in nextEvents" :key="item.id" size="small">
+                            <v-timeline-item
+                                v-for="item in nextEvents"
+                                :key="item.id"
+                                size="small"
+                            >
                                 <v-card>
                                     <v-card-title class="bg-indigo-lighten-1">
-                                        <v-icon size="large" class="me-4" icon="star"></v-icon>
+                                        <v-icon
+                                            size="large"
+                                            class="me-4"
+                                            icon="star"
+                                        ></v-icon>
                                         <h2 class="font-weight-light">
                                             Title 1
                                         </h2>
@@ -36,7 +44,11 @@
                         <!--
                             
                         -->
-                        <BarChart :chartData="biometricData"></BarChart>
+                        <BarChart
+                            v-if="!noSensorData"
+                            :chartData="biometricData"
+                        ></BarChart>
+                        <span v-else>No sensor data</span>
                     </v-card>
                 </v-col>
             </v-row>
@@ -45,12 +57,31 @@
             <v-container class="fill-height" fluid>
                 <v-card class="background rounded mx-auto pa-10 elevation-3">
                     <div class="d-flex flex-column align-center mt-2 mb-16">
-                        <img src="@/assets/logo.png" alt="Logo" class="" height="70" />
+                        <img
+                            src="@/assets/logo.png"
+                            alt="Logo"
+                            class=""
+                            height="70"
+                        />
                     </div>
                     <v-row class="mb-1">
                         <v-col class="d-flex justify-space-around">
-                            <v-btn class="pa-7" elevation="8" outlined @click="goto('Login')"> Login </v-btn>
-                            <v-btn class="pa-7" elevation="8" outlined @click="goto('Register')"> Register </v-btn>
+                            <v-btn
+                                class="pa-7"
+                                elevation="8"
+                                outlined
+                                @click="goto('Login')"
+                            >
+                                Login
+                            </v-btn>
+                            <v-btn
+                                class="pa-7"
+                                elevation="8"
+                                outlined
+                                @click="goto('Register')"
+                            >
+                                Register
+                            </v-btn>
                         </v-col>
                     </v-row>
                 </v-card>
@@ -61,7 +92,7 @@
 
 <style scoped>
 .bgImage {
-    background: url('../assets/gymBackground2.png');
+    background: url("../assets/gymBackground2.png");
     background-size: cover;
     height: 100vh;
 }
@@ -80,7 +111,10 @@ export default {
     },
     data() {
         return {
-            biometricData: null,
+            biometricData: {
+                labels: [],
+                datasets: []
+            },
             nextEvents: [],
             userEvents: []
         };
@@ -101,6 +135,9 @@ export default {
                     color: "bg-amber-lighten-1"
                 }
             ];
+        },
+        noSensorData() {
+            return this.me?.sensors.length === 0;
         }
     },
 
@@ -146,6 +183,9 @@ export default {
                 .map((_, index) => index);
             console.log(indexArray);
 
+            if (sensors.length === 0) {
+                return null;
+            }
             const keys = Object.keys(sensors[0]);
             console.log(keys);
 
