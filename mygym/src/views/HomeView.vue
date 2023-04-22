@@ -11,27 +11,32 @@
 
                         <v-timeline side="end" density="compact">
                             <v-timeline-item
-                                v-for="item in nextEvents"
-                                :key="item.id"
+                                v-for="event in nextEvents"
+                                :key="event.id"
                                 size="small"
                             >
                                 <v-card>
-                                    <v-card-title class="bg-indigo-lighten-1">
+                                    <v-card-title class="blue lighten-2 mb-3">
                                         <v-icon
                                             size="large"
                                             class="me-4"
                                             icon="star"
                                         ></v-icon>
                                         <h2 class="font-weight-light">
-                                            Title 1
+                                            {{ event.type }}
                                         </h2>
                                     </v-card-title>
                                     <v-card-text>
-                                        Lorem ipsum dolor sit amet, no nam
-                                        oblique veritus. Commune scaevola
-                                        imperdiet nec ut, sed euismod convenire
-                                        principes at. Est et nobis iisque
-                                        percipit.
+                                        <span
+                                            ><b>Start Time:</b>
+                                            {{ event.start }}</span
+                                        >
+                                        <br />
+                                        <span
+                                            ><b>End Time:</b>
+                                            {{ event.end }}</span
+                                        >
+                                        <br />
                                     </v-card-text>
                                 </v-card>
                             </v-timeline-item>
