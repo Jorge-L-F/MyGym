@@ -21,6 +21,8 @@ var maxZumba = 415;
 var minZumba = 215;
 var maxSwimming = 710;
 var minSwimming = 432;
+var maxHeart = 170;
+var minHeart = 100;
 var refAge = 25;
 var refDuration = 60;
 var refHeight = 180;
@@ -28,7 +30,7 @@ var refWeight = 70;
 
 function generateData(gender, age, height, weight, typeClass, duration) {
     let calories;
-    let heartRate = 0; //TODO average heart rate
+    let heartRate = Math.floor(Math.random() * (maxHeart - minHeart + 1)) + minHeart
     switch (typeClass) {
         case "running":
             if (gender == "male") {
