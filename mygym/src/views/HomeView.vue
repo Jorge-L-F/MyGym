@@ -56,6 +56,16 @@
 //import LineChart from "@/components/chart/LineChart.vue";
 import BarChart from "@/components/chart/BarChart.vue";
 
+function findObjectsByProperty(keyword, objectArray) {
+    const resultArray = [];
+    objectArray.forEach((object) => {
+        if (Object.prototype.hasOwnProperty.call(object, keyword)) {
+            resultArray.push(object[keyword]);
+        }
+    });
+    return resultArray;
+}
+
 export default {
     title: "Home",
     components: {
@@ -77,18 +87,34 @@ export default {
                 weightLoss: "rgba(0, 143, 120, 0.32)"
             };
 
-            const user = this.$store.state.user.me;
-            const sensors = user.sensors;
+            //const user = this.$store.state.user.me;
+            //TODO Change this to user.sensors
+            const sensors = [
+                {
+                    calories: 1053.7142857142856,
+                    heartRate: 0
+                },
+                {
+                    calories: 699.4285714285714,
+                    heartRate: 0
+                }
+            ];
 
-            let resultDataset = {};
+            //TODO Change this label array
+            const indexArray = Array(sensors.length)
+                .fill()
+                .map((_, index) => index);
+            console.log(indexArray);
 
-            sensors.forEach((value) => {
-                const keys = Object.keys(value);
-                keys.forEach((key) => {
-                    console.log(resultDataset.key);
+            const keys = Object.keys(sensors[0]);
+            console.log(keys);
 
-                    //console.log(value);
-                    //resultDataset.data.push(value[key]);
+            let resultDataset = [];
+            keys.forEach((key) => {
+                resultDataset.push({
+                    label: key,
+                    backgroundColor: backgroundColors[key],
+                    data: findObjectsByProperty(key, sensors)
                 });
             });
 
@@ -96,8 +122,8 @@ export default {
 
             return {
                 //Days of the week
-                labels: [0, 1],
-                datasets: Array.from(resultDataset)
+                labels: indexArray,
+                datasets: resultDataset
             };
         },
         items() {
