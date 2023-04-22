@@ -8,18 +8,19 @@
                 <v-col md="5" sm="12">
                     <v-card class="pa-4 rounded">
                         <h1>Next Classes</h1>
-                        <v-timeline side="start" density="compact">
+
+                        <v-timeline side="end" density="compact">
                             <v-timeline-item
-                                v-for="item in items"
+                                v-for="item in nextEvents"
                                 :key="item.id"
                                 size="small"
                             >
                                 <v-card>
-                                    <v-card-title v-bind:class="item.color">
+                                    <v-card-title class="bg-indigo-lighten-1">
                                         <v-icon
                                             size="large"
                                             class="me-4"
-                                            :icon="item.icon"
+                                            icon="star"
                                         ></v-icon>
                                         <h2 class="font-weight-light">
                                             Title 1
@@ -40,7 +41,10 @@
                 <v-col md="7" sm="12">
                     <v-card class="pa-4 rounded">
                         <h1 class="mb-3">Biometric Record</h1>
-                        <BarChart :chartData="biometricData"></BarChart>
+                        <!--
+                            
+                        -->
+                        <BarChart :chartData="{}"></BarChart>
                     </v-card>
                 </v-col>
             </v-row>
@@ -55,6 +59,7 @@
 <script>
 //import LineChart from "@/components/chart/LineChart.vue";
 import BarChart from "@/components/chart/BarChart.vue";
+import api from "@/api";
 
 function findObjectsByProperty(keyword, objectArray) {
     const resultArray = [];
@@ -66,6 +71,43 @@ function findObjectsByProperty(keyword, objectArray) {
     return resultArray;
 }
 
+function loadBiometricData() {
+    const backgroundColors = {
+        heartRate: "rgba(100, 0, 255, 0.45)",
+        calories: "rgba(200, 100, 0, 0.45)",
+        weightLoss: "rgba(0, 143, 120, 0.32)"
+    };
+
+    const user = this.me;
+    const sensors = user.sensors;
+
+    //TODO Change this label array
+    const indexArray = Array(sensors.length)
+        .fill()
+        .map((_, index) => index);
+    console.log(indexArray);
+
+    const keys = Object.keys(sensors[0]);
+    console.log(keys);
+
+    let resultDataset = [];
+    keys.forEach((key) => {
+        resultDataset.push({
+            label: key,
+            backgroundColor: backgroundColors[key],
+            data: findObjectsByProperty(key, sensors)
+        });
+    });
+
+    console.log(resultDataset);
+
+    return {
+        //Days of the week
+        labels: indexArray,
+        datasets: resultDataset
+    };
+}
+
 export default {
     title: "Home",
     components: {
@@ -73,78 +115,57 @@ export default {
         BarChart
     },
     data() {
-        return {};
+        return {
+            biometricData: {},
+            nextEvents: []
+        };
     },
 
     computed: {
         me() {
             return this.$store.state.user.me;
         },
-        biometricData() {
-            const backgroundColors = {
-                heartRate: "rgba(100, 0, 255, 0.45)",
-                calories: "rgba(200, 100, 0, 0.45)",
-                weightLoss: "rgba(0, 143, 120, 0.32)"
-            };
-
-            //const user = this.$store.state.user.me;
-            //TODO Change this to user.sensors
-            const sensors = [
-                {
-                    calories: 1053.7142857142856,
-                    heartRate: 0
-                },
-                {
-                    calories: 699.4285714285714,
-                    heartRate: 0
-                }
-            ];
-
-            //TODO Change this label array
-            const indexArray = Array(sensors.length)
-                .fill()
-                .map((_, index) => index);
-            console.log(indexArray);
-
-            const keys = Object.keys(sensors[0]);
-            console.log(keys);
-
-            let resultDataset = [];
-            keys.forEach((key) => {
-                resultDataset.push({
-                    label: key,
-                    backgroundColor: backgroundColors[key],
-                    data: findObjectsByProperty(key, sensors)
-                });
-            });
-
-            console.log(resultDataset);
-
-            return {
-                //Days of the week
-                labels: indexArray,
-                datasets: resultDataset
-            };
-        },
         items() {
             return [
                 {
                     id: 1,
-                    color: "bg-purple-lighten-2",
-                    icon: "mdi-information"
+                    color: "bg-purple-lighten-2"
                 },
                 {
                     id: 2,
-                    color: "bg-amber-lighten-1",
-                    icon: "mdi-alert-circle"
+                    color: "bg-amber-lighten-1"
                 }
             ];
         }
     },
 
     watch: {},
-    created() {},
-    mounted() {},
+    created() {
+        this.biometricData = loadBiometricData();
+    },
+    mounted() {
+        let userEvents = [];
+        if (this.me.role === "user") {
+            api.getAllClasses().then((res) => {
+                userEvents = res.data;
+            });
+        } else {
+            api.getClassesOfTrainer(this.me.id).then((res) => {
+                userEvents = res.data;
+            });
+        }
+
+        console.log("User Events", userEvents);
+
+        const now = new Date();
+        this.nextEvents = userEvents.filter(
+            (event) => new Date(event.start) >= now
+        );
+        console.log(
+            "Next events:",
+            userEvents.filter((event) => new Date(event.start) >= now)
+        );
+    },
     methods: {
         goto(routeName) {
             this.$router.push({ name: routeName });

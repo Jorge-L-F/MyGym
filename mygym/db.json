@@ -130,6 +130,15 @@
       "isCompleted": true,
       "start": "2023-04-15T14:00:00.000Z",
       "end": "2023-04-15T15:00:00.000Z"
+    },
+    {
+      "id": "r1t1IEiQWt7FQ2NnYqeO0",
+      "trainer": 2,
+      "participants": [],
+      "type": "crossfit",
+      "isCompleted": false,
+      "start": "2023-04-29T13:10:00.000Z",
+      "end": "2023-04-29T14:00:00.000Z"
     }
   ]
 }
