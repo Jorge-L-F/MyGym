@@ -101,7 +101,7 @@
                                         @click="editMode = true"
                                         v-if="
                                             !createMode &&
-                                            me.role == 'trainer' &&
+                                            role == 'trainer' &&
                                             selectedEventIsCompleted == false
                                         "
                                     >
@@ -119,7 +119,7 @@
                                     <v-form
                                         ref="form"
                                         v-model="valid"
-                                        v-if="me.role == 'trainer'"
+                                        v-if="role == 'trainer'"
                                     >
                                         <v-select
                                             v-model="selectedEvent.type"
@@ -460,6 +460,9 @@ export default {
 
             const [year, month, day] = this.selectedEvent.date.split("-");
             return `${day}/${month}/${year}`;
+        },
+        role () {
+            return this.$store.state.user.me.role;
         }
     },
     watch: {

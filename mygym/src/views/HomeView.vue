@@ -36,7 +36,7 @@
                         <!--
                             
                         -->
-                        <BarChart :chartData="{}"></BarChart>
+                        <BarChart :chartData="biometricData"></BarChart>
                     </v-card>
                 </v-col>
             </v-row>
@@ -72,53 +72,6 @@
 import BarChart from "@/components/chart/BarChart.vue";
 import api from "@/api";
 
-function findObjectsByProperty(keyword, objectArray) {
-    const resultArray = [];
-    objectArray.forEach((object) => {
-        if (Object.prototype.hasOwnProperty.call(object, keyword)) {
-            resultArray.push(object[keyword]);
-        }
-    });
-    return resultArray;
-}
-
-function loadBiometricData() {
-    const backgroundColors = {
-        heartRate: "rgba(100, 0, 255, 0.45)",
-        calories: "rgba(200, 100, 0, 0.45)",
-        weightLoss: "rgba(0, 143, 120, 0.32)"
-    };
-
-    const user = this.me;
-    const sensors = user.sensors;
-
-    //TODO Change this label array
-    const indexArray = Array(sensors.length)
-        .fill()
-        .map((_, index) => index);
-    console.log(indexArray);
-
-    const keys = Object.keys(sensors[0]);
-    console.log(keys);
-
-    let resultDataset = [];
-    keys.forEach((key) => {
-        resultDataset.push({
-            label: key,
-            backgroundColor: backgroundColors[key],
-            data: findObjectsByProperty(key, sensors)
-        });
-    });
-
-    console.log(resultDataset);
-
-    return {
-        //Days of the week
-        labels: indexArray,
-        datasets: resultDataset
-    };
-}
-
 export default {
     title: "Home",
     components: {
@@ -127,8 +80,9 @@ export default {
     },
     data() {
         return {
-            biometricData: {},
-            nextEvents: []
+            biometricData: null,
+            nextEvents: [],
+            userEvents: []
         };
     },
 
@@ -152,34 +106,74 @@ export default {
 
     watch: {},
     created() {
-        this.biometricData = loadBiometricData();
+        this.biometricData = this.loadBiometricData();
     },
     mounted() {
-        let userEvents = [];
         if (this.me.role === "user") {
             api.getAllClasses().then((res) => {
-                userEvents = res.data;
+                this.userEvents = res.data;
             });
         } else {
             api.getClassesOfTrainer(this.me.id).then((res) => {
-                userEvents = res.data;
+                this.userEvents = res.data;
             });
         }
 
-        console.log("User Events", userEvents);
-
         const now = new Date();
-        this.nextEvents = userEvents.filter(
+        this.nextEvents = this.userEvents.filter(
             (event) => new Date(event.start) >= now
         );
         console.log(
             "Next events:",
-            userEvents.filter((event) => new Date(event.start) >= now)
+            this.userEvents.filter((event) => new Date(event.start) >= now)
         );
     },
     methods: {
         goto(routeName) {
             this.$router.push({ name: routeName });
+        },
+        loadBiometricData() {
+            const backgroundColors = {
+                heartRate: "rgba(100, 0, 255, 0.45)",
+                calories: "rgba(200, 100, 0, 0.45)"
+            };
+
+            let sensors = this.me?.sensors;
+
+            //TODO Change this label array
+            const indexArray = Array(sensors.length)
+                .fill()
+                .map((_, index) => index);
+            console.log(indexArray);
+
+            const keys = Object.keys(sensors[0]);
+            console.log(keys);
+
+            let resultDataset = [];
+            keys.forEach((key) => {
+                resultDataset.push({
+                    label: key,
+                    backgroundColor: backgroundColors[key],
+                    data: this.findObjectsByProperty(key, sensors)
+                });
+            });
+
+            console.log(resultDataset);
+
+            return {
+                //Days of the week
+                labels: indexArray,
+                datasets: resultDataset
+            };
+        },
+        findObjectsByProperty(keyword, objectArray) {
+            const resultArray = [];
+            objectArray.forEach((object) => {
+                if (Object.prototype.hasOwnProperty.call(object, keyword)) {
+                    resultArray.push(object[keyword]);
+                }
+            });
+            return resultArray;
         }
     }
 };
