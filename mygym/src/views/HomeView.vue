@@ -146,24 +146,27 @@ export default {
         this.biometricData = this.loadBiometricData();
     },
     mounted() {
-        if (this.me.role === "user") {
-            api.getAllClasses().then((res) => {
+        if (this.me?.role === "user") {
+            api.getClassesOf(this.me.id).then((res) => {
                 this.userEvents = res.data;
+                this.nextEvents = this.userEvents.filter((event) => {
+                    return (
+                        new Date(event.start) > new Date() &&
+                        event.isCompleted === false
+                    );
+                });
             });
         } else {
             api.getClassesOfTrainer(this.me.id).then((res) => {
                 this.userEvents = res.data;
+                this.nextEvents = this.userEvents.filter((event) => {
+                    return (
+                        new Date(event.start) > new Date() &&
+                        event.isCompleted === false
+                    );
+                });
             });
         }
-
-        const now = new Date();
-        this.nextEvents = this.userEvents.filter(
-            (event) => new Date(event.start) >= now
-        );
-        console.log(
-            "Next events:",
-            this.userEvents.filter((event) => new Date(event.start) >= now)
-        );
     },
     methods: {
         goto(routeName) {
@@ -180,26 +183,21 @@ export default {
             //TODO Change this label array
             const indexArray = Array(sensors.length)
                 .fill()
-                .map((_, index) => index);
-            console.log(indexArray);
+                .map((_, index) => "Aula " + parseInt(index + 1));
 
             if (sensors.length === 0) {
                 return null;
             }
             const keys = Object.keys(sensors[0]);
-            console.log(keys);
 
             let resultDataset = [];
             keys.forEach((key) => {
                 resultDataset.push({
-                    label: key,
+                    label: key == "heartRate" ? "Heart Rate" : "Calories",
                     backgroundColor: backgroundColors[key],
                     data: this.findObjectsByProperty(key, sensors)
                 });
             });
-
-            console.log(resultDataset);
-
             return {
                 //Days of the week
                 labels: indexArray,

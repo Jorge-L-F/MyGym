@@ -402,7 +402,7 @@ export default {
     computed: {
         isParticipant() {
             if (this.selectedEvent)
-                return this.selectedEvent?.participants?.includes(this.me.id);
+                return this.selectedEvent?.participants?.includes(this.me?.id);
             return false;
         },
         selectedEventIsCompleted() {
@@ -461,8 +461,8 @@ export default {
             const [year, month, day] = this.selectedEvent.date.split("-");
             return `${day}/${month}/${year}`;
         },
-        role () {
-            return this.$store.state.user.me.role;
+        role() {
+            return this.$store.state.user.me?.role;
         }
     },
     watch: {
