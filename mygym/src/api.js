@@ -55,6 +55,29 @@ export default {
         return api.patch(`/class/${classId}`, {
             participants
         });
+    },
+    // ... Competitions methods
+    getCompetitions() {
+        return api.get("/competitions");
+    },
+    getCompetition(id) {
+        return api.get(`/competitions/${id}`);
+    },
+    createCompetition(competition) {
+        return api.post("/competitions", competition);
+    },
+    updateCompetition(competition) {
+        return api.patch(`/competitions/${competition.id}`, competition);
+    },
+    deleteCompetition(id) {
+        return api.delete(`/competitions/${id}`);
+    },
+    getCompetitionsOf(userId) {
+        return api.get(`/competitions?participants_like=${userId}`);
+    },
+    updateCompetitionParticipants(competitionId, participants) {
+        return api.patch(`/competitions/${competitionId}`, {
+            participants
+        });
     }
-    // ... other methods
 };
