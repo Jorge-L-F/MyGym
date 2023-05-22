@@ -136,6 +136,31 @@ export default {
                     title: "Classes",
                     icon: "mdi-calendar",
                     to: "/classes"
+                },
+                {
+                    title: "Competitions",
+                    icon: "mdi-trophy",
+                    to: "/competitions"
+                },
+                {
+                    title: "Machines",
+                    icon: "mdi-dumbbell",
+                    to: "/machines"
+                },
+                {
+                    title: "Playlists",
+                    icon: "mdi-music",
+                    to: "/playlists"
+                },
+                {
+                    title: "Videos",
+                    icon: "mdi-video",
+                    to: "/videos"
+                },
+                {
+                    title: "Diets",
+                    icon: "mdi-food",
+                    to: "/diets"
                 }
             ],
             trainerMenuItems: [
@@ -154,6 +179,31 @@ export default {
                     title: "Manage Classes",
                     icon: "mdi-calendar",
                     to: "/classes"
+                },
+                {
+                    title: "Manage Competitions",
+                    icon: "mdi-trophy",
+                    to: "/competitions"
+                },
+                {
+                    title: "Manage Machines",
+                    icon: "mdi-dumbbell",
+                    to: "/machines"
+                },
+                {
+                    title: "Manage Playlists",
+                    icon: "mdi-music",
+                    to: "/playlists"
+                },
+                {
+                    title: "Manage Videos",
+                    icon: "mdi-video",
+                    to: "/videos"
+                },
+                {
+                    title: "Manage Diets",
+                    icon: "mdi-food",
+                    to: "/diets"
                 }
             ]
         };
