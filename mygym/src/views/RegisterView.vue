@@ -176,7 +176,8 @@ export default {
                     age: this.age,
                     height: this.height,
                     weight: this.weight,
-                    sensors: []
+                    sensors: [],
+                    playlists: []
                 };
 
                 console.log("User: ");
