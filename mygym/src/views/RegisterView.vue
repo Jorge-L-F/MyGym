@@ -176,6 +176,7 @@ export default {
                     age: this.age,
                     height: this.height,
                     weight: this.weight,
+                    competitions: [],
                     sensors: [],
                     playlists: []
                 };
