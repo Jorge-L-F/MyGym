@@ -199,11 +199,6 @@ export default {
                     title: "Manage Videos",
                     icon: "mdi-video",
                     to: "/videos"
-                },
-                {
-                    title: "Manage Diets",
-                    icon: "mdi-food",
-                    to: "/diets"
                 }
             ]
         };
