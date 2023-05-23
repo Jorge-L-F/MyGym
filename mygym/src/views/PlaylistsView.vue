@@ -71,7 +71,7 @@ export default {
                     value.includes("https://open.spotify.com/") ||
                     "Invalid link.",
                 alreadyOnList: (value) =>
-                    this.me.playlists.indexOf(value) != -1 ||
+                    this.me.playlists.indexOf(value) == -1 ||
                     "Already on this list."
             },
             spotifyLink: ""
@@ -82,7 +82,7 @@ export default {
             immediate: true,
             handler(val) {
                 if (val) {
-                    this.playlists = val.playlists;
+                    this.playlists = [...val.playlists];
                 }
             }
         }

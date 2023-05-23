@@ -177,8 +177,10 @@ export default {
                     height: this.height,
                     weight: this.weight,
                     competitions: [],
+                    competitionsWins: 0,
                     sensors: [],
-                    playlists: []
+                    playlists: [],
+                    videos: []
                 };
 
                 console.log("User: ");
