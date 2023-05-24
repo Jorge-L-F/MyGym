@@ -82,31 +82,37 @@ export default {
             immediate: true,
             handler(val) {
                 if (val) {
-                    this.playlists = [...val.playlists];
+                    console.log(val);
+                    if (
+                        this.areArraysDifferent(this.playlists, val.playlists)
+                    ) {
+                        //this.playlists = [...val.playlists];
+                        this.playlists = val.playlists;
+
+                        this.embedPlaylists = [];
+
+                        this.playlists.forEach((playlist) => {
+                            this.getEmbed(playlist);
+                        });
+                    }
                 }
             }
         }
     },
     mounted() {
         //TODO: Get all playlists from user
-        let playlists = this.me.playlists || [];
+        /* let playlists = this.me.playlists || [];
 
         playlists.forEach((playlist) => {
             this.getEmbed(playlist);
-        });
+        }); */
     },
     computed: {
         me() {
             return this.$store.state.user.me;
         }
     },
-    beforeUpdate() {
-        /* api.getEmbed(
-            "https://open.spotify.com/track/2ZtgxuTO7gEGh5XM1IJEh7?si=8888be4fa509404d"
-        ).then((res) => {
-            console.log(res);
-        }); */
-    },
+    beforeUpdate() {},
     methods: {
         getEmbed(playlist) {
             var myHeaders = new Headers();
@@ -142,13 +148,15 @@ export default {
                     //this.embedPlaylists.push(JSON.parse(result));
                 })
                 .catch((error) => console.log("error", error));
+
+            console.log(this.embedPlaylists);
         },
         updatePlaylists() {
             let newPlaylists = [...this.me.playlists, this.spotifyLink];
 
             api.updatePlaylists(this.me.id, newPlaylists);
 
-            this.getEmbed(this.spotifyLink);
+            //this.getEmbed(this.spotifyLink);
         },
         deletePlaylist(playlist) {
             let newPlaylists = this.me.playlists.filter(
@@ -157,9 +165,22 @@ export default {
 
             api.updatePlaylists(this.me.id, newPlaylists);
 
-            this.embedPlaylists = this.embedPlaylists.filter(
+            /* this.embedPlaylists = this.embedPlaylists.filter(
                 (value) => value.url != playlist
-            );
+            ); */
+        },
+        areArraysDifferent(arr1, arr2) {
+            if (arr1?.length !== arr2?.length) {
+                return true; // Arrays have different lengths, they are definitely different
+            }
+
+            for (let i = 0; i < arr1?.length; i++) {
+                if (arr1[i] !== arr2[i]) {
+                    return true; // Found a pair of different elements
+                }
+            }
+
+            return false; // Arrays are the same
         }
     }
 };
