@@ -62,7 +62,7 @@ import api from "@/api";
 
 export default {
     title: "Playlist",
-    data: function () {
+    data() {
         return {
             embedPlaylists: [],
             rules: {
@@ -71,41 +71,22 @@ export default {
                     value.includes("https://open.spotify.com/") ||
                     "Invalid link.",
                 alreadyOnList: (value) =>
-                    this.me.playlists.indexOf(value) == -1 ||
+                    this.playlists.indexOf(value) == -1 ||
                     "Already on this list."
             },
-            spotifyLink: ""
+            spotifyLink: "",
+            playlists: []
         };
     },
-    watch: {
-        me: {
-            immediate: true,
-            handler(val) {
-                if (val) {
-                    console.log(val);
-                    if (
-                        this.areArraysDifferent(this.playlists, val.playlists)
-                    ) {
-                        //this.playlists = [...val.playlists];
-                        this.playlists = val.playlists;
-
-                        this.embedPlaylists = [];
-
-                        this.playlists.forEach((playlist) => {
-                            this.getEmbed(playlist);
-                        });
-                    }
-                }
-            }
-        }
-    },
+    watch: {},
     mounted() {
-        //TODO: Get all playlists from user
-        /* let playlists = this.me.playlists || [];
-
-        playlists.forEach((playlist) => {
-            this.getEmbed(playlist);
-        }); */
+        api.getUser(this.me.id).then((res) => {
+            this.playlists = res.data.playlists;
+            this.playlists.forEach((playlist) => {
+                this.getEmbed(playlist);
+            });
+            console.log(this.playlists, this.me.playlists);
+        });
     },
     computed: {
         me() {
@@ -139,48 +120,32 @@ export default {
                         ...{ url: playlist }
                     };
 
-                    console.log(resultPlaylist);
-
-                    this.embedPlaylists = [
-                        ...this.embedPlaylists,
-                        resultPlaylist
-                    ];
-                    //this.embedPlaylists.push(JSON.parse(result));
+                    this.embedPlaylists.push(resultPlaylist);
                 })
                 .catch((error) => console.log("error", error));
-
-            console.log(this.embedPlaylists);
         },
         updatePlaylists() {
-            let newPlaylists = [...this.me.playlists, this.spotifyLink];
+            this.playlists.push(this.spotifyLink);
 
-            api.updatePlaylists(this.me.id, newPlaylists);
-
-            //this.getEmbed(this.spotifyLink);
+            api.updatePlaylists(this.me.id, this.playlists).then(() => {
+                this.refetchPlaylists();
+            });
         },
         deletePlaylist(playlist) {
-            let newPlaylists = this.me.playlists.filter(
-                (value) => value != playlist
-            );
+            this.playlists = this.playlists.filter((item) => item !== playlist);
 
-            api.updatePlaylists(this.me.id, newPlaylists);
-
-            /* this.embedPlaylists = this.embedPlaylists.filter(
-                (value) => value.url != playlist
-            ); */
+            api.updatePlaylists(this.me.id, this.playlists).then(() => {
+                this.refetchPlaylists();
+            });
         },
-        areArraysDifferent(arr1, arr2) {
-            if (arr1?.length !== arr2?.length) {
-                return true; // Arrays have different lengths, they are definitely different
-            }
-
-            for (let i = 0; i < arr1?.length; i++) {
-                if (arr1[i] !== arr2[i]) {
-                    return true; // Found a pair of different elements
-                }
-            }
-
-            return false; // Arrays are the same
+        refetchPlaylists() {
+            this.embedPlaylists = [];
+            api.getUser(this.me.id).then((res) => {
+                this.playlists = res.data.playlists;
+                this.playlists.forEach((playlist) => {
+                    this.getEmbed(playlist);
+                });
+            });
         }
     }
 };
