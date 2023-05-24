@@ -4,7 +4,7 @@
             <v-col cols="5">
                 <v-card class="rounded pa-4 elevation-3">
                     <h1 class="mb-4">Adicionar Playlist</h1>
-                    <v-form ref="updatePlaylistForm">
+                    <v-form ref="updatePlaylistForm" :v-model="valid">
                         <v-text-field
                             placeholder="Playlist URL"
                             name="playlistURL"
@@ -74,6 +74,7 @@ export default {
                     this.playlists.indexOf(value) == -1 ||
                     "Already on this list."
             },
+            valid: false,
             spotifyLink: "",
             playlists: []
         };
@@ -125,11 +126,13 @@ export default {
                 .catch((error) => console.log("error", error));
         },
         updatePlaylists() {
-            this.playlists.push(this.spotifyLink);
+            if (this.valid) {
+                this.playlists.push(this.spotifyLink);
 
-            api.updatePlaylists(this.me.id, this.playlists).then(() => {
-                this.refetchPlaylists();
-            });
+                api.updatePlaylists(this.me.id, this.playlists).then(() => {
+                    this.refetchPlaylists();
+                });
+            }
         },
         deletePlaylist(playlist) {
             this.playlists = this.playlists.filter((item) => item !== playlist);
