@@ -11,7 +11,7 @@ const api = axios.create({
 const spotifyEmbedApi = axios.create({
     baseURL: "https://open.spotify.com/oembed",
     headers: {
-        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Origin": "*"
         //"Cookie": "sp_landing=https%3A%2F%2Fopen.spotify.com%2Foembed%3Fsp_cid%3D683624adf4c9290596b481194426c465%26device%3Ddesktop; sp_t=683624adf4c9290596b481194426c465"
     }
 });
@@ -36,6 +36,11 @@ export default {
     createSensorData(data, userId) {
         return api.patch(`/user/${userId}`, {
             sensors: [...data]
+        });
+    },
+    updatePlaylist(userId, playlistsArray) {
+        return api.patch(`/user/${userId}`, {
+            playlists: [...playlistsArray]
         });
     },
 
@@ -93,7 +98,7 @@ export default {
         return spotifyEmbedApi.get(`?url=${playlistLink}`, {
             redirect: "follow"
         });
-    },
+    }
 
     // ... other methods
 };
