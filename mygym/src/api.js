@@ -43,6 +43,11 @@ export default {
             playlists: [...playlistsArray]
         });
     },
+    updateVideos(userId, videosArray) {
+        return api.patch(`/user/${userId}`, {
+            videos: [...videosArray]
+        });
+    },
 
     //Classes methods
     getClass(id) {

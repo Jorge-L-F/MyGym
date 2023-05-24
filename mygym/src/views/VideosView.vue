@@ -6,15 +6,11 @@
                     <h1 class="mb-4">Adicionar Video</h1>
                     <v-form ref="updateVideoForm">
                         <v-text-field
-                            placeholder="Playlist URL"
-                            name="playlistURL"
+                            placeholder="Video URL"
+                            name="videoURL"
                             type="text"
-                            :rules="[
-                                rules.required,
-                                rules.validSpotifyLink,
-                                rules.alreadyOnList
-                            ]"
-                            v-model="spotifyLink"
+                            :rules="[rules.required]"
+                            v-model="videoLink"
                             outlined
                             prepend-inner-icon="person"
                         ></v-text-field>
@@ -22,7 +18,7 @@
                         <v-btn
                             block
                             class="mt-2 bg-blue"
-                            @click="updatePlaylists"
+                            @click="updateVideos"
                             outlined
                             >Submit</v-btn
                         >
@@ -32,30 +28,25 @@
             <v-col cols="7">
                 <v-card class="rounded pa-4 elevation-3 gap-3">
                     <div
-                        v-for="playlist in embedPlaylists"
-                        :key="playlist.title"
+                        v-for="video in this.me.videos"
+                        :key="video"
                         style="width: 100%"
                     >
                         <v-row>
                             <v-col cols="10">
-                                <div v-html="playlist.html"></div>
+                                <iframe width="100%" height="315" :src="video">
+                                </iframe>
                             </v-col>
                             <v-col cols="2">
                                 <v-btn
                                     variant="text"
-                                    @click="deletePlaylist(playlist.url)"
+                                    @click="deleteVideo(video)"
                                 >
                                     <v-icon size="x-large">delete</v-icon>
                                 </v-btn>
                             </v-col>
                         </v-row>
                     </div>
-                    <iframe
-                        width="100%"
-                        height="315"
-                        src="https://www.youtube.com/embed/tgbNymZ7vqY"
-                    >
-                    </iframe>
                 </v-card>
             </v-col>
         </v-row>
@@ -63,7 +54,7 @@
 </template>
 
 <script>
-//import api from "@/api";
+import api from "@/api";
 //import { nanoid } from "nanoid";
 
 export default {
@@ -80,7 +71,7 @@ export default {
                     this.me.playlists.indexOf(value) == -1 ||
                     "Already on this list." */
             },
-            spotifyLink: ""
+            videoLink: ""
         };
     },
     watch: {
@@ -108,7 +99,18 @@ export default {
             console.log(res);
         }); */
     },
-    methods: {}
+    methods: {
+        updateVideos() {
+            let newVideos = [...this.me.videos, this.videoLink];
+
+            api.updateVideos(this.me.id, newVideos);
+        },
+        deleteVideo(video) {
+            let newVideos = this.me.videos.filter((value) => value != video);
+
+            api.updateVideos(this.me.id, newVideos);
+        }
+    }
 };
 </script>
 
