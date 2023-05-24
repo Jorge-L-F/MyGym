@@ -34,8 +34,9 @@
                     >
                         <v-row>
                             <v-col cols="10">
-                                <iframe width="100%" height="315" :src="video">
-                                </iframe>
+                                <a :href="video">{{ video }}</a>
+                                <!-- <iframe width="100%" height="315" :src="video">
+                                </iframe> -->
                             </v-col>
                             <v-col cols="2">
                                 <v-btn
@@ -100,6 +101,11 @@ export default {
         }); */
     },
     methods: {
+        getYTApi() {
+            const scriptElement = document.createElement("script");
+            scriptElement.src = "https://www.youtube.com/iframe_api";
+            document.head.appendChild(scriptElement);
+        },
         updateVideos() {
             let newVideos = [...this.me.videos, this.videoLink];
 
