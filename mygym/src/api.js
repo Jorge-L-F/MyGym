@@ -38,7 +38,7 @@ export default {
             sensors: [...data]
         });
     },
-    updatePlaylist(userId, playlistsArray) {
+    updatePlaylists(userId, playlistsArray) {
         return api.patch(`/user/${userId}`, {
             playlists: [...playlistsArray]
         });

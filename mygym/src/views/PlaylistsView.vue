@@ -92,9 +92,23 @@ export default {
         let playlists = this.me.playlists || [];
 
         playlists.forEach((playlist) => {
-            /* let url =
-                "https://open.spotify.com/track/0sAdiWtInRUw0dCR58gbEn?si=b74bc7029b384c99";
- */
+            this.getEmbed(playlist);
+        });
+    },
+    computed: {
+        me() {
+            return this.$store.state.user.me;
+        }
+    },
+    beforeUpdate() {
+        /* api.getEmbed(
+            "https://open.spotify.com/track/2ZtgxuTO7gEGh5XM1IJEh7?si=8888be4fa509404d"
+        ).then((res) => {
+            console.log(res);
+        }); */
+    },
+    methods: {
+        getEmbed(playlist) {
             var myHeaders = new Headers();
             myHeaders.append(
                 "Cookie",
@@ -128,76 +142,20 @@ export default {
                     //this.embedPlaylists.push(JSON.parse(result));
                 })
                 .catch((error) => console.log("error", error));
-        });
-    },
-    computed: {
-        me() {
-            return this.$store.state.user.me;
-        }
-    },
-    beforeUpdate() {
-        /* api.getEmbed(
-            "https://open.spotify.com/track/2ZtgxuTO7gEGh5XM1IJEh7?si=8888be4fa509404d"
-        ).then((res) => {
-            console.log(res);
-        }); */
-    },
-    methods: {
+        },
         updatePlaylists() {
             let newPlaylists = [...this.me.playlists, this.spotifyLink];
 
-            const target = this.me;
-            const user = {
-                id: target.id,
-                fullName: target.fullName,
-                email: target.email,
-                password: target.password,
-                role: target.role,
-                username: target.username,
-                gender: target.gender,
-                age: target.age,
-                height: target.height,
-                weight: target.weight,
-                sensors: target.sensors,
-                competitions: target.competitions,
-                competitionsWins: target.competitionsWins,
-                playlists: newPlaylists
-            };
+            api.updatePlaylists(this.me.id, newPlaylists);
 
-            api.updateUser(user).then((res) => {
-                //TODO Set the new me variable!
-                console.log(res);
-            });
+            this.getEmbed(this.spotifyLink);
         },
         deletePlaylist(playlist) {
             let newPlaylists = this.me.playlists.filter(
                 (value) => value != playlist
             );
 
-            console.log(newPlaylists);
-
-            const target = this.me;
-            const user = {
-                id: target.id,
-                fullName: target.fullName,
-                email: target.email,
-                password: target.password,
-                role: target.role,
-                username: target.username,
-                gender: target.gender,
-                age: target.age,
-                height: target.height,
-                weight: target.weight,
-                sensors: target.sensors,
-                competitions: target.competitions,
-                competitionsWins: target.competitionsWins,
-                playlists: newPlaylists
-            };
-
-            api.updateUser(user).then((res) => {
-                //TODO Set the new me variable!
-                console.log(res);
-            });
+            api.updatePlaylists(this.me.id, newPlaylists);
 
             this.embedPlaylists = this.embedPlaylists.filter(
                 (value) => value.url != playlist
