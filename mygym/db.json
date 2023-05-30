@@ -189,5 +189,142 @@
             "start": "2023-05-20T18:00:00.000Z",
             "end": "2023-05-20T20:00:00.000Z"
         }
+    ],
+    "diets": [
+      {
+        "id": 1,
+        "name": "Mediterranean Diet",
+        "thumbnail": "https://static1.conquistesuavida.com.br/articles//2/76/82/@/24947-os-peixes-sao-os-grandes-destaques-da-ga-article_gallery-2.jpg",
+        "dishes": [
+            {
+                "type": "breakfast",
+                "thumbnail": "https://fitmealideas.com/wp-content/uploads/2021/05/fruit-salad-with-greek-yogurt.jpg",
+                "description": "Greek yogurt with fresh berries and a sprinkle of nuts, whole grain toast with avocado."
+            },
+            {
+                "type": "lunch",
+                "thumbnail": "https://www.deliciousmeetshealthy.com/wp-content/uploads/2022/03/Greek-Salad-8-scaled.jpg",
+                "description": "Mediterranean salad with mixed greens, tomatoes, cucumbers, olives, feta cheese, and grilled chicken, dressed with olive oil and lemon juice."
+            },
+            {
+                "type": "snack",
+                "thumbnail": "",
+                "description": "Hummus with carrot sticks and whole grain crackers."
+            },
+            {
+                "type": "dinner",
+                "thumbnail": "",
+                "description": "Baked salmon with roasted vegetables (such as zucchini, bell peppers, and eggplant) drizzled with olive oil and herbs."
+            }
+        ]
+    },
+    {
+      "id": 2,
+      "name": "Paleo Diet",
+      "thumbnail": "https://img.freepik.com/fotos-premium/prato-com-uma-comida-de-dieta-paleo-ovos-cozidos-abacate-pepino-nozes-cereja-e-morangos-cafe-da-manha-paleo_2829-3703.jpg?w=2000",
+      "dishes": [
+          {
+              "type": "breakfast",
+              "thumbnail": "",
+              "description": "Vegetable omelet cooked in coconut oil, accompanied by a side of bacon."
+          },
+          {
+              "type": "lunch",
+              "thumbnail": "",
+              "description": "Grilled chicken breast with a mixed green salad, topped with sliced almonds and a light vinaigrette dressing."
+          },
+          {
+              "type": "snack",
+              "thumbnail": "",
+              "description": "Celery sticks with almond butter."
+          },
+          {
+              "type": "dinner",
+              "thumbnail": "",
+              "description": "Baked salmon with steamed broccoli and roasted sweet potatoes."
+          }
+      ]
+  },
+  {
+    "id": 3,
+    "name": "Ketogenic Diet",
+    "thumbnail": "https://www.eatright.org/-/media/images/eatright-articles/eatright-article-thumbnails/whatistheketogenicdiet_600x450.jpg?h=450&w=600&rev=a611c614832d4b5fbc2bc87944f1353d&hash=5322C897F390BB4713E3E123EE5AF812",
+    "dishes": [
+        {
+            "type": "breakfast",
+            "thumbnail": "",
+            "description": "Scrambled eggs cooked in butter with avocado slices and bacon."
+        },
+        {
+            "type": "lunch",
+            "thumbnail": "",
+            "description": "Grilled chicken salad with mixed greens, cherry tomatoes, sliced avocado, and olive oil dressing."
+        },
+        {
+            "type": "snack",
+            "thumbnail": "",
+            "description": "Cheese slices or a handful of mixed nuts."
+        },
+        {
+            "type": "dinner",
+            "thumbnail": "",
+            "description": "Grilled steak with sautéed spinach and cauliflower rice."
+        }
+    ]
+},
+{
+  "id": 4,
+  "name": "Vegan Diet",
+  "thumbnail": "https://images-prod.healthline.com/hlcmsresource/images/AN_images/vegan-diet-guide-1296x728.jpg",
+  "dishes": [
+      {
+          "type": "breakfast",
+          "thumbnail": "",
+          "description": "Overnight oats made with almond milk, chia seeds, and topped with fresh fruits and nuts."
+      },
+      {
+          "type": "lunch",
+          "thumbnail": "",
+          "description": "Quinoa salad with mixed vegetables, chickpeas, and a tahini dressing."
+      },
+      {
+          "type": "snack",
+          "thumbnail": "",
+          "description": "Fresh fruit or a homemade vegan energy bar."
+      },
+      {
+          "type": "dinner",
+          "thumbnail": "",
+          "description": "Stir-fried tofu with vegetables (such as broccoli, bell peppers, and snap peas) served over brown rice."
+      }
+  ]
+},
+{
+  "id": 5,
+  "name": "Vegetarian Diet",
+  "thumbnail": "https://assets.nhs.uk/nhsuk-cms/images/T_0318_vegetarian-meal-guide_916017038.width-320.jpg",
+  "dishes": [
+      {
+          "type": "breakfast",
+          "thumbnail": "",
+          "description": "Whole grain toast with peanut butter and sliced bananas."
+      },
+      {
+          "type": "lunch",
+          "thumbnail": "",
+          "description": "Lentil soup with a side of whole grain bread or a chickpea salad wrap."
+      },
+      {
+          "type": "snack",
+          "thumbnail": "",
+          "description": "Greek yogurt with honey and mixed nuts."
+      },
+      {
+          "type": "dinner",
+          "thumbnail": "",
+          "description": "Spinach and feta stuffed bell peppers served with a side of quinoa."
+      }
+  ]
+}
     ]
 }
