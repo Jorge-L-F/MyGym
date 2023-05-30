@@ -195,5 +195,19 @@
             "start": "2023-05-20T18:00:00.000Z",
             "end": "2023-05-20T20:00:00.000Z"
         }
+    ],
+    "machines": [
+        {
+            "id": 1,
+            "name": "Machine 1",
+            "type": "Treadmill",
+            "isAvailable": true
+        },
+        {
+            "id": 2,
+            "name": "Machine 2",
+            "type": "Treadmill",
+            "isAvailable": true
+        }
     ]
 }

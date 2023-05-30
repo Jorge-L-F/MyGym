@@ -110,7 +110,20 @@ export default {
     getUsersIn(usersArray) {
         return api.get(`/user?id_in=${usersArray}`);
     },
-        
 
     // ... other methods
+    getMachine(id) {
+        return api.get(`/machines/${id}`);
+    },
+    getMachines() {
+        return api.get("/machines");
+    },
+    addMachine(machine) {
+        return api.post("/machines", machine);
+    },
+    updateMachineIsAvailable(machineId, isAvailable) {
+        return api.patch(`/machines/${machineId}`, {
+            isAvailable
+        });
+    }
 };
