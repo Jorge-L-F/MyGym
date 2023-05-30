@@ -165,14 +165,14 @@
             "participants": [1, 2, 3],
             "winner": 2,
             "color": "red",
-            "isCompleted": true,
+            "isCompleted": false,
             "start": "2023-05-19T17:00:00.000Z",
             "end": "2023-05-19T18:00:00.000Z"
         },
         {
             "id": 2,
             "name": "Competition 2",
-            "participants": [1, 2, 3],
+            "participants": [1, 2, 3, "JrG0N09KCkkP93qDENJyk"],
             "winner": 3,
             "color": "green",
             "isCompleted": false,
@@ -182,10 +182,16 @@
         {
             "id": 3,
             "name": "Competition 3",
-            "participants": [1, 2, 3, "bUs6K-EXY3Zv6ScTPnfHx"],
-            "winner": "bUs6K-EXY3Zv6ScTPnfHx",
+            "participants": [
+                1,
+                2,
+                3,
+                "bUs6K-EXY3Zv6ScTPnfHx",
+                "JrG0N09KCkkP93qDENJyk"
+            ],
+            "winner": "JrG0N09KCkkP93qDENJyk",
             "color": "blue",
-            "isCompleted": true,
+            "isCompleted": false,
             "start": "2023-05-20T18:00:00.000Z",
             "end": "2023-05-20T20:00:00.000Z"
         }

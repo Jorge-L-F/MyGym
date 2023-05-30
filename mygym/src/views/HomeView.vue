@@ -42,13 +42,24 @@
                             </v-timeline-item>
                         </v-timeline>
                     </v-card>
+                    <v-card class="pa-4 rounded mt-10" v-if="role == 'user'">
+                        <h1>Competitions</h1>
+                        <v-card-text>
+                            <span
+                                ><b>Competitions Registered:</b>
+                                {{ numberOfCompetitions }}</span
+                            >
+                            <br />
+                            <span
+                                ><b>Competitions Won:</b>
+                                {{ numberWinningCompetitions }}</span
+                            >
+                        </v-card-text>
+                    </v-card>
                 </v-col>
                 <v-col md="7" sm="12">
                     <v-card class="pa-4 rounded">
                         <h1 class="mb-3">Biometric Record</h1>
-                        <!--
-                            
-                        -->
                         <BarChart
                             v-if="!noSensorData"
                             :chartData="biometricData"
@@ -121,13 +132,18 @@ export default {
                 datasets: []
             },
             nextEvents: [],
-            userEvents: []
+            userEvents: [],
+            numberOfCompetitions: 0,
+            numberWinningCompetitions: 0
         };
     },
 
     computed: {
         me() {
             return this.$store.state.user.me;
+        },
+        role() {
+            return this.me?.role;
         },
         items() {
             return [
@@ -160,6 +176,12 @@ export default {
                         event.isCompleted === false
                     );
                 });
+            });
+            api.getCompetitionsOf(this.me.id).then((res) => {
+                this.numberOfCompetitions = res.data.length;
+            });
+            api.getWinningCompetitionsOf(this.me.id).then((res) => {
+                this.numberWinningCompetitions = res.data.length;
             });
         } else {
             api.getClassesOfTrainer(this.me.id).then((res) => {
