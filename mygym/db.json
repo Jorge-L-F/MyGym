@@ -228,12 +228,12 @@
             },
             {
                 "type": "snack",
-                "thumbnail": "",
+                "thumbnail": "https://www.verywellfit.com/thmb/B6eyh4PJPOmBNhegNDEOlxsjktA=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/veggies-and-dip-1d96c27db1244efeab577ead84f3698a.jpg",
                 "description": "Hummus with carrot sticks and whole grain crackers."
             },
             {
                 "type": "dinner",
-                "thumbnail": "",
+                "thumbnail": "https://images.squarespace-cdn.com/content/v1/58bf61ea3a041163d873b4e8/1582871615109-W4TN17L2TH8XYCW0GC00/bakedsalmonwithvegetables.jpeg?format=750w",
                 "description": "Baked salmon with roasted vegetables (such as zucchini, bell peppers, and eggplant) drizzled with olive oil and herbs."
             }
         ]
@@ -245,22 +245,22 @@
       "dishes": [
           {
               "type": "breakfast",
-              "thumbnail": "",
+              "thumbnail": "https://joyfoodsunshine.com/wp-content/uploads/2022/07/best-omelette-recipe-1.jpg",
               "description": "Vegetable omelet cooked in coconut oil, accompanied by a side of bacon."
           },
           {
               "type": "lunch",
-              "thumbnail": "",
+              "thumbnail": "https://www.tadstastytreats.com/uploads/1/8/4/9/18492680/s389171165141949063_p31_i2_w500.jpeg",
               "description": "Grilled chicken breast with a mixed green salad, topped with sliced almonds and a light vinaigrette dressing."
           },
           {
               "type": "snack",
-              "thumbnail": "",
+              "thumbnail": "https://www.justins.com/wp-content/uploads/2021/08/celery-1900x950-1.jpg",
               "description": "Celery sticks with almond butter."
           },
           {
               "type": "dinner",
-              "thumbnail": "",
+              "thumbnail": "https://aiweightlossdiet.com/wp-content/uploads/2020/04/Baked_Salmon_Sweet_Potatoes_Broccoli-_153550565-678x470.jpg",
               "description": "Baked salmon with steamed broccoli and roasted sweet potatoes."
           }
       ]
@@ -272,22 +272,22 @@
     "dishes": [
         {
             "type": "breakfast",
-            "thumbnail": "",
+            "thumbnail": "https://tmbidigitalassetsazure.blob.core.windows.net/toh/GoogleImagesPostCard/Avocado-Scrambled-Eggs_EXPS_BMZ12_10302_B12_08_2b.jpg",
             "description": "Scrambled eggs cooked in butter with avocado slices and bacon."
         },
         {
             "type": "lunch",
-            "thumbnail": "",
+            "thumbnail": "https://www.theculinarycompass.com/wp-content/uploads/2021/01/Balsamic-Grilled-Chicken-Salad-2.jpg.webp",
             "description": "Grilled chicken salad with mixed greens, cherry tomatoes, sliced avocado, and olive oil dressing."
         },
         {
             "type": "snack",
-            "thumbnail": "",
+            "thumbnail": "https://www.diamondnuts.com/wp-content/uploads/cheeseplate.jpg",
             "description": "Cheese slices or a handful of mixed nuts."
         },
         {
             "type": "dinner",
-            "thumbnail": "",
+            "thumbnail": "https://ourplantbasedworld.com/wp-content/uploads/2021/03/IMG_6083.jpg",
             "description": "Grilled steak with sautéed spinach and cauliflower rice."
         }
     ]
@@ -299,22 +299,22 @@
   "dishes": [
       {
           "type": "breakfast",
-          "thumbnail": "",
+          "thumbnail": "https://feelgoodfoodie.net/wp-content/uploads/2018/06/3-Ingredient-Chia-Pudding-06-500x500.jpg",
           "description": "Overnight oats made with almond milk, chia seeds, and topped with fresh fruits and nuts."
       },
       {
           "type": "lunch",
-          "thumbnail": "",
+          "thumbnail": "https://images.squarespace-cdn.com/content/v1/564e178de4b0db900e8e9e1c/1589207815763-E75T27OHY4ZWBVO8QA93/Chickpea+and+quinoa+salad.jpg?format=1000w",
           "description": "Quinoa salad with mixed vegetables, chickpeas, and a tahini dressing."
       },
       {
           "type": "snack",
-          "thumbnail": "",
+          "thumbnail": "https://naturalcontents.com/wp-content/uploads/2017/03/Fruit-Nut-Bars_NaturalContents.jpg",
           "description": "Fresh fruit or a homemade vegan energy bar."
       },
       {
           "type": "dinner",
-          "thumbnail": "",
+          "thumbnail": "https://shwetainthekitchen.com/wp-content/uploads/2014/03/DSC_0276.jpg",
           "description": "Stir-fried tofu with vegetables (such as broccoli, bell peppers, and snap peas) served over brown rice."
       }
   ]
@@ -326,22 +326,22 @@
   "dishes": [
       {
           "type": "breakfast",
-          "thumbnail": "",
+          "thumbnail": "https://deliciouslittlebites.com/wp-content/uploads/2018/03/Banana-Toast-Recipe-Image-3.jpg",
           "description": "Whole grain toast with peanut butter and sliced bananas."
       },
       {
           "type": "lunch",
-          "thumbnail": "",
+          "thumbnail": "https://runningonrealfood.com/wp-content/uploads/2021/10/Vegan-Lemon-Lentil-Soup-Recipe-13-1.jpg",
           "description": "Lentil soup with a side of whole grain bread or a chickpea salad wrap."
       },
       {
           "type": "snack",
-          "thumbnail": "",
+          "thumbnail": "https://www.foodpal-app.com/uploads/images/meals/2828/cremiger-griechischer-joghurt-mit-nuessen-und-honig-5f8ab2fbb781e-800.webp",
           "description": "Greek yogurt with honey and mixed nuts."
       },
       {
           "type": "dinner",
-          "thumbnail": "",
+          "thumbnail": "https://www.wellplated.com/wp-content/uploads/2016/08/Spinach-Artichoke-Quinoa-Stuffed-Bell-Peppers.jpg",
           "description": "Spinach and feta stuffed bell peppers served with a side of quinoa."
       }
   ]

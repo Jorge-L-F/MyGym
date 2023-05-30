@@ -1,7 +1,7 @@
 <template>
     <v-container class="fill-height background2" fluid>
         <v-row>
-            <v-col cols="8">
+            <v-col cols="7">
                 <v-card class="rounded pa-4 elevation-3">
                     <h1 class="mb-4">Recommended Diet</h1>
                     <div class="d-flex flex-wrap">
@@ -49,7 +49,7 @@
                     </div>
                 </v-card>
             </v-col>
-            <v-col cols="4">
+            <v-col cols="5">
                 <v-card class="rounded pa-4 elevation-3">
                     <h1>Selected Diet</h1>
                 </v-card>
