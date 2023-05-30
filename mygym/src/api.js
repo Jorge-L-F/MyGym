@@ -116,4 +116,18 @@ export default {
     }        
 
     // ... other methods
+    getMachine(id) {
+        return api.get(`/machines/${id}`);
+    },
+    getMachines() {
+        return api.get("/machines");
+    },
+    addMachine(machine) {
+        return api.post("/machines", machine);
+    },
+    updateMachineIsAvailable(machineId, isAvailable) {
+        return api.patch(`/machines/${machineId}`, {
+            isAvailable
+        });
+    }
 };
