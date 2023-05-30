@@ -3,8 +3,8 @@
         <v-row>
             <v-col cols="8">
                 <v-card class="rounded pa-4 elevation-3">
-                    <h1>Recommended Diet</h1>
-                    <div class="d-flex flex-wrap justify-center">
+                    <h1 class="mb-4">Recommended Diet</h1>
+                    <div class="d-flex flex-wrap">
                         <v-card
                             v-for="diet in this.availableDiets"
                             max-width="400"

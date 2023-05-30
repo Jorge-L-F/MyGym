@@ -113,7 +113,7 @@ export default {
     //Diet methods
     getAllDiets() {
         return api.get("/diets");
-    }        
+    },
 
     // ... other methods
     getMachine(id) {
