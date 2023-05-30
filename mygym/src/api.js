@@ -93,6 +93,9 @@ export default {
     getCompetitionsOf(userId) {
         return api.get(`/competitions?participants_like=${userId}`);
     },
+    getWinningCompetitionsOf(userId) {
+        return api.get(`/competitions?winner=${userId}`);
+    },
     updateCompetitionParticipants(competitionId, participants) {
         return api.patch(`/competitions/${competitionId}`, {
             participants
@@ -103,7 +106,11 @@ export default {
         return spotifyEmbedApi.get(`?url=${playlistLink}`, {
             redirect: "follow"
         });
-    }
+    },
+    getUsersIn(usersArray) {
+        return api.get(`/user?id_in=${usersArray}`);
+    },
+        
 
     // ... other methods
 };

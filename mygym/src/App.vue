@@ -189,16 +189,6 @@ export default {
                     title: "Manage Machines",
                     icon: "mdi-dumbbell",
                     to: "/machines"
-                },
-                {
-                    title: "Manage Playlists",
-                    icon: "mdi-music",
-                    to: "/playlists"
-                },
-                {
-                    title: "Manage Videos",
-                    icon: "mdi-video",
-                    to: "/videos"
                 }
             ]
         };

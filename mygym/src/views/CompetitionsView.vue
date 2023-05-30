@@ -225,6 +225,18 @@
                                             label="Completed"
                                             :disabled="!editMode"
                                         ></v-checkbox>
+
+                                        <v-select
+                                            v-if="!createMode"
+                                            :clearable="editMode"
+                                            v-model="selectedEvent.winner"
+                                            :items="participantsObj"
+                                            item-text="fullName"
+                                            item-value="id"
+                                            label="Winner"
+                                            outlined
+                                            :disabled="!editMode"
+                                        ></v-select>
                                     </v-form>
                                     <div v-else class="text-center">
                                         <span
@@ -320,6 +332,7 @@ export default {
                 week: "Week",
                 day: "Day"
             },
+            participantsObjects: [],
             valid: false,
             disabled: false,
             menu: false,
@@ -337,24 +350,18 @@ export default {
             },
             createMode: false,
             colors: [
-                "#f44336",
-                "#e91e63",
-                "#9c27b0",
-                "#673ab7",
-                "#3f51b5",
-                "#2196f3",
-                "#03a9f4",
-                "#00bcd4",
-                "#009688",
-                "#4caf50",
-                "#8bc34a",
-                "#cddc39",
-                "#ffeb3b",
-                "#ffc107",
-                "#ff9800",
-                "#ff5722",
-                "#795548",
-                "#607d8b"
+                "blue",
+                "red",
+                "green",
+                "yellow",
+                "purple",
+                "pink",
+                "orange",
+                "grey",
+                "brown",
+                "teal",
+                "cyan",
+                "lime"
             ]
         };
     },
@@ -382,10 +389,13 @@ export default {
             color = this.selectedEvent.color;
             return { color: color, title: title };
         },
+        participantsObj() {
+            return this.participantsObjects.find(
+                (obj) => obj.id === this.selectedEvent.id
+            )?.participants;
+        },
         eventsFormatted() {
             return this.events.map((event) => {
-                // see if me.id is in event.participants
-
                 return {
                     ...event,
                     start: new Date(event.start),
@@ -455,6 +465,18 @@ export default {
     mounted() {
         api.getCompetitions().then((res) => {
             this.events = res.data;
+            this.events.forEach((event) => {
+                console.log(event.participants);
+
+                this.events.forEach((event) => {
+                    this.getUsers(event.participants).then((res2) => {
+                        this.participantsObjects.push({
+                            id: event.id,
+                            participants: res2
+                        });
+                    });
+                });
+            });
         });
         this.$refs.calendar.checkChange();
     },
@@ -603,6 +625,14 @@ export default {
         refetchEvents() {
             api.getCompetitions().then((res) => {
                 this.events = res.data;
+                this.events.forEach((event) => {
+                    this.getUsers(event.participants).then((res2) => {
+                        this.participantsObjects.push({
+                            id: event.id,
+                            participants: res2
+                        });
+                    });
+                });
             });
             this.$refs.calendar.checkChange();
         },
@@ -626,6 +656,14 @@ export default {
         },
         randomColor() {
             return this.colors[Math.floor(Math.random() * this.colors.length)];
+        },
+        async getUsers(participants) {
+            let users = [];
+            for (let i = 0; i < participants.length; i++) {
+                let user = await api.getUser(participants[i]);
+                users.push(user.data);
+            }
+            return users;
         }
     }
 };

@@ -1,206 +1,193 @@
 {
-  "user": [
-    {
-      "id": 1,
-      "fullName": "John Doe",
-      "email": "johndoe@email.com",
-      "password": "123",
-      "role": "user",
-      "username": "johndoe",
-      "gender": "male",
-      "age": 25,
-      "height": 180,
-      "weight": 80,
-      "competitions": [
-        1,
-        2
-      ],
-      "competitionsWins": 1,
-      "sensors": [
+    "user": [
         {
-          "calories": 1053.7142857142856,
-          "heartRate": 123
+            "id": 1,
+            "fullName": "John Doe",
+            "email": "johndoe@email.com",
+            "password": "123",
+            "role": "user",
+            "username": "johndoe",
+            "gender": "male",
+            "age": 25,
+            "height": 180,
+            "weight": 80,
+            "sensors": [
+                {
+                    "calories": 1053.7142857142856,
+                    "heartRate": 123
+                },
+                {
+                    "calories": 699.4285714285714,
+                    "heartRate": 100
+                },
+                {
+                    "calories": 296.1904761904762,
+                    "heartRate": 150
+                }
+            ]
         },
         {
-          "calories": 699.4285714285714,
-          "heartRate": 100
+            "id": 2,
+            "fullName": "Bruno Braga",
+            "email": "braga@email.com",
+            "password": "123",
+            "role": "trainer",
+            "username": "brunobraga",
+            "gender": "male",
+            "age": 25,
+            "height": 180,
+            "weight": 80,
+            "sensors": [],
+            "playlists": [
+                "https://open.spotify.com/track/2Foc5Q5nqNiosCNqttzHof?si=f59fbaa1e9c8441b"
+            ],
+            "videos": [
+                "https://www.youtube.com/watch?v=k7RM-ot2NWY",
+                "https://www.youtube.com/watch?v=kYB8IZa5AuE"
+            ]
         },
         {
-          "calories": 296.1904761904762,
-          "heartRate": 150
+            "id": 3,
+            "fullName": "rodrigo alegris",
+            "email": "alegris@email.com",
+            "password": "123",
+            "role": "user",
+            "username": "alegris",
+            "gender": "male",
+            "age": 21,
+            "height": 190,
+            "weight": 80,
+            "sensors": []
+        },
+        {
+            "id": "bUs6K-EXY3Zv6ScTPnfHx",
+            "fullName": "Joao Cristiano",
+            "email": "jc@email.com",
+            "password": "123",
+            "role": "user",
+            "username": "jcristiano",
+            "gender": "male",
+            "age": 21,
+            "height": 140,
+            "weight": 55,
+            "sensors": []
+        },
+        {
+            "id": "JrG0N09KCkkP93qDENJyk",
+            "fullName": "123",
+            "email": "123@email",
+            "password": "123",
+            "role": "user",
+            "username": "123",
+            "gender": "male",
+            "age": 123,
+            "height": 123,
+            "weight": 123,
+            "sensors": [
+                {
+                    "calories": 1053.7142857142856,
+                    "heartRate": 123
+                },
+                {
+                    "calories": 699.4285714285714,
+                    "heartRate": 100
+                },
+                {
+                    "calories": 296.1904761904762,
+                    "heartRate": 150
+                }
+            ]
+        },
+        {
+            "id": "2Z7b4p3s3FKfJLa3jYJ-T",
+            "fullName": "123",
+            "email": "123@email",
+            "password": "123",
+            "role": "user",
+            "username": "rd.alegria",
+            "gender": "male",
+            "age": 123,
+            "height": 123,
+            "weight": 123
         }
-      ]
-    },
-    {
-      "id": 2,
-      "fullName": "Bruno Braga",
-      "email": "braga@email.com",
-      "password": "123",
-      "role": "trainer",
-      "username": "brunobraga",
-      "gender": "male",
-      "age": 25,
-      "height": 180,
-      "weight": 80,
-      "sensors": [],
-      "playlists": [
-        "https://open.spotify.com/track/2Foc5Q5nqNiosCNqttzHof?si=f59fbaa1e9c8441b"
-      ],
-      "videos": [
-        "https://www.youtube.com/watch?v=k7RM-ot2NWY",
-        "https://www.youtube.com/watch?v=kYB8IZa5AuE"
-      ]
-    },
-    {
-      "id": 3,
-      "fullName": "rodrigo alegris",
-      "email": "alegris@email.com",
-      "password": "123",
-      "role": "user",
-      "username": "alegris",
-      "gender": "male",
-      "age": 21,
-      "height": 190,
-      "weight": 80,
-      "sensors": []
-    },
-    {
-      "id": "bUs6K-EXY3Zv6ScTPnfHx",
-      "fullName": "Joao Cristiano",
-      "email": "jc@email.com",
-      "password": "123",
-      "role": "user",
-      "username": "jcristiano",
-      "gender": "male",
-      "age": 21,
-      "height": 140,
-      "weight": 55,
-      "sensors": []
-    },
-    {
-      "id": "JrG0N09KCkkP93qDENJyk",
-      "fullName": "123",
-      "email": "123@email",
-      "password": "123",
-      "role": "user",
-      "username": "123",
-      "gender": "male",
-      "age": 123,
-      "height": 123,
-      "weight": 123
-    },
-    {
-      "id": "2Z7b4p3s3FKfJLa3jYJ-T",
-      "fullName": "123",
-      "email": "123@email",
-      "password": "123",
-      "role": "user",
-      "username": "rd.alegria",
-      "gender": "male",
-      "age": 123,
-      "height": 123,
-      "weight": 123
-    }
-  ],
-  "class": [
-    {
-      "id": 1,
-      "type": "skippingRope",
-      "isCompleted": true,
-      "start": "2023-04-19T17:00:00.000Z",
-      "end": "2023-04-19T18:00:00.000Z",
-      "trainer": 2,
-      "participants": [
-        1
-      ]
-    },
-    {
-      "id": 2,
-      "type": "cycling",
-      "isCompleted": true,
-      "start": "2023-04-20T18:00:00.000Z",
-      "end": "2023-04-20T20:00:00.000Z",
-      "trainer": 2,
-      "participants": [
-        1
-      ]
-    },
-    {
-      "id": "NQ9YpWvrBddh1-OeLcPlH",
-      "trainer": 2,
-      "participants": [
-        1
-      ],
-      "type": "skippingRope",
-      "isCompleted": true,
-      "start": "2023-04-20T14:00:00.000Z",
-      "end": "2023-04-20T15:00:00.000Z"
-    },
-    {
-      "id": "DeU27_HskgVV5wUWb0WKM",
-      "trainer": 2,
-      "participants": [
-        1
-      ],
-      "type": "boxing",
-      "isCompleted": false,
-      "start": "2023-04-23T14:00:00.000Z",
-      "end": "2023-04-23T15:00:00.000Z"
-    },
-    {
-      "id": "r1t1IEiQWt7FQ2NnYqeO0",
-      "trainer": 2,
-      "participants": [
-        1
-      ],
-      "type": "crossfit",
-      "isCompleted": false,
-      "start": "2023-04-29T13:10:00.000Z",
-      "end": "2023-04-29T14:00:00.000Z"
-    }
-  ],
-  "competitions": [
-    {
-      "id": 1,
-      "name": "Competition 1",
-      "participants": [
-        1,
-        2,
-        3
-      ],
-      "winner": 1,
-      "color": "#ff0000",
-      "isCompleted": true,
-      "start": "2023-05-19T17:00:00.000Z",
-      "end": "2023-05-19T18:00:00.000Z"
-    },
-    {
-      "id": 2,
-      "name": "Competition 2",
-      "participants": [
-        1,
-        2,
-        3
-      ],
-      "winner": 2,
-      "color": "#00ff00",
-      "isCompleted": true,
-      "start": "2023-05-20T18:00:00.000Z",
-      "end": "2023-05-20T20:00:00.000Z"
-    },
-    {
-      "id": 3,
-      "name": "Competition 3",
-      "participants": [
-        1,
-        2,
-        3
-      ],
-      "winner": null,
-      "color": "#00ffff",
-      "isCompleted": false,
-      "start": "2023-05-20T18:00:00.000Z",
-      "end": "2023-05-20T20:00:00.000Z"
-    }
-  ]
+    ],
+    "class": [
+        {
+            "id": 1,
+            "type": "skippingRope",
+            "isCompleted": true,
+            "start": "2023-04-19T17:00:00.000Z",
+            "end": "2023-04-19T18:00:00.000Z",
+            "trainer": 2,
+            "participants": [1]
+        },
+        {
+            "id": 2,
+            "type": "cycling",
+            "isCompleted": true,
+            "start": "2023-04-20T18:00:00.000Z",
+            "end": "2023-04-20T20:00:00.000Z",
+            "trainer": 2,
+            "participants": [1]
+        },
+        {
+            "id": "NQ9YpWvrBddh1-OeLcPlH",
+            "trainer": 2,
+            "participants": [1],
+            "type": "skippingRope",
+            "isCompleted": true,
+            "start": "2023-04-20T14:00:00.000Z",
+            "end": "2023-04-20T15:00:00.000Z"
+        },
+        {
+            "id": "DeU27_HskgVV5wUWb0WKM",
+            "trainer": 2,
+            "participants": [1],
+            "type": "boxing",
+            "isCompleted": false,
+            "start": "2023-04-23T14:00:00.000Z",
+            "end": "2023-04-23T15:00:00.000Z"
+        },
+        {
+            "id": "r1t1IEiQWt7FQ2NnYqeO0",
+            "trainer": 2,
+            "participants": [1],
+            "type": "crossfit",
+            "isCompleted": false,
+            "start": "2023-04-29T13:10:00.000Z",
+            "end": "2023-04-29T14:00:00.000Z"
+        }
+    ],
+    "competitions": [
+        {
+            "id": 1,
+            "name": "Competition 1",
+            "participants": [1, 2, 3],
+            "winner": 2,
+            "color": "red",
+            "isCompleted": true,
+            "start": "2023-05-19T17:00:00.000Z",
+            "end": "2023-05-19T18:00:00.000Z"
+        },
+        {
+            "id": 2,
+            "name": "Competition 2",
+            "participants": [1, 2, 3],
+            "winner": 3,
+            "color": "green",
+            "isCompleted": false,
+            "start": "2023-05-20T18:00:00.000Z",
+            "end": "2023-05-20T20:00:00.000Z"
+        },
+        {
+            "id": 3,
+            "name": "Competition 3",
+            "participants": [1, 2, 3, "bUs6K-EXY3Zv6ScTPnfHx"],
+            "winner": "bUs6K-EXY3Zv6ScTPnfHx",
+            "color": "blue",
+            "isCompleted": true,
+            "start": "2023-05-20T18:00:00.000Z",
+            "end": "2023-05-20T20:00:00.000Z"
+        }
+    ]
 }

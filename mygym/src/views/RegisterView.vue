@@ -176,8 +176,6 @@ export default {
                     age: this.age,
                     height: this.height,
                     weight: this.weight,
-                    competitions: [],
-                    competitionsWins: 0,
                     sensors: [],
                     playlists: [],
                     videos: []
