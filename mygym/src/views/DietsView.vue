@@ -95,7 +95,7 @@
             <v-col cols="5">
                 <v-card class="rounded pa-4 elevation-3">
                     <h1>Selected Diet</h1>
-                    <v-card max-width="400" class="ma-2">
+                    <!-- <v-card max-width="400" class="ma-2">
                         <v-img
                             height="250"
                             :src="this.selectedDiet?.thumbnail"
@@ -132,7 +132,7 @@
                                 </v-timeline-item>
                             </v-timeline>
                         </v-card-text>
-                    </v-card>
+                    </v-card> -->
                 </v-card>
             </v-col>
         </v-row>
