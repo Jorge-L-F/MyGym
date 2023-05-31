@@ -220,9 +220,8 @@ export default {
         },
         selectDiet(diet) {
             console.log("Updating Selected Diet");
-            const user = this.me;
             this.me.diet = diet;
-            api.updateUser(user).then((res) => {
+            api.updateUser(this.me).then((res) => {
                 //TODO Set the new me variable!
                 console.log(res);
             });

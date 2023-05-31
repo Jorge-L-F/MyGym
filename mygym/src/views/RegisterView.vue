@@ -178,7 +178,8 @@ export default {
                     weight: this.weight,
                     sensors: [],
                     playlists: [],
-                    videos: []
+                    videos: [],
+                    diet: {}
                 };
 
                 console.log("User: ");

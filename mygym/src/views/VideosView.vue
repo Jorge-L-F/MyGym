@@ -9,7 +9,7 @@
                             placeholder="Video URL"
                             name="videoURL"
                             type="text"
-                            :rules="[rules.required]"
+                            :rules="[rules.required, rules.isEmpty]"
                             v-model="videoLink"
                             outlined
                             prepend-inner-icon="person"
@@ -62,9 +62,9 @@ export default {
     title: "Videos",
     data: function () {
         return {
-            embedPlaylists: [],
             rules: {
-                required: (value) => !!value || "Required."
+                required: (value) => !!value || "Required.",
+                isEmpty: (value) => value.trim() !== "" || "Required."
                 /*                 validSpotifyLink: (value) =>
                     value.includes("https://open.spotify.com/") ||
                     "Invalid link.",
@@ -107,14 +107,24 @@ export default {
             document.head.appendChild(scriptElement);
         },
         updateVideos() {
+            if (this.videoLink.trim() == "") return;
+
             let newVideos = [...this.me.videos, this.videoLink];
 
-            api.updateVideos(this.me.id, newVideos);
+            this.me.videos = newVideos;
+
+            api.updateUser(this.me).then((res) => {
+                console.log(res);
+            });
         },
         deleteVideo(video) {
             let newVideos = this.me.videos.filter((value) => value != video);
 
-            api.updateVideos(this.me.id, newVideos);
+            this.me.videos = newVideos;
+
+            api.updateUser(this.me).then((res) => {
+                console.log(res);
+            });
         }
     }
 };
