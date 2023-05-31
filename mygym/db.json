@@ -26,29 +26,29 @@
         }
       ],
       "diet": {
-        "id": 5,
-        "name": "Vegetarian Diet",
-        "thumbnail": "https://assets.nhs.uk/nhsuk-cms/images/T_0318_vegetarian-meal-guide_916017038.width-320.jpg",
+        "id": 1,
+        "name": "Mediterranean Diet",
+        "thumbnail": "https://static1.conquistesuavida.com.br/articles//2/76/82/@/24947-os-peixes-sao-os-grandes-destaques-da-ga-article_gallery-2.jpg",
         "dishes": [
           {
             "type": "breakfast",
-            "thumbnail": "https://deliciouslittlebites.com/wp-content/uploads/2018/03/Banana-Toast-Recipe-Image-3.jpg",
-            "description": "Whole grain toast with peanut butter and sliced bananas."
+            "thumbnail": "https://fitmealideas.com/wp-content/uploads/2021/05/fruit-salad-with-greek-yogurt.jpg",
+            "description": "Greek yogurt with fresh berries and a sprinkle of nuts, whole grain toast with avocado."
           },
           {
             "type": "lunch",
-            "thumbnail": "https://runningonrealfood.com/wp-content/uploads/2021/10/Vegan-Lemon-Lentil-Soup-Recipe-13-1.jpg",
-            "description": "Lentil soup with a side of whole grain bread or a chickpea salad wrap."
+            "thumbnail": "https://www.deliciousmeetshealthy.com/wp-content/uploads/2022/03/Greek-Salad-8-scaled.jpg",
+            "description": "Mediterranean salad with mixed greens, tomatoes, cucumbers, olives, feta cheese, and grilled chicken, dressed with olive oil and lemon juice."
           },
           {
             "type": "snack",
-            "thumbnail": "https://www.foodpal-app.com/uploads/images/meals/2828/cremiger-griechischer-joghurt-mit-nuessen-und-honig-5f8ab2fbb781e-800.webp",
-            "description": "Greek yogurt with honey and mixed nuts."
+            "thumbnail": "https://www.verywellfit.com/thmb/B6eyh4PJPOmBNhegNDEOlxsjktA=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/veggies-and-dip-1d96c27db1244efeab577ead84f3698a.jpg",
+            "description": "Hummus with carrot sticks and whole grain crackers."
           },
           {
             "type": "dinner",
-            "thumbnail": "https://www.wellplated.com/wp-content/uploads/2016/08/Spinach-Artichoke-Quinoa-Stuffed-Bell-Peppers.jpg",
-            "description": "Spinach and feta stuffed bell peppers served with a side of quinoa."
+            "thumbnail": "https://images.squarespace-cdn.com/content/v1/58bf61ea3a041163d873b4e8/1582871615109-W4TN17L2TH8XYCW0GC00/bakedsalmonwithvegetables.jpeg?format=750w",
+            "description": "Baked salmon with roasted vegetables (such as zucchini, bell peppers, and eggplant) drizzled with olive oil and herbs."
           }
         ]
       }

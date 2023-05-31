@@ -19,7 +19,7 @@
                                     outlined
                                     rounded
                                     text
-                                    @click="selectDiet(this.recommendedDiet)"
+                                    @click="selectRecommendedDiet()"
                                 >
                                     Select
                                 </v-btn>
@@ -174,7 +174,7 @@ export default {
     data: function () {
         return {
             availableDiets: [],
-            recommendedDiet: null,
+            recommendedDiet: {},
             otherDiets: []
         };
     },
@@ -224,8 +224,11 @@ export default {
             this.me.diet = diet;
             api.updateUser(user).then((res) => {
                 //TODO Set the new me variable!
-                this.recommendedDiet = res.data.diet;
+                console.log(res);
             });
+        },
+        selectRecommendedDiet() {
+            this.selectDiet(this.recommendedDiet);
         }
     }
 };
