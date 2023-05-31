@@ -24,7 +24,34 @@
           "calories": 296.1904761904762,
           "heartRate": 150
         }
-      ]
+      ],
+      "diet": {
+        "id": 5,
+        "name": "Vegetarian Diet",
+        "thumbnail": "https://assets.nhs.uk/nhsuk-cms/images/T_0318_vegetarian-meal-guide_916017038.width-320.jpg",
+        "dishes": [
+          {
+            "type": "breakfast",
+            "thumbnail": "https://deliciouslittlebites.com/wp-content/uploads/2018/03/Banana-Toast-Recipe-Image-3.jpg",
+            "description": "Whole grain toast with peanut butter and sliced bananas."
+          },
+          {
+            "type": "lunch",
+            "thumbnail": "https://runningonrealfood.com/wp-content/uploads/2021/10/Vegan-Lemon-Lentil-Soup-Recipe-13-1.jpg",
+            "description": "Lentil soup with a side of whole grain bread or a chickpea salad wrap."
+          },
+          {
+            "type": "snack",
+            "thumbnail": "https://www.foodpal-app.com/uploads/images/meals/2828/cremiger-griechischer-joghurt-mit-nuessen-und-honig-5f8ab2fbb781e-800.webp",
+            "description": "Greek yogurt with honey and mixed nuts."
+          },
+          {
+            "type": "dinner",
+            "thumbnail": "https://www.wellplated.com/wp-content/uploads/2016/08/Spinach-Artichoke-Quinoa-Stuffed-Bell-Peppers.jpg",
+            "description": "Spinach and feta stuffed bell peppers served with a side of quinoa."
+          }
+        ]
+      }
     },
     {
       "id": 2,

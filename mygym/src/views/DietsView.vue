@@ -4,7 +4,7 @@
             <v-col cols="7">
                 <v-card class="rounded pa-4 elevation-3">
                     <h1 class="mb-4">Recommended Diet</h1>
-                    <v-card max-width="400" class="ma-2">
+                    <v-card max-width="450" class="ma-2">
                         <v-img
                             height="250"
                             :src="this.recommendedDiet.thumbnail"
@@ -13,9 +13,17 @@
                             ><h2 class="mt-2">
                                 {{ this.recommendedDiet.name }}
                             </h2>
-                            <v-icon color="orange" class="pa-4"
-                                >mdi-star</v-icon
-                            ></v-card-title
+                            <v-icon color="orange" class="pa-4">mdi-star</v-icon
+                            ><v-card-actions class="ml-auto">
+                                <v-btn
+                                    outlined
+                                    rounded
+                                    text
+                                    @click="selectDiet(this.recommendedDiet)"
+                                >
+                                    Select
+                                </v-btn>
+                            </v-card-actions></v-card-title
                         >
                         <v-card-text>
                             <v-timeline align-top dense>
@@ -35,7 +43,9 @@
                                             ></v-img>
                                         </v-col>
                                         <v-col>
-                                            <strong>{{ dish.type }}</strong>
+                                            <strong>{{
+                                                getFormattedString(dish.type)
+                                            }}</strong>
                                             <div class="text-caption">
                                                 {{ dish.description }}
                                             </div>
@@ -58,8 +68,19 @@
                             <v-card-title
                                 ><h2 class="mt-2">
                                     {{ diet.name }}
-                                </h2></v-card-title
+                                </h2>
+                                <v-card-actions class="ml-auto">
+                                    <v-btn
+                                        outlined
+                                        rounded
+                                        text
+                                        @click="selectDiet(diet)"
+                                    >
+                                        Select
+                                    </v-btn>
+                                </v-card-actions></v-card-title
                             >
+
                             <v-card-text>
                                 <v-timeline align-top dense>
                                     <v-timeline-item
@@ -79,7 +100,11 @@
                                                 ></v-img>
                                             </v-col>
                                             <v-col>
-                                                <strong>{{ dish.type }}</strong>
+                                                <strong>{{
+                                                    getFormattedString(
+                                                        dish.type
+                                                    )
+                                                }}</strong>
                                                 <div class="text-caption">
                                                     {{ dish.description }}
                                                 </div>
@@ -95,22 +120,21 @@
             <v-col cols="5">
                 <v-card class="rounded pa-4 elevation-3">
                     <h1>Selected Diet</h1>
-                    <!-- <v-card max-width="400" class="ma-2">
+                    <v-card max-width="400" class="ma-2">
                         <v-img
                             height="250"
-                            :src="this.selectedDiet?.thumbnail"
+                            :src="this.me.diet?.thumbnail"
                         ></v-img>
                         <v-card-title
                             ><h2 class="mt-2">
-                                {{ this.selectedDiet?.name }}
+                                {{ this.me.diet?.name }}
                             </h2></v-card-title
                         >
                         <v-card-text>
                             <v-timeline align-top dense>
                                 <v-timeline-item
                                     small
-                                    v-for="(dish, i) in this.selectedDiet
-                                        ?.dishes"
+                                    v-for="(dish, i) in this.me.diet?.dishes"
                                     :key="i"
                                 >
                                     <v-row dense>
@@ -123,7 +147,9 @@
                                             ></v-img>
                                         </v-col>
                                         <v-col>
-                                            <strong>{{ dish.type }}</strong>
+                                            <strong>{{
+                                                getFormattedString(dish.type)
+                                            }}</strong>
                                             <div class="text-caption">
                                                 {{ dish.description }}
                                             </div>
@@ -132,7 +158,7 @@
                                 </v-timeline-item>
                             </v-timeline>
                         </v-card-text>
-                    </v-card> -->
+                    </v-card>
                 </v-card>
             </v-col>
         </v-row>
@@ -149,11 +175,19 @@ export default {
         return {
             availableDiets: [],
             recommendedDiet: null,
-            otherDiets: [],
-            selectedDiet: null
+            otherDiets: []
         };
     },
-    watch: {},
+    watch: {
+        me: {
+            immediate: true,
+            handler(val) {
+                if (val) {
+                    this.diet = val.diet;
+                }
+            }
+        }
+    },
     async mounted() {
         await api.getAllDiets().then((res) => {
             this.availableDiets = res.data;
@@ -168,7 +202,6 @@ export default {
         this.otherDiets = this.availableDiets.filter(
             (diet) => diet.id !== this.recommendedDiet.id
         );
-        this.selectedDiet = this.me.diet;
     },
     computed: {
         me() {
@@ -181,6 +214,18 @@ export default {
             min = Math.ceil(min);
             max = Math.floor(max);
             return Math.floor(Math.random() * (max - min + 1)) + min;
+        },
+        getFormattedString(str) {
+            return str.charAt(0).toUpperCase() + str.slice(1);
+        },
+        selectDiet(diet) {
+            console.log("Updating Selected Diet");
+            const user = this.me;
+            this.me.diet = diet;
+            api.updateUser(user).then((res) => {
+                //TODO Set the new me variable!
+                this.recommendedDiet = res.data.diet;
+            });
         }
     }
 };
