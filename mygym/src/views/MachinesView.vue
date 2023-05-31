@@ -10,6 +10,14 @@
                         class="elevation-1"
                         @click:row="showMachine"
                     >
+                        <template v-slot:item.isAvailable="{ item }">
+                            <v-chip
+                                :color="item.isAvailable ? 'green' : 'red'"
+                                dark
+                            >
+                                {{ item.isAvailable ? "Yes" : "No" }}
+                            </v-chip>
+                        </template>
                         <template v-slot:top>
                             <v-toolbar flat>
                                 <v-spacer></v-spacer>
@@ -47,12 +55,9 @@
                                                                 v-model="
                                                                     newItem.name
                                                                 "
-                                                                rules="
-                                                                    [
-                                                                        (v) =>
-                                                                            !!v ||
-                                                                            'Name is required',
-                                                                    ]"
+                                                                :rules="[
+                                                                    rules.required
+                                                                ]"
                                                                 outlined
                                                                 label="Machine name"
                                                             ></v-text-field
@@ -108,28 +113,28 @@
                 v-model="selectedMachine"
                 max-width="500px"
                 @click:outside="selectedMachine = null"
+                v-if="selectedMachine"
             >
                 <v-card>
                     <v-card-title>
-                        <span class="text-h5">Add Machine</span>
+                        <span class="text-h5">Use Machine</span>
                     </v-card-title>
 
                     <v-card-text>
                         <v-container>
+                            {{ selectedMachine.isAvailable }}
                             <v-row>
-                                <v-col cols="12" sm="6" md="6">
+                                <v-col cols="6" sm="6" md="6">
                                     <v-text-field
-                                        v-model="newItem.name"
+                                        v-model="selectedMachine.name"
                                         disabled
                                         outlined
                                         label="Machine name"
                                     ></v-text-field>
                                 </v-col>
-                            </v-row>
-                            <v-row>
-                                <v-col cols="12" sm="6" md="6">
+                                <v-col cols="6" sm="6" md="6">
                                     <v-select
-                                        v-model="newItem.type"
+                                        v-model="selectedMachine.type"
                                         :items="typesOfMachines"
                                         outlined
                                         disabled
@@ -137,15 +142,34 @@
                                     ></v-select>
                                 </v-col>
                             </v-row>
+
+                            <v-radio-group
+                                v-model="selectedMachine.isAvailable"
+                                row
+                                class="d-flex"
+                            >
+                                <v-radio
+                                    label="Available"
+                                    :value="true"
+                                ></v-radio>
+                                <v-radio
+                                    label="Unavailable"
+                                    :value="false"
+                                ></v-radio>
+                            </v-radio-group>
                         </v-container>
                     </v-card-text>
 
                     <v-card-actions>
                         <v-spacer></v-spacer>
-                        <v-btn color="blue darken-1" text @click="close">
+                        <v-btn
+                            color="blue darken-1"
+                            text
+                            @click="selectedMachine = null"
+                        >
                             Cancel
                         </v-btn>
-                        <v-btn color="blue darken-1" text @click="save">
+                        <v-btn color="blue darken-1" text @click="saveStatus">
                             Save
                         </v-btn>
                     </v-card-actions>
@@ -157,7 +181,7 @@
 
 <script>
 import api from "../api";
-// import { nanoid } from "nanoid";
+import { nanoid } from "nanoid";
 
 export default {
     title: "Machines",
@@ -190,7 +214,12 @@ export default {
                 "Other"
             ],
             selectedMachine: null,
-            validate: false
+            validate: false,
+            rules: {
+                required: (value) => !!value || "Required.",
+                validEmail: (value) =>
+                    /.+@.+/.test(value) || "E-mail must be valid"
+            }
         };
     },
 
@@ -223,11 +252,31 @@ export default {
             this.dialog = false;
         },
         save() {
-            this.machines.push(this.newItem);
-            this.close();
+            if (this.$refs.form.validate()) {
+                this.newItem.id = nanoid();
+                api.addMachine(this.newItem).then(() => {
+                    this.newItem = {
+                        id: null,
+                        name: "",
+                        type: "Treadmill",
+                        isAvailable: false
+                    };
+                    this.refetchMachines();
+                });
+                this.close();
+            }
         },
         showMachine(machine) {
             this.selectedMachine = machine;
+        },
+        saveStatus() {
+            api.updateMachineIsAvailable(
+                this.selectedMachine.id,
+                this.selectedMachine.isAvailable
+            ).then(() => {
+                this.selectedMachine = null;
+                this.refetchMachines();
+            });
         }
     }
 };
