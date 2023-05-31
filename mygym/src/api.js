@@ -110,6 +110,10 @@ export default {
     getUsersIn(usersArray) {
         return api.get(`/user?id_in=${usersArray}`);
     },
+    //Diet methods
+    getAllDiets() {
+        return api.get("/diets");
+    },
 
     // ... other methods
     getMachine(id) {
