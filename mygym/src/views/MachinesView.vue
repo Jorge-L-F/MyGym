@@ -204,7 +204,7 @@ export default {
                 id: null,
                 name: "",
                 type: "Treadmill",
-                isAvailable: false
+                isAvailable: true
             },
             typesOfMachines: [
                 "Treadmill",
@@ -259,7 +259,7 @@ export default {
                         id: null,
                         name: "",
                         type: "Treadmill",
-                        isAvailable: false
+                        isAvailable: true
                     };
                     this.refetchMachines();
                 });
